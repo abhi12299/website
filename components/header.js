@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import $ from 'jquery';
 
@@ -7,8 +7,8 @@ import '../css/header.css';
 const Header = () => {
     let [showMenu, toggleMenu] = useState(false);
 
-    const header = createRef();
-    const cvDownloadElem = createRef();
+    const header = useRef();
+    const cvDownloadElem = useRef();
 
     // on scroll, toggle sticky class
     useEffect(() => {

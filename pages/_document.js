@@ -15,6 +15,7 @@ class MyDocument extends Document {
                         name="viewport"
                         content="width=device-width, initial-scale=1"
                     />
+                    {/* <link rel="icon" type="image/x-icon" href="../static/favicon.ico" /> */}
                     <link type='stylesheet' href='../node_modules/font-awesome/css/font-awesome.css'/>
                 </Head>
                 <body>
