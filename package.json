@@ -1,0 +1,26 @@
+{
+  "name": "website",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.22",
+    "@fortawesome/free-brands-svg-icons": "^5.10.2",
+    "@fortawesome/free-regular-svg-icons": "^5.10.2",
+    "@fortawesome/free-solid-svg-icons": "^5.10.2",
+    "@fortawesome/react-fontawesome": "^0.1.4",
+    "@zeit/next-css": "^1.0.1",
+    "bootstrap": "^4.3.1",
+    "jquery": "^3.4.1",
+    "next": "9.0.5",
+    "next-compose-plugins": "^2.2.0",
+    "popper.js": "^1.15.0",
+    "react": "16.9.0",
+    "react-dom": "16.9.0",
+    "react-transition-group": "^4.3.0"
+  }
+}
