@@ -7,7 +7,7 @@
     font-family: Poppins;
     src: url('/static/fonts/Poppins-Regular.ttf');
 }
-body {color: #111;font-family: 'Poppins', sans-serif;font-size: 14px;font-weight: 400;overflow-x: hidden;height: 100%}
+body {color: #111;font-family: 'Poppins', sans-serif;font-size: 14px;font-weight: 400;overflow-x: hidden;height: 100%; touch-action: manipulation;}
 dl,dt,dd,ol,ul,li {margin: 0;padding: 0;}
 a {color: #333;text-decoration: none;position: relative;transition: all 0.3s;}
 a:focus,
