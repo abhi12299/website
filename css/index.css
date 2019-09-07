@@ -95,7 +95,7 @@ blockquote p {line-height: 1.6;}
 .bobottom{border-bottom: 1px #eeee solid;}
 
 h1 {font-size: 40px;}
-h2 {font-size: 32px;}
+h2 {font-size: 38px;}
 h3 {font-size: 26px;}
 h4 {font-size: 22px;}
 h5 {font-size: 18px;}
@@ -265,6 +265,8 @@ li {font-size: 13px;font-weight: 400;line-height: 30px;}
 }
 
 @media (max-width: 991px) {
+    .main-body-content h2 { font-size: 34px; }
+
     .logo img {width: 50px; }
     .dots:before{display: none !important;}  
 
@@ -373,6 +375,9 @@ li {font-size: 13px;font-weight: 400;line-height: 30px;}
 }
 
 @media (max-width: 767px) {
+    .main-body-content h2 { font-size: 32px; }
+    .main-body-content p { line-height: 27px; }
+
     .social-icons {margin-top: 25px; }
     .social-icons li a i {width: 25px; height: 25px; }
     .social-icons li:not(:last-child) {margin-right: 14px;}
@@ -459,6 +464,9 @@ li {font-size: 13px;font-weight: 400;line-height: 30px;}
 }
 
 @media (max-width: 580px) {
+    .main-body-content h2 { font-size: 30px; }
+    .main-body-content p { line-height: 25px; }
+
     .entry-meta.bold.float-right {display: none; }
     .blog-post .entry-date {position: relative; left:0; margin-bottom: 5px; }
     .blog-post .entry-date span {left:50px; right:auto; }
@@ -526,4 +534,6 @@ li {font-size: 13px;font-weight: 400;line-height: 30px;}
 
     .fullpage-wrapper .hover-blog-content {padding: 30px 30px; }
     .popular-blog-2.mb75 {width: 100%; float: left;} 
+    .main-body-content h2 { font-size: 28px; }
+    .main-body-content p { line-height: 25px; }
 }

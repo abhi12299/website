@@ -127,7 +127,7 @@
     .header-wrapper.style-three {padding: 20px 0; }
     .header-wrapper.style-three .logo img {width: 120px; }
     .menu-click {display: inline-block; cursor: pointer;}
-    .header-wrapper.style-one .menu-click {display: inline-block; }
+    .header-wrapper .menu-click {display: inline-block; width: 50px}
     .header-wrapper.style-one .menu-click,
     .header-wrapper.style-two .menu-click {margin-top: 17px; }
     .header-wrapper.style-four {padding: 30px 0 40px;  }
