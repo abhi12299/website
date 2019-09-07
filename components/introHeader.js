@@ -1,6 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStackOverflow, faGithub } from '@fortawesome/free-brands-svg-icons';
+import { faStackOverflow, faGithub, faGoogle } from '@fortawesome/free-brands-svg-icons';
+import { faFilePdf } from '@fortawesome/free-regular-svg-icons';
 
 import '../css/introHeader.css';
 
@@ -26,6 +27,16 @@ function IntroHeader() {
 						<li className="list-inline-item">
 								<a target='_blank' rel='noopener' href="https://github.com/abhi12299">
 									<FontAwesomeIcon className='icon' icon={faGithub} size='3x' title='Github' />
+								</a>
+							</li>
+							<li className="list-inline-item">
+								<a target='_blank' rel='noopener' href="mailto:abhi.9811206369@gmail.com">
+									<FontAwesomeIcon className='icon' icon={faGoogle} size='3x' title='Gmail' />
+								</a>
+							</li>
+							<li className="list-inline-item">
+								<a href='../static/Abhishek.pdf' download='AbhishekCV'>
+									<FontAwesomeIcon className='icon' icon={faFilePdf} size='3x' title='CV' />
 								</a>
 							</li>
 						</ul>
