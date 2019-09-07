@@ -10,7 +10,9 @@ function IntroHeader() {
 			<div className="container">
 				<div className="row">
 					<div className="col-xl-5 col-md-6 offset-xl-1 text-left">
-						<img src="https://via.placeholder.com/400.png?text=My+image+here" alt="avatar" className="avatar-img" />
+						<div className='img-placeholder'>
+							<img src="../static/400.png" alt="avatar" className="avatar-img" />
+						</div>
 					</div>
 					<div className="col-xl-5 col-md-6 text-left">
 						<h1> Hi. I'm Abhishek Mehandiratta.</h1>

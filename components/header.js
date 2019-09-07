@@ -58,22 +58,16 @@ const Header = () => {
                         <nav id='main-menu' className='text-center'>
                             <ul>
                                 <li>
-                                    <Link href='/' scroll={true}>
-                                        <a>Home</a>
-                                    </Link>
+                                    <a>Home</a>
                                 </li>
                                 <li>
-                                    <Link href='/about'>
-                                        <a>About</a>
-                                    </Link>
+                                    <a>About Me</a>
                                 </li>
                                 <li>
-                                    <Link href='/contact'>
-                                        <a>Contact</a>
-                                    </Link>
+                                    <a>Contact</a>
                                 </li>
                                 <li>
-                                    <a href='../static/Abhishek.pdf' download='abhishek'>Download My CV</a>
+                                    <a href='../static/Abhishek.pdf' download='abhishek'>Get My CV</a>
                                 </li>
                             </ul>
                         </nav>
