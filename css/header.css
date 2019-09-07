@@ -14,22 +14,11 @@
 .search-icon img {width: 22px;  display: inline-block; }
 #main-menu {padding-top: 7px;}
 
-#main-menu ul li {padding: 0 18px; display: inline-block; position: relative;}
+#main-menu ul li {padding: 0 18px; display: inline-block; position: relative; cursor: pointer;}
 #main-menu ul li a {font-size: 16px; font-weight: 400; text-transform: uppercase;  color: #000; line-height: 42px;letter-spacing: 0.7px;}
 #main-menu ul li:after {background-color: #333;border-radius: 100%;  width: 4px; height: 4px;     bottom: 18.8px;    right: -3px; content: ''; position: absolute; content: ''; }
 #main-menu ul li:last-child:after {display: none; }
-#main-menu2 {padding-top: 7px; }
-#main-menu2 ul li {padding: 0 15px; display: inline-block; position: relative;}
-#main-menu2 ul li a {font-size: 16px; font-weight: 400; text-transform: uppercase;  color: #000; line-height: 42px;letter-spacing: 0.7px; }
-#main-menu2 ul li:after {background-color: #333;border-radius: 100%;  width: 4px; height: 4px;     bottom: 20px;    right: -3px; content: ''; position: absolute; content: ''; }
-#main-menu2 ul li:nth-child(4) {padding: 0; }
-#main-menu2 ul li:nth-child(3):after,#main-menu2 ul li:nth-child(4):after,#main-menu2 ul li:last-child:after {display: none; }
 #main-menu ul li a:hover {color: #777;}
-#main-menu > ul > li:hover .level-two {visibility: visible; opacity: 1; }
-#main-menu > ul > li > .level-two li:hover .level-three {visibility: visible; opacity: 1; }
-#main-menu2 > ul > li:hover .level-two {visibility: visible; opacity: 1; }
-#main-menu2 > ul > li > .level-two li:hover .level-three {visibility: visible; opacity: 1; }
-
 
 .menu-click {display: none; float: right; position: relative; width: 30px; height: 20px; margin-top: 12px; margin-right: 5px; }
 .menu-click span {position: absolute; background-color: #111; right: 0; height: 2px; width: 25px; display: inline-block;      transition: all 0.3s;}

@@ -8,6 +8,7 @@ const Header = () => {
     let [showMenu, toggleMenu] = useState(false);
 
     const header = createRef();
+    const cvDownloadElem = createRef();
 
     // on scroll, toggle sticky class
     useEffect(() => {
@@ -30,8 +31,13 @@ const Header = () => {
         }
     }, []);
 
-    const handleMenuToggle = e => {
-        const expander = e.target.closest('.menu-click');
+    const handleMenuToggle = (e, forceToggle=false) => {
+        let expander;
+        if (forceToggle) {
+            expander = document.getElementsByClassName('menu-click')[0];
+        } else {
+            expander = e.target.closest('.menu-click'); 
+        }
         if (expander) {
             if (expander.classList.contains('open')) {
                 toggleMenu(false);
@@ -39,6 +45,17 @@ const Header = () => {
                 toggleMenu(true);
             }
             $('#main-menu').slideToggle(200);
+        }
+    }
+
+    const animateToTop = () => {
+        $('html, body').animate({scrollTop : 0},800);
+        handleMenuToggle(null, true);
+    }
+
+    const downloadCV = () => {
+        if (cvDownloadElem.current) {
+            cvDownloadElem.current.click();
         }
     }
 
@@ -57,17 +74,14 @@ const Header = () => {
                     <div className='col-lg-8 col-md-12'>
                         <nav id='main-menu' className='text-center'>
                             <ul>
-                                <li>
+                                <li onClick={animateToTop}>
                                     <a>Home</a>
-                                </li>
-                                <li>
-                                    <a>About Me</a>
                                 </li>
                                 <li>
                                     <a>Contact</a>
                                 </li>
-                                <li>
-                                    <a href='../static/Abhishek.pdf' download='abhishek'>Get My CV</a>
+                                <li onClick={downloadCV}>
+                                    <a ref={cvDownloadElem} href='../static/Abhishek.pdf' download='abhishek'>Get My CV</a>
                                 </li>
                             </ul>
                         </nav>
