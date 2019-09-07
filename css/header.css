@@ -1,5 +1,5 @@
 .header-wrapper.sticky { position: fixed; top: 0; width: 100%; z-index: 100; background-color: #FFF;}
-.header-wrapper.sticky + .main-body-content { padding-top: 77px; }
+.header-wrapper.sticky + .main-body-content { padding-top: 75px; }
 
 .header-wrapper {padding: 13px 0; }
 .header-wrapper:before{ content: "";width: 100%;height: 2px;top: 0px;left: 0;position: absolute;z-index: -2;background: linear-gradient(to right,#FFF 0,#eeeeee 35%,#eeeeee 65%,#FFF 100%);background: -ms-linear-gradient(left,#fff 0,#eeeeee 35%,#eeeeee 65%,#fff 100%);background: -o-linear-gradient(left,#fff 0,#eeeeee 35%,#eeeeee 65%,#fff 100%);background: -webkit-linear-gradient(left,#FFF 0,#eeeeee 35%,#eeeeee 65%,#FFF 100%);background: -moz-linear-gradient(left,#fff 0,#eeeeee 35%,#eeeeee 65%,#fff 100%);background: -webkit-gradient(linear,left top,right top,color-stop(0%,#FFF),color-stop(35%,#eeeeee),color-stop(65%,#eeeeee),color-stop(100%,#FFF));}
