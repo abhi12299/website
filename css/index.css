@@ -101,7 +101,7 @@ h4 {font-size: 22px;}
 h5 {font-size: 18px;}
 h6 {font-size: 16px;}
 b,.bold {font-weight: 700 !important}
-p {color: #111;font-size: 16px;font-weight: 400;line-height: 32px;margin-bottom: 0;}
+p {color: #111;font-size: 18px;font-weight: 400;line-height: 32px;margin-bottom: 0;}
 li {font-size: 13px;font-weight: 400;line-height: 30px;}
 .display-md {display: none;} 
 
@@ -534,6 +534,6 @@ li {font-size: 13px;font-weight: 400;line-height: 30px;}
 
     .fullpage-wrapper .hover-blog-content {padding: 30px 30px; }
     .popular-blog-2.mb75 {width: 100%; float: left;} 
-    .main-body-content h2 { font-size: 28px; }
+    .main-body-content h2 { font-size: 26px; }
     .main-body-content p { line-height: 25px; }
 }
