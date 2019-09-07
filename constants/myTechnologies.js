@@ -6,4 +6,5 @@ export default [
     'Firebase',
     'GRPC',
     'Flutter',
+    'SocketIO'
 ];
