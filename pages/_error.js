@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import PropTypes from 'prop-types';
 import Header from '../components/header';
 
 import '../css/error.css';
@@ -55,5 +56,9 @@ Error.getInitialProps = ({ res, err }) => {
     const statusCode = res ? res.statusCode : err ? err.statusCode : null;
     return { statusCode };
 }
+
+Error.proptypes = {
+    statusCode: PropTypes.number.isRequired
+};
 
 export default Error;
