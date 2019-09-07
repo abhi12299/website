@@ -266,7 +266,6 @@ li {font-size: 13px;font-weight: 400;line-height: 30px;}
 @media (max-width: 991px) {
     .main-body-content h2 { font-size: 34px; }
 
-    .logo img {width: 50px; }
     .dots:before{display: none !important;}  
 
     #main-menu {display: none;    width: 100%;position: relative; padding-top: 0; margin-top: 13px;  }
