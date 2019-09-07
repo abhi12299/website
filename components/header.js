@@ -75,7 +75,7 @@ const Header = () => {
                 <div className='row'>
                     <div className='col-lg-2 col-md-12 text-left'>
                         <a className='logo' onClick={handleHomeClick}>
-                            <img src='https://via.placeholder.com/60.png?text=AM' alt='logo' />
+                            <img src='../static/logo.png' alt='logo' />
                         </a>
                         <a className={'menu-click' + (showMenu ? ' open' : '')} onClick={handleMenuToggle}><span></span><span></span><span></span></a>
                     </div>
@@ -89,7 +89,7 @@ const Header = () => {
                                     <a>Contact</a>
                                 </li>
                                 <li onClick={downloadCV}>
-                                    <a ref={cvDownloadElem} href='../static/Abhishek.pdf' download='abhishek'>Download My CV</a>
+                                    <a ref={cvDownloadElem} href='../static/Abhishek.pdf' download='AbhishekCV'>Download My CV</a>
                                 </li>
                             </ul>
                         </nav>
