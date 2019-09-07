@@ -25,7 +25,6 @@ img {max-width: 100%;}
 .pad-20{padding-top: 20px !important; padding-bottom: 20px !important; }
 .pad-25 {padding-top: 25px; padding-bottom: 25px; }
 .pad-50 {padding-top: 50px; padding-bottom: 50px; }
-.pad-75 {padding-top: 75px; padding-bottom: 75px; }
 .pad-100 {padding-top: 100px; padding-bottom: 100px; }
 .pad-125 {padding-top: 125px; padding-bottom: 125px; }
 .pad-150 {padding-top: 150px; padding-bottom: 150px; }
@@ -433,12 +432,10 @@ li {font-size: 13px;font-weight: 400;line-height: 30px;}
     .coupon {float: left;}
     
 
-    .pad-75 {padding-top: 50px; padding-bottom: 50px; }
     .col-xs-2 {width: 25%; }
     .col-xs-8 {width: 50%; }
     .page-nav li a {line-height: 36px; }
     .hi-img {width: 120px; }
-    .notfound-wrapper h1 {font-size: 120px; margin-bottom: 0; line-height: 1; }
 
     .fullpage-wrapper .left-side {height: 85%; }
     .fullpage-wrapper .center-side {padding-bottom: 0; }
