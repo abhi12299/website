@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 import $ from 'jquery';
 
 import '../css/header.css';
@@ -9,11 +9,12 @@ const Header = () => {
 
     const header = useRef();
     const cvDownloadElem = useRef();
+    const router = useRouter();
 
     // on scroll, toggle sticky class
     useEffect(() => {
         const headerComponent = header.current;
-        
+
         if (headerComponent) {
             const initialHeaderOffset = headerComponent.offsetTop;
             if (window.pageYOffset > initialHeaderOffset) {
@@ -22,7 +23,7 @@ const Header = () => {
 
             window.onscroll = () => {
                 if (window.pageYOffset <= initialHeaderOffset) {
-                    headerComponent.classList.remove('sticky');                    
+                    headerComponent.classList.remove('sticky');
                 }
                 if (window.pageYOffset > headerComponent.offsetTop) {
                     headerComponent.classList.add('sticky');
@@ -31,12 +32,12 @@ const Header = () => {
         }
     }, []);
 
-    const handleMenuToggle = (e, forceToggle=false) => {
+    const handleMenuToggle = (e, forceToggle = false) => {
         let expander;
         if (forceToggle) {
             expander = document.getElementsByClassName('menu-click')[0];
         } else {
-            expander = e.target.closest('.menu-click'); 
+            expander = e.target.closest('.menu-click');
         }
         if (expander) {
             if (expander.classList.contains('open')) {
@@ -48,8 +49,17 @@ const Header = () => {
         }
     }
 
+    const handleHomeClick = () => {
+        if (router.pathname === '/') {
+            // if we're on the index page, just scroll to top
+            animateToTop();
+        } else {
+            router.push('/');
+        }
+    }
+
     const animateToTop = () => {
-        $('html, body').animate({scrollTop : 0},800);
+        $('html, body').animate({ scrollTop: 0 }, 800);
         handleMenuToggle(null, true);
     }
 
@@ -64,24 +74,22 @@ const Header = () => {
             <div className='container'>
                 <div className='row'>
                     <div className='col-lg-2 col-md-12 text-left'>
-                        <Link href='/' scroll={true}>
-                            <a className='logo'>
-                                <img src='https://via.placeholder.com/60.png?text=AM' alt='logo' />
-                            </a>
-                        </Link>
-                        <a className={'menu-click' + (showMenu ? ' open': '')} onClick={handleMenuToggle}><span></span><span></span><span></span></a>
+                        <a className='logo' onClick={handleHomeClick}>
+                            <img src='https://via.placeholder.com/60.png?text=AM' alt='logo' />
+                        </a>
+                        <a className={'menu-click' + (showMenu ? ' open' : '')} onClick={handleMenuToggle}><span></span><span></span><span></span></a>
                     </div>
                     <div className='col-lg-8 col-md-12'>
                         <nav id='main-menu' className='text-center'>
                             <ul>
-                                <li onClick={animateToTop}>
+                                <li onClick={handleHomeClick}>
                                     <a>Home</a>
                                 </li>
                                 <li>
                                     <a>Contact</a>
                                 </li>
                                 <li onClick={downloadCV}>
-                                    <a ref={cvDownloadElem} href='../static/Abhishek.pdf' download='abhishek'>Get My CV</a>
+                                    <a ref={cvDownloadElem} href='../static/Abhishek.pdf' download='abhishek'>Download My CV</a>
                                 </li>
                             </ul>
                         </nav>
