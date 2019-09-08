@@ -35,7 +35,7 @@ function IntroHeader() {
 								</a>
 							</li>
 							<li className="list-inline-item">
-								<a href='../static/Abhishek.pdf' download='AbhishekCV'>
+								<a href='../static/pdf/Abhishek.pdf' download='AbhishekCV'>
 									<FontAwesomeIcon className='icon' icon={faFilePdf} size='3x' title='CV' />
 								</a>
 							</li>

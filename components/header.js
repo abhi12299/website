@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useRouter } from 'next/router';
 import $ from 'jquery';
+import goToPage from '../utils/goToPage';
 
 import '../css/header.css';
 
@@ -9,7 +9,6 @@ const Header = () => {
 
     const header = useRef();
     const cvDownloadElem = useRef();
-    const router = useRouter();
 
     // on scroll, toggle sticky class
     useEffect(() => {
@@ -49,20 +48,6 @@ const Header = () => {
         }
     }
 
-    const handleHomeClick = () => {
-        if (router.pathname === '/') {
-            // if we're on the index page, just scroll to top
-            animateToTop();
-        } else {
-            router.push('/');
-        }
-    }
-
-    const animateToTop = () => {
-        $('html, body').animate({ scrollTop: 0 }, 800);
-        handleMenuToggle(null, true);
-    }
-
     const downloadCV = () => {
         if (cvDownloadElem.current) {
             cvDownloadElem.current.click();
@@ -74,7 +59,7 @@ const Header = () => {
             <div className='container'>
                 <div className='row'>
                     <div className='col-lg-2 col-md-12 text-left'>
-                        <a className='logo' onClick={handleHomeClick}>
+                        <a className='logo' onClick={() => goToPage('/')}>
                             <img src='../static/png/logo.png' alt='logo' />
                         </a>
                         <a className={'menu-click' + (showMenu ? ' open' : '')} onClick={handleMenuToggle}><span></span><span></span><span></span></a>
@@ -82,14 +67,14 @@ const Header = () => {
                     <div className='col-lg-8 col-md-12'>
                         <nav id='main-menu' className='text-center'>
                             <ul>
-                                <li onClick={handleHomeClick}>
+                                <li onClick={() => goToPage('/', { cbAfterAnimate: () => handleMenuToggle(null, true) })}>
                                     <a>Home</a>
                                 </li>
                                 <li>
                                     <a>Contact</a>
                                 </li>
                                 <li onClick={downloadCV}>
-                                    <a ref={cvDownloadElem} href='../static/Abhishek.pdf' download='AbhishekCV'>Download My CV</a>
+                                    <a ref={cvDownloadElem} href='../static/pdf/Abhishek.pdf' download='AbhishekCV'>Download My CV</a>
                                 </li>
                             </ul>
                         </nav>
