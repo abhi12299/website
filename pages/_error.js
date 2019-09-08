@@ -1,7 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
+
 import Header from '../components/header';
+import Footer from '../components/footer';
 
 import '../css/error.css';
 
@@ -48,6 +50,7 @@ function Error(props) {
                     </div>
                 </section>
             </div>
+            <Footer />
         </div>
     );
 }

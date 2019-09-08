@@ -18,7 +18,7 @@ function AboutMe() {
                         </div>
                     </div>
                     <div className='d-none d-lg-block d-md-block col-lg-5 col-md-5 offset-md-1 offset-lg-1 text-center'>
-                        <img src='../static/about-me.png' alt='banner-right' className='banner-right-about-me' />
+                        <img src='../static/png/about-me.png' alt='banner-right' className='banner-right-about-me' />
                     </div>
                 </div>
             </div>

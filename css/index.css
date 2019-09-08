@@ -68,8 +68,8 @@ section {position: relative; }
 blockquote {padding: 20px 20px;margin: 0 0 20px;font-size: 16px;background: #F7F7F7;border-radius: 10px;}
 blockquote p {line-height: 1.6;}
 .bg-lightblue {background-color: #f4f8fb; }
-.bg-pattern {background-image: url('/static/bg-pattern-1.png'); background-repeat: no-repeat; background-size: cover; }
-.bg-pattern-2 {background-image: url('/static/bg-pattern-2.jpg'); background-repeat: repeat; background-size: cover; }
+.bg-pattern {background-image: url('/static/png/bg-pattern-1.png'); background-repeat: no-repeat; background-size: cover; }
+.bg-pattern-2 {background-image: url('/static/png/bg-pattern-2.jpg'); background-repeat: repeat; background-size: cover; }
 .load {line-height: 45px; min-width: 180px; padding: 0 25px; font-size: 16px; color: #111; font-weight: bold; height: 50px; border:2px #333 solid; display: inline-block; }
 .button-4{width:180px;height:50px;border:2px solid #333;text-align:center;cursor:pointer;position:relative;box-sizing:border-box;overflow:hidden;}
 .button-4 a{font-size:14px;letter-spacing: 1px;  text-transform: uppercase;font-weight: bold;color:#333;text-decoration:none;line-height:47px;transition:all .5s ease;z-index:2;position:relative;}

@@ -75,7 +75,7 @@ const Header = () => {
                 <div className='row'>
                     <div className='col-lg-2 col-md-12 text-left'>
                         <a className='logo' onClick={handleHomeClick}>
-                            <img src='../static/logo.png' alt='logo' />
+                            <img src='../static/png/logo.png' alt='logo' />
                         </a>
                         <a className={'menu-click' + (showMenu ? ' open' : '')} onClick={handleMenuToggle}><span></span><span></span><span></span></a>
                     </div>

@@ -4,6 +4,7 @@ import IntroHeader from '../components/introHeader';
 import Header from '../components/header';
 import AboutMe from '../components/aboutMe';
 import TechStack from '../components/techStack';
+import Footer from '../components/footer';
 
 const Home = () => (
   <div>
@@ -12,9 +13,10 @@ const Home = () => (
     </Head>
     <IntroHeader />
     <Header />
-    <div className='main-body-content' style={{ marginBottom: '10000px' }}>
+    <div className='main-body-content'>
       <AboutMe />
       <TechStack />
+      <Footer />
     </div>
   </div>
 );
