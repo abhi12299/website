@@ -32,7 +32,7 @@
 .social-text {margin-top: 30px; }
 .social-text .list-inline-item:not(:last-child) {margin-right: 25px; }
 .social-text li a {font-weight: bold; font-size: 12px; color: #111; text-transform: uppercase; letter-spacing: 1px;}
-
+.social-icons-surround { min-width: 55px;}
 .social-icons {margin-top: 32px;}
 .social-icons li:not(:last-child) {margin-right: 20px; }
 .social-icons li:not(:last-child) a {padding-right: 25px; border-right: 1px solid grey; }
@@ -42,7 +42,7 @@
 
 /* RESPONSIVE SECTION */
 @media (max-width: 1400px) {
-    .top-header.pad-125 {padding-top: 100px; padding-bottom: 120px; }
+    .top-header.pad-125 {padding-top: 70px; padding-bottom: 120px; }
     .img-placeholder { width: 380px; height: 380px; border-radius: 50%; background-color: #fff; position: absolute;}
     /* .top-header .avatar-img {width: 380px; } */
     .top-header h1 {margin-top: 20px; font-size: 50px; }

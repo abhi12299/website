@@ -6,7 +6,7 @@ const animateToElem = (scrollToElement) => {
         $('html, body').animate({ scrollTop: 0 }, 800);
     } else {
         const elem = $(scrollToElement);
-        elem && $('html, body').animate({ scrollTop: elem.offset().top - 200 }, 800);
+        elem && elem.length > 0 && $('html, body').animate({ scrollTop: elem.offset().top - 200 }, 800);
     }
 }
 
