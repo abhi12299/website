@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import { faStackOverflow, faGithub, faGoogle } from '@fortawesome/free-brands-svg-icons';
+import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
+import { faStackOverflow, faGithub } from '@fortawesome/free-brands-svg-icons';
 import toastr from 'toastr';
 
 import comingSoonToast from '../utils/comingSoonToast';
@@ -50,7 +51,7 @@ function Footer() {
                                 <a onClick={() => goToPage('/', { scrollToElement: '.about-me' })}>About</a>
                             </li>
                             <li>
-                                <a onClick={() => goToPage('/contact')}>Contact</a>
+                                <a onClick={() => goToPage('/', { scrollToElement: '.contact-section' })}>Contact</a>
                             </li>
                         </ul>
                     </div>
@@ -84,7 +85,7 @@ function Footer() {
                             </li>
                             <li className='list-inline-item'>
                                 <a target='_blank' rel='noopener' href="mailto:abhi.9811206369@gmail.com">
-                                    <FontAwesomeIcon className='icon' icon={faGoogle} title='Gmail' />
+                                    <FontAwesomeIcon className='icon' icon={faEnvelope} title='Email' />
                                 </a>
                             </li>
                         </ul>
