@@ -4,18 +4,21 @@ import goToPage from '../utils/goToPage';
 
 import '../css/header.css';
 
+// used to differentiate b/w diff states of header
+let isMobileView = false;
 const Header = () => {
     let [showMenu, toggleMenu] = useState(false);
-
     const header = useRef();
     const cvDownloadElem = useRef();
 
     // on scroll, toggle sticky class
     useEffect(() => {
         const headerComponent = header.current;
-
         if (headerComponent) {
             const initialHeaderOffset = headerComponent.offsetTop;
+            // header is in collapsed view
+            isMobileView = window.innerWidth <= 991;
+
             if (window.pageYOffset > initialHeaderOffset) {
                 headerComponent.classList.add('sticky');
             }
@@ -27,6 +30,10 @@ const Header = () => {
                 if (window.pageYOffset > headerComponent.offsetTop) {
                     headerComponent.classList.add('sticky');
                 }
+            }
+
+            window.onresize = () => {
+                isMobileView = window.innerWidth <= 991;
             }
         }
     }, []);
@@ -54,6 +61,21 @@ const Header = () => {
         }
     }
 
+    const handleHomeClick = () => {
+        if (isMobileView) {
+            goToPage('/', { cbAfterAnimate: () => handleMenuToggle(null, true) });
+        } else {
+            goToPage('/');
+        }
+    }
+
+    const handleContactClick = () => {
+        if (isMobileView) {
+            goToPage('/', { cbAfterAnimate: () => handleMenuToggle(null, true), scrollToElement: '.contact-section' });
+        } else {
+            goToPage('/', { scrollToElement: '.contact-section' });
+        }
+    }
     return (
         <section className='header-wrapper' ref={header}>
             <div className='container'>
@@ -67,10 +89,10 @@ const Header = () => {
                     <div className='col-lg-8 col-md-12'>
                         <nav id='main-menu' className='text-center'>
                             <ul>
-                                <li onClick={() => goToPage('/', { cbAfterAnimate: () => handleMenuToggle(null, true) })}>
+                                <li onClick={handleHomeClick}>
                                     <a>Home</a>
                                 </li>
-                                <li>
+                                <li onClick={handleContactClick}>
                                     <a>Contact</a>
                                 </li>
                                 <li onClick={downloadCV}>
