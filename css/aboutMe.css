@@ -5,3 +5,29 @@
 .banner-right-about-me {
     max-height: 300px;
 }
+
+.about-me .sep {
+    width: 50%;
+    margin-left: 0px;
+}
+
+.experience {
+    font-size: 20px;
+}
+
+.experience ul {
+    list-style-type: none;
+}
+
+.experience ul li {
+    margin-right: 5px;
+    font-size: 20px;
+}
+
+.experience ul li::before {
+    content: '> ';
+}
+
+.experience ul li a {
+    text-decoration: underline;
+}

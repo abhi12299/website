@@ -15,9 +15,16 @@ function AboutMe() {
                                 that come about in the web development community.
                                 Besides programming, I also love to play video games :)
                                 </p>
+                                <hr className='sep' />
+                            <div className='experience'>
+                                <b>Work Experience</b>
+                                <ul>
+                                    <li>MERN Stack Developer @<a href='https://so.city' target='_blank'>SoDelhi</a></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                    <div className='d-none d-lg-block d-md-block col-lg-5 col-md-5 offset-md-1 offset-lg-1 text-center'>
+                    <div className='d-none d-lg-block d-md-block col-lg-5 col-md-5 offset-md-1 offset-lg-1 text-center my-auto'>
                         <img src='../static/png/about-me.png' alt='banner-right' className='banner-right-about-me' />
                     </div>
                 </div>
