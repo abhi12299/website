@@ -1,0 +1,14 @@
+.projects .title {
+    text-align: center;
+}
+
+.projects-container {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+@media (max-width: 767px) {
+    .projects .title {
+        text-align: left;
+    }
+}
