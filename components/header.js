@@ -9,7 +9,7 @@ let isMobileView = false;
 const Header = () => {
     let [showMenu, toggleMenu] = useState(false);
     const header = useRef();
-    const cvDownloadElem = useRef();
+    // const cvDownloadElem = useRef();
 
     // on scroll, toggle sticky class
     useEffect(() => {
@@ -55,27 +55,28 @@ const Header = () => {
         }
     }
 
-    const downloadCV = () => {
-        if (cvDownloadElem.current) {
-            cvDownloadElem.current.click();
+    // const downloadCV = () => {
+    //     if (cvDownloadElem.current) {
+    //         cvDownloadElem.current.click();
+    //     }
+    // }
+
+    const handleLinksClick = (page='/', scrollToElement) => {
+        const opts = {};
+        if (isMobileView) {
+            opts.cbAfterAnimate = () => handleMenuToggle(null, true);
+            if (scrollToElement) {
+                opts.scrollToElement = scrollToElement;
+            }
+            goToPage(page, opts);
+        } else {
+            if (scrollToElement) {
+                opts.scrollToElement = scrollToElement;
+            }
+            goToPage(page, opts);
         }
     }
 
-    const handleHomeClick = () => {
-        if (isMobileView) {
-            goToPage('/', { cbAfterAnimate: () => handleMenuToggle(null, true) });
-        } else {
-            goToPage('/');
-        }
-    }
-
-    const handleContactClick = () => {
-        if (isMobileView) {
-            goToPage('/', { cbAfterAnimate: () => handleMenuToggle(null, true), scrollToElement: '.contact-section' });
-        } else {
-            goToPage('/', { scrollToElement: '.contact-section' });
-        }
-    }
     return (
         <section className='header-wrapper' ref={header}>
             <div className='container'>
@@ -89,15 +90,24 @@ const Header = () => {
                     <div className='col-lg-8 col-md-12'>
                         <nav id='main-menu' className='text-center'>
                             <ul>
-                                <li onClick={handleHomeClick}>
+                                <li onClick={() => handleLinksClick('/')}>
                                     <a>Home</a>
                                 </li>
-                                <li onClick={handleContactClick}>
+                                <li onClick={() => handleLinksClick('/', '.about-me')}>
+                                    <a>About Me</a>
+                                </li>
+                                <li onClick={() => handleLinksClick('/', '.contact-section')}>
                                     <a>Contact</a>
                                 </li>
-                                <li onClick={downloadCV}>
-                                    <a ref={cvDownloadElem} href='../static/pdf/Abhishek.pdf' download='AbhishekCV'>Download My CV</a>
+                                <li onClick={() => handleLinksClick('/', '.projects')}>
+                                    <a>Projects</a>
                                 </li>
+                                {/* <li onClick={() => handleLinksClick('/', '.blog')}>
+                                    <a>Blog</a>
+                                </li> */}
+                                {/* <li onClick={downloadCV}>
+                                    <a ref={cvDownloadElem} href='../static/pdf/Abhishek.pdf' download='AbhishekCV'>Download My CV</a>
+                                </li> */}
                             </ul>
                         </nav>
                     </div>
