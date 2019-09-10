@@ -37,6 +37,15 @@ class MyDocument extends Document {
                 <body>
                     <Main />
                     <NextScript />
+                    {/* to remove preloader */}
+                    <script dangerouslySetInnerHTML={{__html: `
+                        function loaded() {
+                            document.body.classList.add('loaded');            
+                        }
+                        setTimeout(loaded, 5000);
+                        window.addEventListener('load', loaded);
+                    `}}>
+                    </script>
                 </body>
             </Html>
         )

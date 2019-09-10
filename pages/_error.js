@@ -6,6 +6,7 @@ import Header from '../components/header';
 import Footer from '../components/footer';
 
 import '../css/error.css';
+import Preloader from '../components/preloader';
 
 function Error(props) {
     let { statusCode } = props;
@@ -27,6 +28,7 @@ function Error(props) {
     return (
         <div>
             <Header />
+            {/* <Preloader /> */}
             <div className='main-body-content'>
                 <section className='pad-75'>
                     <div className='container'>

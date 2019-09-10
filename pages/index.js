@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Head from 'next/head';
 
 import Preloader from '../components/preloader';
@@ -7,20 +7,9 @@ import Header from '../components/header';
 import AboutMe from '../components/aboutMe';
 import TechStack from '../components/techStack';
 import Footer from '../components/footer';
+import Projects from '../components/projects';
 
 const Home = () => {
-  useEffect(() => {
-    // THIS CODE RIGHT HERE
-    window.addEventListener('load', () => {
-      document.body.classList.add('loaded');
-    });
-
-    // WORK AROUND BUT NOT GOOD
-        setTimeout(() => {
-          document.body.classList.add('loaded');
-        }, 700);
-  }, []);
-
   return (
     <div>
       <Head>
@@ -29,9 +18,11 @@ const Home = () => {
       <Preloader />
       <IntroHeader />
       <Header />
-      <div className='main-body-content' style={{maxWidth: '100%'}}>
+      {/* position relative needed for jquery scroll */}
+      <div className='main-body-content' style={{maxWidth: '100%', position: 'relative'}}>
         <AboutMe />
         <TechStack />
+        <Projects />
         <Footer />
       </div>
     </div>
