@@ -1,0 +1,37 @@
+.single-project {
+    padding: 10px 0px;
+    margin: 12px;
+}
+
+.single-project .sep {
+    max-width: 70%;
+    border: 0.6px solid black;
+    margin-left: 0;
+}
+
+.single-project .project-links ul {
+    list-style-type: none;
+}
+
+.single-project .project-links ul li {
+    font-size: 15px;
+    padding-right: 1px;
+    display: inline-block;
+}
+
+.single-project .project-links ul li a {
+    color: #4ea8fcec;
+}
+
+.single-project .project-links ul li a:hover {
+    color: #4ea8fc;
+}
+
+.single-project .project-links ul li:not(:first-child) {
+    margin-left: 10px; 
+}
+
+.single-project .project-heading {
+    font-weight: bold;
+    font-size: 22px;
+}

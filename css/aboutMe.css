@@ -1,0 +1,43 @@
+.about-me.pad-top-50 {
+    padding-top: 50px;
+}
+
+.banner-right-about-me {
+    max-height: 300px;
+}
+
+.about-me .sep {
+    width: 50%;
+    margin-left: 0px;
+}
+
+.experience, .contact {
+    font-size: 20px;
+}
+
+.contact a {
+    text-decoration: underline;
+}
+
+.experience ul {
+    list-style-type: none;
+}
+
+.experience ul li {
+    margin-right: 5px;
+    font-size: 20px;
+}
+
+.experience ul li::before {
+    content: '> ';
+}
+
+.experience ul li a {
+    text-decoration: underline;
+}
+
+@media (max-width: 991px) {
+    .experience ul li, .contact p {
+        font-size: 18px;
+    }
+}
