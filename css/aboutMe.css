@@ -11,8 +11,12 @@
     margin-left: 0px;
 }
 
-.experience {
+.experience, .contact {
     font-size: 20px;
+}
+
+.contact a {
+    text-decoration: underline;
 }
 
 .experience ul {
@@ -30,4 +34,10 @@
 
 .experience ul li a {
     text-decoration: underline;
+}
+
+@media (max-width: 991px) {
+    .experience ul li, .contact p {
+        font-size: 18px;
+    }
 }

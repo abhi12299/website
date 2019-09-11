@@ -51,7 +51,7 @@ function Footer() {
                                 <a onClick={() => goToPage('/', { scrollToElement: '.about-me' })}>About</a>
                             </li>
                             <li>
-                                <a onClick={() => goToPage('/', { scrollToElement: '.contact-section' })}>Contact</a>
+                                <a onClick={() => goToPage('/', { scrollToElement: '.contact' })}>Contact</a>
                             </li>
                         </ul>
                     </div>

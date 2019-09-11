@@ -106,4 +106,6 @@
     .top-header p { font-size: 22px; line-height: 32px; }
     .top-header.style-four p {font-size: 24px; line-height: 34px; }
     .img-placeholder { position: relative; width: 250px; height: 250px; border-radius: 50%; background-color: #fff;  margin:auto; display: block; }
+    .social-icons li:not(:last-child) {margin-right: 10px; }
+    .social-icons li:not(:last-child) a {padding-right: 15px; }
 }
