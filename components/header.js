@@ -63,18 +63,13 @@ const Header = () => {
 
     const handleLinksClick = (page='/', scrollToElement) => {
         const opts = {};
-        if (isMobileView) {
-            opts.cbAfterAnimate = () => handleMenuToggle(null, true);
-            if (scrollToElement) {
-                opts.scrollToElement = scrollToElement;
-            }
-            goToPage(page, opts);
-        } else {
-            if (scrollToElement) {
-                opts.scrollToElement = scrollToElement;
-            }
-            goToPage(page, opts);
+        if (scrollToElement) {
+            opts.scrollToElement = scrollToElement;
         }
+        if (isMobileView) {
+            opts.cbAfterAnimate = () => handleMenuToggle(null, true);   
+        }    
+        goToPage(page, opts);
     }
 
     return (
@@ -96,7 +91,7 @@ const Header = () => {
                                 <li onClick={() => handleLinksClick('/', '.about-me')}>
                                     <a>About Me</a>
                                 </li>
-                                <li onClick={() => handleLinksClick('/', '.contact-section')}>
+                                <li onClick={() => handleLinksClick('/', '.contact')}>
                                     <a>Contact</a>
                                 </li>
                                 <li onClick={() => handleLinksClick('/', '.projects')}>

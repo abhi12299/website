@@ -1,12 +1,17 @@
 import Router from 'next/router';
 import $ from 'jquery';
 
-const animateToElem = (scrollToElement) => {
+const animateToElem = (scrollToElement, animateDuration = 800) => {
     if (!scrollToElement) {
-        $('html, body').animate({ scrollTop: 0 }, 800);
+        $('html, body').animate({ scrollTop: 0 }, animateDuration);
     } else {
+        // if window has scrolled past element, subtract expanded height if in mobile view
         const elem = $(scrollToElement);
-        elem && elem.length > 0 && $('html, body').animate({ scrollTop: elem.offset().top - 100}, 800);
+        let expandedMenuHeight = 0;
+        if (window.innerWidth <= 991) {
+            expandedMenuHeight = window.scrollY >= elem.offset().top ? 0 : 170;
+        }
+        elem && elem.length > 0 && $('html, body').animate({ scrollTop: elem.offset().top - 100 - expandedMenuHeight}, animateDuration);
     }
 }
 
@@ -21,10 +26,12 @@ const noOp = () => {};
  */
 export default (nextPage, { cbAfterAnimate = noOp, scrollToElement = null } = {}) => {
     if (Router.pathname === nextPage) {
-        // if we're on the next page, just scroll to top
-        animateToElem(scrollToElement);
+        // if we're on the next page, animate to element
         cbAfterAnimate();
+        animateToElem(scrollToElement);
     } else {
-        Router.push(nextPage).then(() => window.scrollTo(0, 0));
+        Router.push(nextPage).then(() => {
+            if (scrollToElement) animateToElem(scrollToElement, 0);
+        });
     }
 }

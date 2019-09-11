@@ -96,6 +96,7 @@
     line-height: 45px;
     color: #000;
     font-weight: 300;
+    cursor: pointer;
 }
 
 .footer-wrapper .widget-text {
