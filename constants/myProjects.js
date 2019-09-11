@@ -29,7 +29,7 @@ export default [
     },
     {
         title: 'YouTube To MP3',
-        description: 'One of my initial projects. Does what it says. Built with React, NodeJS, youtube-dl. Deployed on Heroku.',
+        description: 'One of my initial projects. Does what it says. Built with React, ExpressJS, youtube-dl. Deployed on Heroku.',
         links: [
             {
                 name: 'Check It Out',
@@ -47,7 +47,7 @@ export default [
     },
     {
         title: 'Live Coding App',
-        description: 'One of my initial projects. A serverless app to code collectively across machines. A room can have number of participants.',
+        description: 'One of my initial projects. A serverless app to code collectively across machines. A room can have any number of participants.',
         links: [
             {
                 name: 'Check It Out',

@@ -1,14 +1,11 @@
 .single-project {
-    border: 1px solid grey;
-    border-radius: 20px;
-    padding: 10px 13px;
+    padding: 10px 0px;
     margin: 12px;
-    box-shadow: 0px 0px 0px 0px rgba(123, 173, 209, 0.6);
 }
 
 .single-project .sep {
     max-width: 70%;
-    border: 0.4px solid black;
+    border: 0.6px solid black;
     margin-left: 0;
 }
 
@@ -23,7 +20,7 @@
 }
 
 .single-project .project-links ul li a {
-    color: #4ea8fcc2;
+    color: #4ea8fcec;
 }
 
 .single-project .project-links ul li a:hover {

@@ -6,7 +6,7 @@ import '../css/singleProject.css';
 function SingleProject(props) {
     const { project, index } = props;
 
-    let className = 'col-lg-5 col-md-5 col-11 single-project';
+    let className = 'col-lg-5 col-md-12 col-11 single-project';
     // if ((index + 1) % 2 === 0) {
     //     className += ' offset-lg-1 offset-md-1';
     // }
