@@ -125,7 +125,7 @@
 }
 
 .subscribe-form input {
-    width: 65%;
+    width: 90%;
     background: transparent;
     float: left;
     line-height: 40px;
@@ -136,9 +136,9 @@
     color: #555;
 }
 
-.subscribe-form button {
+.subscribe-btn {
     float: right;
-    width: 30%;
+    width: 10%;
     background-color: transparent;
     text-align: right;
     color: #111;
@@ -209,6 +209,13 @@
         -ms-flex: 0 0 16.666667%;
         flex: 0 0 19%;
         max-width: 19%;
+    }
+}
+
+@media (max-width: 991px) {
+    .footer-wrapper .social-share-container {
+        text-align: center !important;
+        margin: auto;
     }
 }
 

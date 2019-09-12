@@ -4,24 +4,45 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import { faStackOverflow, faGithub } from '@fortawesome/free-brands-svg-icons';
 import toastr from 'toastr';
+import fetch from 'isomorphic-unfetch';
 
+import LoadingSVG from './loadingSVG';
 import comingSoonToast from '../utils/comingSoonToast';
 import goToPage from '../utils/goToPage';
 import '../css/footer.css';
 
 function Footer() {
     let [email, setEmail] = useState('');
+    let [loading, setLoading] = useState(false);
 
-    const handleSubscribe = e => {
+    const handleSubscribe = async e => {
         e.preventDefault();
         const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
+        toastr.options = { positionClass: 'toast-bottom-right', };
         if (!emailRegex.test(email)) {
-            toastr.options = { positionClass: 'toast-bottom-right', }
             toastr.error('Please enter a valid email address!');
         } else {
-            toastr.options = { positionClass: 'toast-bottom-right', }
-            toastr.success('Get ready to receive awesome content!');
+            setLoading(true);
+            try {
+                const resp = await fetch('/api/subscribe', {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email })
+                });
+                const result = await resp.json();
+                setLoading(false);
+                if (result.error) {
+                    throw new Error(result.msg);
+                }
+                toastr.success('Get ready to receive awesome content!');
+                setEmail('');
+            } catch (err) {
+                toastr.error(err.message || 'Something went wrong! Please try again later.');
+            }
         }
     };
 
@@ -64,9 +85,13 @@ function Footer() {
                                 onChange={e => setEmail(e.target.value)}
                                 value={email}
                             />
-                            <button className='subscribe-bttn'>
-                                <FontAwesomeIcon icon={faArrowRight} />
-                            </button>
+                            {
+                                loading ?
+                                    <LoadingSVG className='subscribe-btn' width='20px' height='15px' /> :
+                                    <button className='subscribe-btn'>
+                                        <FontAwesomeIcon icon={faArrowRight} />
+                                    </button>
+                            }
                         </form>
                     </div>
                 </div>
