@@ -87,7 +87,10 @@ function Footer() {
                             />
                             {
                                 loading ?
-                                    <LoadingSVG className='subscribe-btn' width='20px' height='15px' /> :
+                                    <div className='subscribe-btn'>
+                                        <LoadingSVG width='20px' height='15px' />
+                                    </div>
+                                    :
                                     <button className='subscribe-btn'>
                                         <FontAwesomeIcon icon={faArrowRight} />
                                     </button>
