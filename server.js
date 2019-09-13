@@ -2,6 +2,7 @@ require('./config');
 
 const express = require('express');
 const next = require('next');
+const path = require('path');
 
 const logger = require('./logger');
 const serverMiddleware = require('./server-middleware');
@@ -35,11 +36,20 @@ app.prepare().then(() => {
 
     server.post('/api/subscribe', subscriberController);
 
+    server.get('/service-worker.js', (req, res) => {
+        res.sendFile(path.join(__dirname, '.next', 'service-worker.js'));
+    });
+
     server.all('*', (req, res) => {
         res.cookie('csrfToken', req.csrfToken ? req.csrfToken() : null, {
             sameSite: true,
             httpOnly: true
         });
+
+        if (req.path.startsWith('/workbox')) {
+            return res.sendFile(path.join(__dirname, '.next', req.path));
+        }
+        
         return handle(req, res);
     });
 
