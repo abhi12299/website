@@ -24,8 +24,6 @@ To run this locally, clone this repo and `cd` in the project directory
     </li>
 </ol>
 
-<hr />
-
 ## To analyse bundle sizes,
 For server,
 <pre>yarn run analyse-server</pre>
