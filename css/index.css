@@ -1,13 +1,13 @@
 /* FONTS */
 
 @font-face {
-    font-display: auto;
+    font-display: swap;
     font-family: PoppinsBold;
     src: url('/static/fonts/Poppins-Bold.ttf');
 }
 
 @font-face {
-    font-display: auto;
+    font-display: swap;
     font-family: Poppins;
     src: url('/static/fonts/Poppins-Regular.ttf');
 }
