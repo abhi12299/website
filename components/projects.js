@@ -10,9 +10,8 @@ function Projects() {
                 <h2 className='title'>My Projects</h2>
                 <div className='row justify-content-center projects-container'>
                     {
-                        myProjects.map((proj, i) => 
+                        myProjects.map(proj => 
                         <SingleProject 
-                            index={i}
                             project={proj}
                             key={proj.title} 
                         />)

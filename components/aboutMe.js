@@ -19,7 +19,7 @@ function AboutMe() {
                             <div className='experience'>
                                 <b>Work Experience</b>
                                 <ul>
-                                    <li>MERN Stack Developer @<a href='https://so.city' target='_blank'>SoDelhi</a></li>
+                                    <li>MERN Stack Developer @<a href='https://so.city' target='_blank' rel='noopener'>SoDelhi</a></li>
                                 </ul>
                             </div>
                             <hr className='sep' />

@@ -4,12 +4,9 @@ import PropTypes from 'prop-types';
 import '../css/singleProject.css';
 
 function SingleProject(props) {
-    const { project, index } = props;
+    const { project } = props;
 
     let className = 'col-lg-5 col-md-12 col-11 single-project';
-    // if ((index + 1) % 2 === 0) {
-    //     className += ' offset-lg-1 offset-md-1';
-    // }
 
     return (
         <div className={className}>
@@ -43,8 +40,7 @@ SingleProject.propTypes = {
             name: PropTypes.string.isRequired,
             url: PropTypes.string.isRequired
         })),
-    }),
-    index: PropTypes.number.isRequired,
+    })
 };
 
 export default SingleProject;
