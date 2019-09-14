@@ -9,7 +9,7 @@ module.exports = async (req, res, next) => {
         logger.info('IP address is: ' + IP);
 
         // gives null on non-existent key
-        const numAttempts = Number(await redisClient.getAsync(IP));
+        const numAttempts = Number(await redisClient.getAsync(IP)) || 0;
         if (numAttempts < MAX_ATTEMPTS) {
             logger.info(`${IP} has attempts ${numAttempts}..`);
             let TTL = await redisClient.ttlAsync(IP);
