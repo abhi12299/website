@@ -24,7 +24,7 @@ To run this locally, clone this repo and `cd` in the project directory
     </li>
     <li>
     Cluster with PM2
-    <pre>pm3 start process.json</pre>
+    <pre>pm2 start process.json</pre>
     </li>
 </ol>
 
