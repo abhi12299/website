@@ -11,12 +11,10 @@ const logger = createLogger({
     format.json()
   ),
   transports: [
-    //
     // - Write to all logs with level `info` and below to `quick-start-combined.log`.
     // - Write all logs error (and below) to `quick-start-error.log`.
-    //
-    new transports.File({ filename: 'website-error.log', level: 'error' }),
-    new transports.File({ filename: 'website-info.log' })
+    new transports.File({ filename: 'website-error.log', level: 'error', maxsize: 5242880 }),
+    new transports.File({ filename: 'website-info.log', maxsize: 5242880 })
   ]
 });
 
