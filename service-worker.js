@@ -3,11 +3,11 @@ self.addEventListener('activate', event => event.waitUntil(self.clients.claim())
 
 workbox.precaching.precacheAndRoute(self.__precacheManifest);
 
-// cache images
+// cache images/fonts
 workbox.routing.registerRoute(
-    /\.(?:png|gif|jpg|jpeg|webp|svg)$/,
+    /\.(?:png|gif|jpg|jpeg|webp|svg|ttf|woff)$/,
     new workbox.strategies.CacheFirst({
-        cacheName: 'images',
+        cacheName: 'assets',
         plugins: [
             new workbox.expiration.Plugin({
                 maxEntries: 60,
