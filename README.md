@@ -22,6 +22,10 @@ To run this locally, clone this repo and `cd` in the project directory
     Production server
     <pre>yarn start</pre>
     </li>
+    <li>
+    Cluster with PM2
+    <pre>pm3 start process.json</pre>
+    </li>
 </ol>
 
 ## To analyse bundle sizes,
