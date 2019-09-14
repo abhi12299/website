@@ -10,6 +10,7 @@ const mongoose = require('mongoose');
 const logger = require('./logger');
 const serverMiddleware = require('./server-middleware');
 const subscriberController = require('./controllers/subscribe.controller');
+const rateLimiter = require('./utils/rateLimiter');
 
 if (cluster.isMaster) {
     masterProcess();
@@ -57,7 +58,7 @@ function childProcess() {
         const server = express();
         serverMiddleware(server);
 
-        server.post('/api/subscribe', subscriberController);
+        server.post('/api/subscribe', rateLimiter, subscriberController);
 
         server.get('/service-worker.js', (req, res) => {
             res.sendFile(path.join(__dirname, '.next', 'service-worker.js'));
@@ -76,6 +77,16 @@ function childProcess() {
             return handle(req, res);
         });
 
+        server.use((err, req, res, next) => {
+            if (err.code === 'EBADCSRFTOKEN') {
+                logger.error('CSRF token mismatch', err);
+                return res.status(403).json({ error: true, msg: 'Something went wrong. Please refresh the page and try again.'});
+            } else if (err.code === 'THROTTLE') {
+                return res.status(429).json({ error: true, msg: 'We\'ve been receiving a lot of requests from you. Please try after sometime.' });
+            }
+            return next(err);
+        });
+
         server.listen(port, err => {
             if (err) throw err;
             console.log(`> Ready on http://localhost:${port}`);
@@ -83,8 +94,8 @@ function childProcess() {
     });
 }
 
-process.on('unhandledRejection', (reason, promise) => {
-    logger.error('Unhandled promise rejection:', reason + ':' + JSON.stringify(promise, null, 2));
+process.on('unhandledRejection', reason => {
+    logger.error('Unhandled promise rejection:', reason);
 });
 
 process.on('uncaughtException', err => {

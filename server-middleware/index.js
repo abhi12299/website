@@ -12,11 +12,4 @@ module.exports = server => {
         cookie: true,
         value: req => req.cookies.csrfToken
     }));
-
-    server.use(function (err, req, res, next) {
-        if (err.code !== 'EBADCSRFTOKEN') return next(err);
-
-        logger.error('CSRF token mismatch', err);
-        res.status(403);
-    });
 };

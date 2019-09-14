@@ -36,6 +36,7 @@
     "react": "16.9.0",
     "react-dom": "16.9.0",
     "react-transition-group": "^4.3.0",
+    "redis": "^2.8.0",
     "toastr": "^2.1.4",
     "winston": "^3.2.1"
   },
