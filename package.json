@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "node server.js",
     "build": "next build",
-    "start": "NODE_ENV=production node server.js",
+    "start": "cross-env NODE_ENV=production node server.js",
     "analyse-server": "BUNDLE_ANALYZE=server yarn build",
     "analyse-client": "BUNDLE_ANALYZE=browser yarn build"
   },
@@ -41,6 +41,7 @@
     "winston": "^3.2.1"
   },
   "devDependencies": {
-    "@zeit/next-bundle-analyzer": "^0.1.2"
+    "@zeit/next-bundle-analyzer": "^0.1.2",
+    "cross-env": "^5.2.1"
   }
 }
