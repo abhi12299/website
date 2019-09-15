@@ -6,18 +6,19 @@ import '../css/singleProject.css';
 function SingleProject(props) {
     const { project } = props;
 
-    let className = 'col-lg-5 col-md-12 col-11 single-project';
+    // col-lg-5
+    let className = 'col-lg-10 col-md-12 col-11 single-project';
 
     return (
         <div className={className}>
             <div className='project-heading'>
-                { project.title }
+                {project.title}
             </div>
             <hr className='sep' />
             <div className='project-links'>
                 <ul>
                     {
-                        project.links.map(l => 
+                        project.links.map(l =>
                             <li key={l.name}>
                                 <a target='_blank' rel='noopener' href={l.url}>{l.name}</a>
                             </li>
@@ -26,7 +27,7 @@ function SingleProject(props) {
                 </ul>
             </div>
             <div className='project-text'>
-                { project.description }
+                {project.description}
             </div>
         </div>
     );
