@@ -7,7 +7,10 @@ To run this locally, clone this repo and `cd` in the project directory
     <pre>echo "MONGO_URI=mongodb://localhost:27017/website
     PORT=3001
     REDIS_HOST='127.0.0.1'
-    REDIS_PORT=6379" > .env</pre>
+    REDIS_PORT=6379
+    OAUTH_CLIENT_ID='your-google-oauth-client-id'
+    CLIENT_SECRET='your-google-ouath-client-secret'
+    JWT_SECRET='your-jwt-secret'" > .env</pre>
     </li>
     <li>
     Install packages with
