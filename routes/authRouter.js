@@ -3,8 +3,6 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 
 const verifyUserToken = require('../utils/verifyUserToken');
-const logger = require('../logger');
-const Admin = require('../models/admin.model');
 
 const authRouter = Router();
 
