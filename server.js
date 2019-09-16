@@ -6,11 +6,13 @@ const express = require('express');
 const next = require('next');
 const path = require('path');
 const mongoose = require('mongoose');
+const passport = require('passport');
 
 const logger = require('./logger');
 const serverMiddleware = require('./server-middleware');
-const subscriberController = require('./controllers/subscribe.controller');
-const rateLimiter = require('./utils/rateLimiter');
+const auth = require('./auth');
+const apiRouter = require('./routes/apiRouter');
+const authRouter = require('./routes/authRouter');
 
 if (cluster.isMaster) {
     masterProcess();
@@ -58,7 +60,11 @@ function childProcess() {
         const server = express();
         serverMiddleware(server);
 
-        server.post('/api/subscribe', rateLimiter, subscriberController);
+        auth(passport);
+
+        server.use(passport.initialize());
+        server.use('/api', apiRouter);
+        server.use('/auth', authRouter);
 
         server.get('/service-worker.js', (req, res) => {
             res.sendFile(path.join(__dirname, '.next', 'service-worker.js'));
@@ -83,6 +89,11 @@ function childProcess() {
                 return res.status(403).json({ error: true, msg: 'Something went wrong. Please refresh the page and try again.'});
             } else if (err.code === 'THROTTLE') {
                 return res.status(429).json({ error: true, msg: 'We\'ve been receiving a lot of requests from you. Please try after sometime.' });
+            } else if (err.code === 'NOTADMIN') {
+                req.logout && req.logout();
+                res.cookie('notAdmin', 'notAdmin');
+                return res.redirect('/');
+                // return res.redirect('https://accounts.google.com/logout');
             }
             return next(err);
         });
