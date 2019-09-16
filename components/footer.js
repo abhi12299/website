@@ -7,7 +7,7 @@ import toastr from 'toastr';
 import fetch from 'isomorphic-unfetch';
 
 import LoadingSVG from './loadingSVG';
-import comingSoonToast from '../utils/comingSoonToast';
+import { comingSoonToast } from '../utils/toasts';
 import goToPage from '../utils/goToPage';
 import '../css/footer.css';
 
