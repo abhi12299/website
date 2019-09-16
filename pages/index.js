@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Head from 'next/head';
 
 import Preloader from '../components/preloader';
@@ -9,7 +9,17 @@ import TechStack from '../components/techStack';
 import Footer from '../components/footer';
 import Projects from '../components/projects';
 
-const Home = () => {
+import { getCookie, removeCookie } from '../utils/cookies';
+import { notAdminToast } from '../utils/toasts';
+
+const Home = props => {
+  useEffect(() => {
+    if (props.notAdminError) {
+      removeCookie('notAdmin');
+      notAdminToast();
+    }
+  });
+
   return (
     <div>
       <Head>
@@ -28,5 +38,10 @@ const Home = () => {
     </div>
   );
 };
+
+Home.getInitialProps = ctx => {
+  const notAdminError = getCookie('notAdmin', ctx.req);
+  return { notAdminError: !!notAdminError };
+}
 
 export default Home;
