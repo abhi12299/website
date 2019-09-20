@@ -10,13 +10,18 @@ import Footer from '../components/footer';
 import Projects from '../components/projects';
 
 import { getCookie, removeCookie } from '../utils/cookies';
-import { notAdminToast } from '../utils/toasts';
+import { notAdminToast, loggedOutToast } from '../utils/toasts';
 
 const Home = props => {
   useEffect(() => {
     if (props.notAdminError) {
       removeCookie('notAdmin');
-      notAdminToast();
+      setTimeout(() => notAdminToast(), 500);
+    }
+
+    if (typeof props.loggedOut !== 'undefined') {
+      removeCookie('loggedOut');
+      setTimeout(() => loggedOutToast(props.loggedOut), 500);
     }
   });
 
@@ -41,7 +46,8 @@ const Home = props => {
 
 Home.getInitialProps = ctx => {
   const notAdminError = getCookie('notAdmin', ctx.req);
-  return { notAdminError: !!notAdminError };
+  const loggedOut = getCookie('loggedOut', ctx.req);
+  return { notAdminError: !!notAdminError, loggedOut };
 }
 
 export default Home;
