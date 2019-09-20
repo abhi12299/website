@@ -23,20 +23,33 @@ authRouter.get('/redirect', passport.authenticate('google', {
     failureRedirect: '/'
 }), (req, res) => {
     const token = jwt.sign(req.user.token, process.env.JWT_SECRET);
-    res.cookie('token', token, { httpOnly: true })
+    res.cookie('token', token, { httpOnly: true });
     res.redirect('/dashboard');
 });
 
-authRouter.get('/logout', (req, res) => {
-    req.logout();
-    res.clearCookie('token');
+authRouter.get('/logout', async (req, res) => {
+    if ('token' in req.cookies) {
+        await req.logout();
+        res.clearCookie('token');
+        res.cookie('loggedOut', 'true');
+        res.redirect('/');
+        return;
+    }
     res.redirect('/');
 });
 
-authRouter.post('/verify', async (req, res) => {
-    const { token } = req.body;
-    const valid = await verifyUserToken(token);
-    return res.json({ valid });
+authRouter.get('/verify', async (req, res) => {
+    let { token } = req.cookies;
+    const bearer = req.headers['authorization'];
+    if (bearer) {
+        token = bearer.split(' ')[1];
+    }
+    console.log('token is:', token);
+    if (token) {
+        const valid = await verifyUserToken(token);
+        return res.json({ valid });
+    }
+    return res.json({ valid: false });
 });
 
 module.exports = authRouter;
