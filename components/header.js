@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { connect } from 'react-redux';
 import $ from 'jquery';
 import goToPage from '../utils/goToPage';
 
@@ -6,7 +7,7 @@ import '../css/header.css';
 
 // used to differentiate b/w diff states of header
 let isMobileView = false;
-const Header = () => {
+const Header = props => {
     let [showMenu, toggleMenu] = useState(false);
     const header = useRef();
     // const cvDownloadElem = useRef();
@@ -106,13 +107,17 @@ const Header = () => {
                             </ul>
                         </nav>
                     </div>
-                    {/* <div className='col-lg-2 col-md-4 text-right'>
-                        <a className='search-icon' onClick={() => console.log('click')}><img className='search-area' src='../static/icons8-search-50.png' /></a>
-                    </div> */}
+                    <div className='col-lg-2 col-md-4 text-right'>
+                        <a className='search-icon' onClick={() => console.log('click')}>
+                            <img className='search-area' src='../static/png/icons8-search-50.png' />
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
     );
 }
 
-export default Header;
+const mapStateToProps = state => state.auth;
+
+export default connect(mapStateToProps, null)(Header);
