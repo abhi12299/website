@@ -8,7 +8,7 @@ import Footer from '../components/footer';
 import '../css/error.css';
 
 function Error(props) {
-    let { statusCode } = props;
+    let { statusCode = 404 } = props;
     let errorText = '';
 
     switch (statusCode) {
@@ -19,9 +19,8 @@ function Error(props) {
             break;
 
         default: errorText = 'Oops! Something went wrong.';
-            // just to show something to user
-            statusCode = 404;
     }
+    errorText = props.errorText || errorText;
 
     return (
         <div>
@@ -54,13 +53,14 @@ function Error(props) {
     );
 }
 
-Error.getInitialProps = ({ res, err }) => {
-    const statusCode = res ? res.statusCode : err ? err.statusCode : null;
-    return { statusCode };
-}
+// Error.getInitialProps = ({ res, err }) => {
+//     const statusCode = res ? res.statusCode : err ? err.statusCode : null;
+//     return { statusCode };
+// }
 
 Error.proptypes = {
-    statusCode: PropTypes.number.isRequired
+    statusCode: PropTypes.number.isRequired,
+    errorText: PropTypes.string
 };
 
 export default Error;
