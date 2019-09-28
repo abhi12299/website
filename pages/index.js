@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import Head from 'next/head';
+import { connect } from 'react-redux';
 
 import Preloader from '../components/preloader';
 import IntroHeader from '../components/introHeader';
@@ -9,8 +10,10 @@ import TechStack from '../components/techStack';
 import Footer from '../components/footer';
 import Projects from '../components/projects';
 
+import actions from '../redux/actions';
 import { getCookie, removeCookie } from '../utils/cookies';
 import { notAdminToast, loggedOutToast } from '../utils/toasts';
+import AdminSidebar from '../components/adminSidebar';
 
 const Home = props => {
   useEffect(() => {
@@ -25,6 +28,8 @@ const Home = props => {
     }
   });
 
+  console.log('props are:', props);
+
   return (
     <div>
       <Head>
@@ -36,6 +41,7 @@ const Home = props => {
       {/* position relative needed for jquery scroll */}
       <div className='main-body-content' style={{maxWidth: '100%', position: 'relative'}}>
         <AboutMe />
+        { props.auth.admin && <AdminSidebar /> }
         <TechStack />
         <Projects />
         <Footer />
@@ -44,10 +50,12 @@ const Home = props => {
   );
 };
 
-Home.getInitialProps = ctx => {
+Home.getInitialProps = async ctx => {
   const notAdminError = getCookie('notAdmin', ctx.req);
   const loggedOut = getCookie('loggedOut', ctx.req);
+  await ctx.store.dispatch(actions.authActions.authenticate(ctx.req));
+
   return { notAdminError: !!notAdminError, loggedOut };
 }
 
-export default Home;
+export default connect(state => state)(Home);

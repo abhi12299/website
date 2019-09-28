@@ -377,6 +377,10 @@ blockquote p {
     left: 0;
 }
 
+.button-4:focus .eff-4 {
+    left: 0;
+}
+
 .button-4:hover a {
     color: #fff;
 }

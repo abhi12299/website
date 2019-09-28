@@ -1,0 +1,62 @@
+@media (min-width: 767px) {
+    #adminSidebar .links {
+        transition: 0.3s;
+    }
+    #adminSidebar .links:hover {
+        right: -35px;
+        color: white;
+    }
+}
+
+#adminSidebar .links:hover, #adminSidebar .links:active {
+    color: black !important;
+}
+
+#adminSidebar .links {
+    position: fixed;
+    z-index: 1000;
+    right: -132px;
+    text-align: left;
+    padding-left: 15px;
+    border-radius: 20px;
+    background-color: white;
+}
+
+
+#adminSidebar .opened {
+    animation: slideLeft 0.3s forwards;
+}
+
+#adminSidebar .opened .eff-4 {
+    left: 0;
+}
+
+#adminSidebar .closed .eff-4{
+    left: -180px;
+}
+
+#adminSidebar .closed {
+    animation: slideRight 0.3s ease-in-out;
+}
+
+@keyframes slideLeft {
+    100% {
+        right: -35px;
+        color: white;
+    }
+}
+
+@keyframes slideRight {
+    100% {
+        right: -132px;
+        background-color: white;
+    }
+}
+
+#adminSidebar .adminLogout {
+    bottom: 20px;
+}
+
+#adminSidebar .adminDashboard {
+    bottom: 80px;
+}
