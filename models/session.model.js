@@ -1,5 +1,7 @@
 const uuid = require('uuid/v4');
 const mongoose = require('mongoose');
+
+const errorCodes = require('../constants/errorCodes');
 const logger = require('../logger');
 
 const Schema = mongoose.Schema;
@@ -29,13 +31,21 @@ SessionSchema.statics = {
     
             if (!session) {
                 const err = new Error();
-                err.code = 'SESSIONNOTFOUND'
+                err.code = errorCodes[1];
+                err.data = {
+                    email,
+                    sessionId: identifier
+                };
                 throw err;
             }
             
             if (session.validity < Date.now()) {
                 const err = new Error();
-                err.code = 'SESSIONTIMEOUT'
+                err.code = errorCodes[2];
+                err.data = {
+                    email,
+                    sessionId: identifier
+                };
                 await this.deleteOne({ _id: session._id });
                 throw err;
             }
@@ -45,12 +55,14 @@ SessionSchema.statics = {
                 const newSession = await this.findOneAndUpdate({ _id: session._id }, {
                     validity: session.validity + TEN_MINS_IN_MS
                 });
-                logger.info('Updating user session by 10mins' + newSession);
+                logger.info('Updating user session by 10mins:' + newSession);
             }
             return { sessionValid: true };
         } catch (err) {
             logger.error('Verify user session failed with error:', err);
-            return { sessionValid: false };
+            return { sessionValid: false, error: {
+                code: err.code, data: err.data
+            }};
         }
     },
     async createUserSession(email) {

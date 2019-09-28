@@ -10,7 +10,10 @@ To run this locally, clone this repo and `cd` in the project directory
     REDIS_PORT=6379
     OAUTH_CLIENT_ID='your-google-oauth-client-id'
     CLIENT_SECRET='your-google-ouath-client-secret'
-    JWT_SECRET='your-jwt-secret'" > .env</pre>
+    JWT_SECRET='your-jwt-secret'
+    GMAIL_USER='gmail-email'
+    GMAIL_PASS='gmail-pass'" > .env</pre>
+    <small>(* The server uses NodeMailer to send emails to admins!)</small>
     </li>
     <li>
     Install packages with

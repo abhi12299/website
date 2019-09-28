@@ -2,18 +2,21 @@ const Router = require('express').Router;
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 
-const logger = require('../logger');
 const Session = require('../models/session.model');
 const verifyUserToken = require('../utils/verifyUserToken');
+const emailHelperFunction = require('../utils/emailHelper');
 
 const authRouter = Router();
 
 authRouter.get('/login', async (req, res, next) => {
     const { token } = req.cookies;
     if (token) {
-        const { valid } = await verifyUserToken(token);
+        const { valid, error } = await verifyUserToken(token);
         if (valid) {
             return res.redirect('/dashboard');
+        } else {
+            // send email to admins
+            emailHelperFunction(error.code, error.data, req);
         }
     }
     next();
@@ -26,7 +29,7 @@ authRouter.get('/redirect', passport.authenticate('google', {
 }), async (req, res) => {
     const sessionId = await Session.createUserSession(req.user.email);
     const token = jwt.sign({
-        token: req.user.token,
+        token: req.user._id,
         sessionId
     }, process.env.JWT_SECRET);
     res.cookie('token', token, { httpOnly: true });
@@ -41,43 +44,34 @@ authRouter.get('/logout', async (req, res) => {
             res.clearCookie('token');
             res.cookie('loggedOut', 'true');
 
-            const { sessionId } = await jwt.verify(token, process.env.JWT_SECRET);
+            const { sessionId } = jwt.decode(token, process.env.JWT_SECRET);
             await Session.destroyUserSession(sessionId);
 
             res.redirect('/');
             return;
         }
-    } catch (err) {}
+    } catch (err) { }
     res.redirect('/');
 });
 
 authRouter.get('/verify', async (req, res) => {
-    try {
-        let { token } = req.cookies;
-        
-        const bearer = req.headers['authorization'];
-        if (bearer && !token) {
-            token = bearer.split(' ')[1];
-        }
+    let { token } = req.cookies;
 
-        if (!token) {
-            const err = new Error();
-            err.code = 'TOKENNOTFOUND';
-            throw err;
-        }
-        
-        const { valid } = await verifyUserToken(token);
-        if (!valid) {
-            const err = new Error();
-            err.code = 'TOKENINVALID';
-            throw err;
-        }
-
-        return res.json({ valid: true });
-    } catch(err) {
-        logger.error('User verification failed with error:', err);
-        return res.json({ valid: false });
+    const bearer = req.headers['authorization'];
+    if (bearer && !token) {
+        token = bearer.split(' ')[1];
     }
+
+    if (token) {
+        const { valid, error } = await verifyUserToken(token);
+        if (valid) {
+            return res.json({ valid: true });
+        } else {
+            // send email to admins
+            emailHelperFunction(error.code, error.data, req);
+        }
+    }
+    return res.json({ valid: false });
 });
 
 module.exports = authRouter;

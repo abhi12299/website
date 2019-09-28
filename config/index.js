@@ -12,7 +12,9 @@ const envVarsSchema = Joi.object({
     REDIS_PORT: Joi.number().default(6379),
     OAUTH_CLIENT_ID: Joi.string().required(),
     CLIENT_SECRET: Joi.string().required(),
-    JWT_SECRET: Joi.string().required()
+    JWT_SECRET: Joi.string().required(),
+    GMAIL_USER: Joi.string().required(),
+    GMAIL_PASS: Joi.string().required()
 }).unknown().required();
 
 const { error } = Joi.validate(process.env, envVarsSchema);
