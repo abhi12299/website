@@ -38,7 +38,7 @@ module.exports = (passport) => {
                         $set: { token }
                     });
                 }
-                return done(null, { token });
+                return done(null, { token, email });
             } catch (error) {
                 logger.error(`Admin access denied, email was: ${email}`, error);
                 const err = new Error();
