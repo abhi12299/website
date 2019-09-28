@@ -1,14 +1,18 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Head from 'next/head';
-import { connect } from 'react-redux';
 
+import withAuth from '../components/withAuth';
 import Preloader from '../components/preloader';
 import Header from '../components/header';
 
 const Dashboard = props => {
-  useEffect(() => {
-      console.log(props);
-  });
+  console.log(props);
+
+  const dashboardView = (
+    <div>
+      Dashboard here!
+    </div>
+  );
 
   return (
     <div>
@@ -19,10 +23,10 @@ const Dashboard = props => {
       <Header />
       {/* position relative needed for jquery scroll */}
       <div className='main-body-content' style={{maxWidth: '100%', position: 'relative'}}>
-          Dashboard here!
+          { dashboardView }
       </div>
     </div>
   );
 };
 
-export default connect(state => state)(Dashboard);
+export default withAuth(Dashboard);

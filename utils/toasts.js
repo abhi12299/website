@@ -1,4 +1,5 @@
 import toastr from 'toastr';
+import Router from 'next/router';
 
 export const comingSoonToast = () => {
     toastr.options = { positionClass: 'toast-bottom-right' };
@@ -17,4 +18,12 @@ export const loggedOutToast = status => {
     } else {
         toastr.error('You aren\'t logged in!');
     }
+}
+
+export const forceLogoutToast = text => {
+    toastr.options = {
+        positionClass: 'toast-bottom-center',
+        onHidden: () => Router.push('/auth/logout')
+    };
+    toastr.error(text);
 }
