@@ -13,6 +13,7 @@ const serverMiddleware = require('./server-middleware');
 const auth = require('./auth');
 const apiRouter = require('./routes/apiRouter');
 const authRouter = require('./routes/authRouter');
+const errorCodes = require('./constants/errorCodes');
 
 if (cluster.isMaster) {
     masterProcess();
@@ -84,12 +85,12 @@ function childProcess() {
         });
 
         server.use((err, req, res, next) => {
-            if (err.code === 'EBADCSRFTOKEN') {
+            if (err.code === errorCodes[4]) {
                 logger.error('CSRF token mismatch', err);
                 return res.status(403).json({ error: true, msg: 'Something went wrong. Please refresh the page and try again.'});
-            } else if (err.code === 'THROTTLE') {
+            } else if (err.code === errorCodes[3]) {
                 return res.status(429).json({ error: true, msg: 'We\'ve been receiving a lot of requests from you. Please try after sometime.' });
-            } else if (err.code === 'NOTADMIN') {
+            } else if (err.code === errorCodes[0]) {
                 req.logout && req.logout();
                 res.cookie('notAdmin', 'notAdmin');
                 return res.redirect('/');

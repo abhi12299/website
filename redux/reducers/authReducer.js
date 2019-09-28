@@ -2,7 +2,10 @@ import { LOADING, LOGIN, ERROR } from '../types';
 
 const initialState = {
   admin: null,
-  loading: false
+  loading: false,
+  initiateForceLogout: false,
+  errorMessage: '',
+  error: false
 };
 
 export default (state = initialState, action) => {
@@ -12,7 +15,7 @@ export default (state = initialState, action) => {
     case LOGIN:
       return Object.assign({}, state, { admin: action.payload, loading: false });
     case ERROR:
-      return Object.assign({}, state, { loading: false, errorMessage: action.payload });
+      return Object.assign({}, state, { error: true, loading: false, errorMessage: action.payload, initiateForceLogout: action.initiateForceLogout });
     default:
       return state;
   }
