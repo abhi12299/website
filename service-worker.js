@@ -1,15 +1,15 @@
-self.addEventListener('install', event => event.waitUntil(self.skipWaiting()));
-self.addEventListener('activate', event => event.waitUntil(self.clients.claim()));
-
 workbox.setConfig({
     debug: false
 });
+
+workbox.core.skipWaiting();
+workbox.core.clientsClaim();
 
 workbox.precaching.precacheAndRoute(self.__precacheManifest);
 
 // cache images/fonts
 workbox.routing.registerRoute(
-    /\.(?:png|gif|jpg|jpeg|webp|svg|ttf|woff)$/,
+    /^https?\.(png|gif|jpg|jpeg|webp|svg|ttf|woff)$/,
     new workbox.strategies.CacheFirst({
         cacheName: 'assets',
         plugins: [
@@ -21,10 +21,3 @@ workbox.routing.registerRoute(
     })
 );
 
-// for css/js use cache first then network
-workbox.routing.registerRoute(
-    /\.(?:js|css)$/,
-    new workbox.strategies.StaleWhileRevalidate({
-        cacheName: 'static-resources',
-    })
-);
