@@ -9,7 +9,7 @@ workbox.precaching.precacheAndRoute(self.__precacheManifest);
 
 // cache images/fonts
 workbox.routing.registerRoute(
-    /^https?\.(png|gif|jpg|jpeg|webp|svg|ttf|woff)$/,
+    /^https?.*\.(png|gif|jpg|jpeg|webp|svg|ttf|woff)$/,
     new workbox.strategies.CacheFirst({
         cacheName: 'assets',
         plugins: [
