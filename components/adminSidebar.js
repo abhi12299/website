@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
-import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
+import { connect } from 'react-redux';
+import Router from 'next/router';
 
+import actions from '../redux/actions';
 import '../css/adminSidebar.css';
 
-function AdminSidebar() {
+function AdminSidebar(props) {
     useEffect(() => {
         document.addEventListener('touchstart', handleTouchStart, false);
         document.addEventListener('touchmove', handleTouchMove, false);
@@ -56,7 +58,7 @@ function AdminSidebar() {
 
     return (
         <div id='adminSidebar'>
-            <Link href='/dashboard'>
+            <div onClick={() => Router.push('/dashboard')}>
                 <div className='button-4 links adminDashboard'>
                     <div className='eff-4' />
                     <a>
@@ -64,8 +66,8 @@ function AdminSidebar() {
                         Dashboard
                     </a>
                 </div>
-            </Link>
-            <Link href='/auth/logout'>
+            </div>
+            <div onClick={() => props.dispatch(actions.authActions.logout())}>
                 <div className='button-4 links adminLogout'>
                     <div className='eff-4' />
                     <a>
@@ -73,9 +75,9 @@ function AdminSidebar() {
                         Logout
                     </a>
                 </div>
-            </Link>
+            </div>
         </div>
     );
 }
 
-export default AdminSidebar;
+export default connect(state => state)(AdminSidebar);

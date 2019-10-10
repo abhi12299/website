@@ -8,8 +8,6 @@ import Footer from '../components/footer';
 import AdminSidebar from '../components/adminSidebar';
 
 const Dashboard = props => {
-  console.log(props);
-
   const dashboardView = (
     <div>
       Dashboard here!
