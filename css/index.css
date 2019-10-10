@@ -3,13 +3,13 @@
 @font-face {
     font-display: swap;
     font-family: PoppinsBold;
-    src: url('/static/fonts/Poppins-Bold.ttf');
+    src: url('https://res.cloudinary.com/dmzk3uux3/raw/upload/v1570728212/portfolio/fonts/Poppins-Bold_xwckcc.ttf');
 }
 
 @font-face {
     font-display: swap;
     font-family: Poppins;
-    src: url('/static/fonts/Poppins-Regular.ttf');
+    src: url('https://res.cloudinary.com/dmzk3uux3/raw/upload/v1570728212/portfolio/fonts/Poppins-Regular_vyecsd.ttf');
 }
 
 html, body {
@@ -283,13 +283,13 @@ blockquote p {
 }
 
 .bg-pattern {
-    background-image: url('/static/png/bg-pattern-1.png');
+    background-image: url('https://res.cloudinary.com/dmzk3uux3/image/upload/fl_progressive/v1570726313/portfolio/png/bg-pattern-1_amob1k.png');
     background-repeat: no-repeat;
     background-size: cover;
 }
 
 .bg-pattern-2 {
-    background-image: url('/static/png/bg-pattern-2.jpg');
+    background-image: url('https://res.cloudinary.com/dmzk3uux3/image/upload/fl_progressive/v1570726313/portfolio/png/bg-pattern-2_awtrmu.jpg');
     background-repeat: repeat;
     background-size: cover;
 }

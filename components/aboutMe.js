@@ -30,7 +30,7 @@ function AboutMe() {
                         </div>
                     </div>
                     <div className='d-none d-lg-block d-md-block col-lg-5 col-md-5 offset-md-1 offset-lg-1 text-center my-auto'>
-                        <img src='../static/png/about-me.png' alt='banner-right' className='banner-right-about-me' />
+                        <img crossOrigin='anonymous' src='https://res.cloudinary.com/dmzk3uux3/image/upload/fl_progressive/v1570726313/portfolio/png/about-me_up3a9a.png' alt='banner-right' className='banner-right-about-me' />
                     </div>
                 </div>
             </div>

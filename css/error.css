@@ -1,5 +1,5 @@
 .pad-75 {padding-top: 75px; padding-bottom: 75px; }
-.notfound-wrapper {background-image: url('/static/png/bg-pattern-2.jpg'); background-repeat: repeat; }
+.notfound-wrapper {background-image: url('https://res.cloudinary.com/dmzk3uux3/image/upload/fl_progressive/v1570726313/portfolio/png/bg-pattern-2_awtrmu.jpg'); background-repeat: repeat; }
 .notfound-wrapper h1 {font-size: 180px; color: #999; letter-spacing: 5px; font-weight: bold; line-height: 140px; margin-bottom: 20px;  }
 .notfound-wrapper p {color: #111; font-size: 22px; font-weight: 400; margin-bottom: 30px; display: inline-block;  }
 

@@ -15,22 +15,22 @@ class MyDocument extends Document {
                         name='viewport'
                         content='width=device-width, initial-scale=1'
                     />
-                    <link rel='apple-touch-icon' sizes='57x57' href='../static/favicon/apple-icon-57x57.png' />
-                    <link rel='apple-touch-icon' sizes='60x60' href='../static/favicon/apple-icon-60x60.png' />
-                    <link rel='apple-touch-icon' sizes='72x72' href='../static/favicon/apple-icon-72x72.png' />
-                    <link rel='apple-touch-icon' sizes='76x76' href='../static/favicon/apple-icon-76x76.png' />
-                    <link rel='apple-touch-icon' sizes='114x114' href='../static/favicon/apple-icon-114x114.png' />
-                    <link rel='apple-touch-icon' sizes='120x120' href='../static/favicon/apple-icon-120x120.png' />
-                    <link rel='apple-touch-icon' sizes='144x144' href='../static/favicon/apple-icon-144x144.png' />
-                    <link rel='apple-touch-icon' sizes='152x152' href='../static/favicon/apple-icon-152x152.png' />
-                    <link rel='apple-touch-icon' sizes='180x180' href='../static/favicon/apple-icon-180x180.png' />
-                    <link rel='icon' type='image/png' sizes='192x192' href='../static/favicon/android-icon-192x192.png' />
-                    <link rel='icon' type='image/png' sizes='32x32' href='../static/favicon/favicon-32x32.png' />
-                    <link rel='icon' type='image/png' sizes='96x96' href='../static/favicon/favicon-96x96.png' />
-                    <link rel='icon' type='image/png' sizes='16x16' href='../static/favicon/favicon-16x16.png' />
-                    <link rel='manifest' href='../static/favicon/manifest.json' />
+                    <link crossOrigin='anonymous' rel='apple-touch-icon' sizes='57x57' href='https://res.cloudinary.com/dmzk3uux3/image/upload/fl_progressive/v1570727631/portfolio/favicon/apple-icon-57x57_ocno0r.png' />
+                    <link crossOrigin='anonymous' rel='apple-touch-icon' sizes='60x60' href='https://res.cloudinary.com/dmzk3uux3/image/upload/fl_progressive/v1570727631/portfolio/favicon/apple-icon-60x60_tmlaan.png' />
+                    <link crossOrigin='anonymous' rel='apple-touch-icon' sizes='72x72' href='https://res.cloudinary.com/dmzk3uux3/image/upload/fl_progressive/v1570727631/portfolio/favicon/apple-icon-72x72_lolczk.png' />
+                    <link crossOrigin='anonymous' rel='apple-touch-icon' sizes='76x76' href='https://res.cloudinary.com/dmzk3uux3/image/upload/fl_progressive/v1570727631/portfolio/favicon/apple-icon-76x76_dpxrkd.png' />
+                    <link crossOrigin='anonymous' rel='apple-touch-icon' sizes='114x114' href='https://res.cloudinary.com/dmzk3uux3/image/upload/fl_progressive/v1570727631/portfolio/favicon/apple-icon-114x114_kzbhil.png' />
+                    <link crossOrigin='anonymous' rel='apple-touch-icon' sizes='120x120' href='https://res.cloudinary.com/dmzk3uux3/image/upload/fl_progressive/v1570727631/portfolio/favicon/apple-icon-120x120_euveav.png' />
+                    <link crossOrigin='anonymous' rel='apple-touch-icon' sizes='144x144' href='https://res.cloudinary.com/dmzk3uux3/image/upload/fl_progressive/v1570727630/portfolio/favicon/ms-icon-144x144_x7fgjz.png' />
+                    <link crossOrigin='anonymous' rel='apple-touch-icon' sizes='152x152' href='https://res.cloudinary.com/dmzk3uux3/image/upload/fl_progressive/v1570727631/portfolio/favicon/apple-icon-152x152_stgkbj.png' />
+                    <link crossOrigin='anonymous' rel='apple-touch-icon' sizes='180x180' href='https://res.cloudinary.com/dmzk3uux3/image/upload/fl_progressive/v1570727631/portfolio/favicon/apple-icon-180x180_saos91.png' />
+                    <link crossOrigin='anonymous' rel='icon' type='image/png' sizes='192x192' href='https://res.cloudinary.com/dmzk3uux3/image/upload/fl_progressive/v1570727632/portfolio/favicon/android-icon-192x192_dwhykb.png' />
+                    <link crossOrigin='anonymous' rel='icon' type='image/png' sizes='32x32' href='https://res.cloudinary.com/dmzk3uux3/image/upload/v1570727630/portfolio/favicon/favicon-32x32_q88vxt.png' />
+                    <link crossOrigin='anonymous' rel='icon' type='image/png' sizes='96x96' href='https://res.cloudinary.com/dmzk3uux3/image/upload/fl_progressive/v1570727630/portfolio/favicon/favicon-96x96_eh6cm6.png' />
+                    <link crossOrigin='anonymous' rel='icon' type='image/png' sizes='16x16' href='https://res.cloudinary.com/dmzk3uux3/image/upload/fl_progressive/v1570727630/portfolio/favicon/favicon-16x16_hsfzpc.png' />
+                    <link crossOrigin='anonymous' rel='manifest' href='https://res.cloudinary.com/dmzk3uux3/raw/upload/v1570727632/portfolio/favicon/manifest_phvyhd.json' />
                     <meta name='msapplication-TileColor' content='#ffffff' />
-                    <meta name='msapplication-TileImage' content='../static/favicon/ms-icon-144x144.png' />
+                    <meta crossOrigin='anonymous' name='msapplication-TileImage' content='https://res.cloudinary.com/dmzk3uux3/image/upload/fl_progressive/v1570727630/portfolio/favicon/ms-icon-144x144_x7fgjz.png' />
                     <meta name='theme-color' content='#ffffff' />
                     <meta name='Description' content='Abhishek Mehandiratta Portfolio' />
                     <link type='stylesheet' href='../node_modules/font-awesome/css/font-awesome.css'/>

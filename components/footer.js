@@ -52,7 +52,7 @@ function Footer() {
                 <div className='row'>
                     <div className='col-lg-3 col-md-4 col-12 widget'>
                         <a className='logo' onClick={() => goToPage('/')}>
-                            <img src='../static/png/logo.png' alt='logo' />
+                            <img crossOrigin='anonymous' src='https://res.cloudinary.com/dmzk3uux3/image/upload/fl_progressive/v1570726311/portfolio/png/logo_nydoag.png' alt='logo' />
                         </a>
                     </div>
                     <div className='col-lg-3 col-md-4 col-sm-5 col-5 widget footer-link-list-1'>

@@ -79,7 +79,7 @@ const Header = props => {
                 <div className='row'>
                     <div className='col-lg-2 col-md-12 text-left'>
                         <a className='logo' onClick={() => goToPage('/')}>
-                            <img src='../static/png/logo.png' alt='logo' />
+                            <img crossOrigin='anonymous' src='https://res.cloudinary.com/dmzk3uux3/image/upload/fl_progressive/v1570726311/portfolio/png/logo_nydoag.png' alt='logo' />
                         </a>
                         <a className={'menu-click' + (showMenu ? ' open' : '')} onClick={handleMenuToggle}><span></span><span></span><span></span></a>
                     </div>
@@ -109,7 +109,7 @@ const Header = props => {
                     </div>
                     <div className='col-lg-2 col-md-4 text-right'>
                         <a className='search-icon' onClick={() => console.log('click')}>
-                            <img className='search-area' src='../static/png/icons8-search-50.png' />
+                            <img crossOrigin='anonymous' className='search-area' src='https://res.cloudinary.com/dmzk3uux3/image/upload/fl_progressive/v1570726312/portfolio/png/icons8-search-50_gyptxy.png' />
                         </a>
                     </div>
                 </div>

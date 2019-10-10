@@ -12,7 +12,7 @@ function IntroHeader() {
 				<div className="row">
 					<div className="col-xl-5 col-md-6 offset-xl-1 text-left">
 						<div className='img-placeholder'>
-							<img src="../static/png/400.png" alt="avatar" className="avatar-img" />
+							<img crossOrigin='anonymous' src="https://res.cloudinary.com/dmzk3uux3/image/upload/fl_progressive/v1570726313/portfolio/png/400_eimzgx.png" alt="avatar" className="avatar-img" />
 						</div>
 					</div>
 					<div className="col-xl-5 col-md-6 text-left">
