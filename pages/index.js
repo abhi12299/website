@@ -9,26 +9,29 @@ import AboutMe from '../components/aboutMe';
 import TechStack from '../components/techStack';
 import Footer from '../components/footer';
 import Projects from '../components/projects';
+import FullScreenLoader from '../components/fullScreenLoader';
+import AdminSidebar from '../components/adminSidebar';
 
 import actions from '../redux/actions';
 import { getCookie, removeCookie } from '../utils/cookies';
-import { notAdminToast, loggedOutToast } from '../utils/toasts';
-import AdminSidebar from '../components/adminSidebar';
+import { notAdminToast } from '../utils/toasts';
 
 const Home = props => {
   useEffect(() => {
+    if (props.auth.initiateForceLogout) {
+      props.dispatch(actions.authActions.logout());
+      return;
+    }
+
     if (props.notAdminError) {
       removeCookie('notAdmin');
       setTimeout(() => notAdminToast(), 500);
     }
+  }, []);
 
-    if (typeof props.loggedOut !== 'undefined') {
-      removeCookie('loggedOut');
-      setTimeout(() => loggedOutToast(props.loggedOut), 500);
-    }
-  });
-
-  console.log('props are:', props);
+  if (props.auth.loading) {
+    return <FullScreenLoader />;
+  }
 
   return (
     <div>
@@ -52,10 +55,9 @@ const Home = props => {
 
 Home.getInitialProps = async ctx => {
   const notAdminError = getCookie('notAdmin', ctx.req);
-  const loggedOut = getCookie('loggedOut', ctx.req);
   await ctx.store.dispatch(actions.authActions.authenticate(ctx.req));
 
-  return { notAdminError: !!notAdminError, loggedOut };
+  return { notAdminError: !!notAdminError };
 }
 
 export default connect(state => state)(Home);

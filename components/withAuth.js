@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Router from 'next/router';
 
 import Error from '../pages/_error';
 import actions from '../redux/actions';
 import { forceLogoutToast } from '../utils/toasts';
-import LoadingSVG from './loadingSVG';
+import FullScreenLoader from './fullScreenLoader';
 
 export default function(WrappedComponent) {
     class WithAuth extends Component {
@@ -27,21 +28,21 @@ export default function(WrappedComponent) {
             const { admin, error, errorMessage } = this.props.auth;
 
             if (this.state.forceLogout) {
-                forceLogoutToast(errorMessage);
+                this.setState({ forceLogout: false }, () => {
+                    forceLogoutToast(errorMessage).then(() => {
+                        Router.push('/');
+                    });
+                });
             }
 
             if (admin) {
                 return <WrappedComponent {...this.props} />
             } else if (error) {
                 return (
-                    <Error statusCode={400} errorText='Awwww Snap!' />
+                    <Error statusCode={400} errorText={errorMessage || 'Awwww Snap!'} />
                 );
             }
-            return (
-                <div className='d-flex flex-column align-items-center' style={{marginTop: '40vh'}}>
-                    <LoadingSVG text='Hang on!' width='80px' height='80px' />
-                </div>
-            );
+            return <FullScreenLoader />;
         }
     }
     return connect(state => state)(WithAuth);

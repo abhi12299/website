@@ -37,21 +37,18 @@ authRouter.get('/redirect', passport.authenticate('google', {
 });
 
 authRouter.get('/logout', async (req, res) => {
+    res.clearCookie('token');
     try {
         const { token } = req.cookies;
         if (token) {
             await req.logout();
-            res.clearCookie('token');
-            res.cookie('loggedOut', 'true');
 
             const { sessionId } = jwt.decode(token, process.env.JWT_SECRET);
             await Session.destroyUserSession(sessionId);
-
-            res.redirect('/');
-            return;
+            return res.json({ loggedOut: true });
         }
     } catch (err) { }
-    res.redirect('/');
+    res.json({});
 });
 
 authRouter.get('/verify', async (req, res) => {
@@ -61,17 +58,18 @@ authRouter.get('/verify', async (req, res) => {
     if (bearer && !token) {
         token = bearer.split(' ')[1];
     }
-
-    if (token) {
-        const { valid, error } = await verifyUserToken(token);
-        if (valid) {
-            return res.json({ valid: true });
-        } else {
-            // send email to admins
-            emailHelperFunction(error.code, error.data, req);
-        }
+    if (!token) {
+        return res.json({ valid: false, emptyToken: true });
     }
-    return res.json({ valid: false });
+
+    const { valid, error } = await verifyUserToken(token);
+    if (valid) {
+        return res.json({ valid: true });
+    } else {
+        // send email to admins
+        emailHelperFunction(error.code, error.data, req);
+        return res.json({ valid: false, emptyToken: false });
+    }
 });
 
 module.exports = authRouter;

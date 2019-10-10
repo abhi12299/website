@@ -1,11 +1,12 @@
-import { LOADING, LOGIN, ERROR } from '../types';
+import { LOADING, LOGIN, ERROR, /*RESET,*/ LOGOUT } from '../types';
 
 const initialState = {
   admin: null,
   loading: false,
   initiateForceLogout: false,
   errorMessage: '',
-  error: false
+  error: false,
+  loggedOut: null
 };
 
 export default (state = initialState, action) => {
@@ -14,8 +15,12 @@ export default (state = initialState, action) => {
       return Object.assign({}, state, { loading: true });
     case LOGIN:
       return Object.assign({}, state, { admin: action.payload, loading: false });
+    case LOGOUT:
+      return Object.assign({}, state, { admin: null, loading: false, loggedOut: true, error: false, initiateForceLogout: false, errorMessage: null });
     case ERROR:
       return Object.assign({}, state, { error: true, loading: false, errorMessage: action.payload, initiateForceLogout: action.initiateForceLogout });
+    // case RESET:
+    //     return Object.assign({}, state, { error: false, loading: false, errorMessage: null, initiateForceLogout: false, admin: null, loggedOut: null });
     default:
       return state;
   }
