@@ -15,15 +15,18 @@ export const loggedOutToast = status => {
     toastr.options = { positionClass: 'toast-bottom-right' };
     if (status) {
         toastr.success('You\'ve been logged out!');
-    } else {
-        toastr.error('You aren\'t logged in!');
     }
 }
 
-export const forceLogoutToast = text => {
-    toastr.options = {
-        positionClass: 'toast-bottom-center',
-        onHidden: () => Router.push('/auth/logout')
-    };
-    toastr.error(text);
+export const forceLogoutToast = async text => {
+    return new Promise((resolve, reject) => {
+        toastr.options = {
+            positionClass: 'toast-bottom-center',
+            timeOut: 2000,
+            extendedTimeOut: 2000,
+            onHidden: resolve,
+            preventDuplicates: true
+        };
+        toastr.error(text);
+    });
 }

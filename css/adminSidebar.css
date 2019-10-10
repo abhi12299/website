@@ -8,6 +8,11 @@
     }
 }
 
+#adminSidebar .links a:hover {
+    color: white !important;
+}
+
+
 #adminSidebar .links:hover, #adminSidebar .links:active {
     color: black !important;
 }
