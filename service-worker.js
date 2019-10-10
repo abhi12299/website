@@ -1,6 +1,10 @@
 self.addEventListener('install', event => event.waitUntil(self.skipWaiting()));
 self.addEventListener('activate', event => event.waitUntil(self.clients.claim()));
 
+workbox.setConfig({
+    debug: false
+});
+
 workbox.precaching.precacheAndRoute(self.__precacheManifest);
 
 // cache images/fonts
