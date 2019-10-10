@@ -49,7 +49,7 @@
     .top-header.style-seven {margin-left: 25px;margin-right: 25px;}
     .top-header.style-eight .avatar-img {width: 250px; height: 250px; margin-bottom: 30px; border:10px #fff solid; border-radius: 100%; }
     .top-header.style-eight {margin: 30px;    margin-bottom: 0; }
-    .top-header.style-eight h1 {font-size: 34px;font-weight: bold;display: inline;padding: 0px;line-height: 55px;background-color: #fff;position: relative;z-index: 2;-webkit-box-shadow: 10px 0 0 #fff, -10px 0 0 #fff;-moz-box-shadow: 10px 0 0 #fff, -10px 0 0 #fff;-ms-box-shadow: 10px 0 0 #fff, -10px 0 0 #fff;-o-box-shadow: 10px 0 0 #fff, -10px 0 0 #fff;/* box-shadow: 10px 0 0 #fff, -10px 0 0 #fff; */}
+    .top-header.style-eight h1 {font-size: 34px;font-weight: bold;display: inline;padding: 0px;line-height: 55px;background-color: #fff;position: relative;z-index: 2;-webkit-box-shadow: 10px 0 0 #fff, -10px 0 0 #fff;box-shadow: 10px 0 0 #fff, -10px 0 0 #fff;-moz-box-shadow: 10px 0 0 #fff, -10px 0 0 #fff;-ms-box-shadow: 10px 0 0 #fff, -10px 0 0 #fff;-o-box-shadow: 10px 0 0 #fff, -10px 0 0 #fff;/* box-shadow: 10px 0 0 #fff, -10px 0 0 #fff; */}
 }
 
 @media (max-width: 1200px) {
