@@ -10,7 +10,7 @@ import TechStack from '../components/techStack';
 import Footer from '../components/footer';
 import Projects from '../components/projects';
 import FullScreenLoader from '../components/fullScreenLoader';
-import AdminSidebar from '../components/adminSidebar';
+import AdminFAB from '../components/adminFAB';
 
 import actions from '../redux/actions';
 import { getCookie, removeCookie } from '../utils/cookies';
@@ -44,7 +44,7 @@ const Home = props => {
       {/* position relative needed for jquery scroll */}
       <div className='main-body-content' style={{maxWidth: '100%', position: 'relative'}}>
         <AboutMe />
-        { props.auth.admin && <AdminSidebar /> }
+        { props.auth.admin && <AdminFAB /> }
         <TechStack />
         <Projects />
         <Footer />

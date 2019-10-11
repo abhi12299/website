@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import Router from 'next/router';
 
 import actions from '../redux/actions';
-import '../css/adminSidebar.css';
+import '../css/adminFAB.css';
 
-function AdminSidebar(props) {
+function AdminFAB(props) {
     useEffect(() => {
         document.addEventListener('touchstart', handleTouchStart, false);
         document.addEventListener('touchmove', handleTouchMove, false);
@@ -39,13 +39,13 @@ function AdminSidebar(props) {
             if (Math.abs(xDiff) > Math.abs(yDiff)) {
                 if (xDiff > 0) {
                     // open both sidebars
-                    document.querySelectorAll('#adminSidebar .links').forEach(elem => {
+                    document.querySelectorAll('#adminFAB .links').forEach(elem => {
                         elem.classList.add('opened');
                         elem.classList.remove('closed');
                     });
                 } else {
                     // close both sidebars
-                    document.querySelectorAll('#adminSidebar .links').forEach(elem => {
+                    document.querySelectorAll('#adminFAB .links').forEach(elem => {
                         elem.classList.add('closed');
                         elem.classList.remove('opened');
                     });
@@ -57,7 +57,7 @@ function AdminSidebar(props) {
     }, []);
 
     return (
-        <div id='adminSidebar'>
+        <div id='adminFAB'>
             <div onClick={() => Router.push('/dashboard')}>
                 <div className='button-4 links adminDashboard'>
                     <div className='eff-4' />
@@ -80,4 +80,4 @@ function AdminSidebar(props) {
     );
 }
 
-export default connect(state => state)(AdminSidebar);
+export default connect(state => state)(AdminFAB);
