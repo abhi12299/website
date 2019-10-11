@@ -17,9 +17,10 @@
 
 #main-menu ul li {padding: 0 18px; display: inline-block; position: relative; cursor: pointer;}
 #main-menu ul li a {font-size: 16px; font-weight: 400; text-transform: uppercase;  color: #000; line-height: 42px;letter-spacing: 0.7px;}
-#main-menu ul li:after {background-color: #333;border-radius: 100%;  width: 4px; height: 4px;     bottom: 18.8px;    right: -3px; content: ''; position: absolute; content: ''; }
+#main-menu ul li:after {background-color: #333;border-radius: 100%;  width: 4px; height: 4px;     bottom: 18.8px;    right: -3px; content: ''; position: absolute; }
 #main-menu ul li:last-child:after {display: none; }
 #main-menu ul li a:hover {color: #777;}
+#main-menu ul li:nth-last-child(2):after {display: none; }
 
 .menu-click {display: none; float: right; position: relative; width: 30px; height: 20px; margin-top: 12px; margin-right: 5px; }
 .menu-click span {position: absolute; background-color: #111; right: 0; height: 2px; width: 25px; display: inline-block;      transition: all 0.3s;}
@@ -49,6 +50,8 @@
 .soical-icon-font li {padding-left: 8px; padding-right: 8px; }
 .soical-icon-font li a { line-height: 40px;  font-size: 16px; color: #333; }
 
+.header-wrapper #search-nav { display: none; }
+
 /* RESPONSIVE SECTION */
 
 @media (max-width: 991px) {
@@ -56,4 +59,9 @@
     .menu-click {display: inline-block; cursor: pointer;}
     .header-wrapper .menu-click {display: inline-block; width: 50px}
     .header-wrapper.logo img {width: 75px; }
+    .header-wrapper #search-nav { display: inline-block; }
+}
+
+@media (min-width: 991px) {
+    .header-wrapper nav { display: block !important;}
 }

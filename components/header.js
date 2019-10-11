@@ -73,6 +73,8 @@ const Header = props => {
         goToPage(page, opts);
     }
 
+    const handleSearch = () => console.log('click');
+
     return (
         <section className='header-wrapper' ref={header}>
             <div className='container'>
@@ -98,6 +100,9 @@ const Header = props => {
                                 <li onClick={() => handleLinksClick('/', '.projects')}>
                                     <a>Projects</a>
                                 </li>
+                                <li onClick={() => handleSearch()} id='search-nav'>
+                                    <a>Search</a>
+                                </li>
                                 {/* <li onClick={() => handleLinksClick('/', '.blog')}>
                                     <a>Blog</a>
                                 </li> */}
@@ -108,7 +113,7 @@ const Header = props => {
                         </nav>
                     </div>
                     <div className='col-lg-2 col-md-4 text-right'>
-                        <a className='search-icon' onClick={() => console.log('click')}>
+                        <a className='search-icon' onClick={() => handleSearch()}>
                             <img className='search-area' src='../static/png/icons8-search-50.png' />
                         </a>
                     </div>
