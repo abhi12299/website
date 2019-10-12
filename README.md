@@ -12,9 +12,14 @@ To run this locally, clone this repo and `cd` in the project directory
     CLIENT_SECRET='your-google-ouath-client-secret'
     JWT_SECRET='your-jwt-secret'
     GMAIL_USER='gmail-email'
-    GMAIL_PASS='gmail-pass'
-    TINY_MCE_API_KEY='your_api_key'" > .env</pre>
+    GMAIL_PASS='gmail-pass'" > .env</pre>
     <small>(* The server uses NodeMailer to send emails to admins!)</small>
+    </li>
+    <li>
+        Make a file <pre>constants/apiKeys.js</pre> with the following contents:
+        <pre>export default {
+    TINY_MCE_API_KEY: 'your-api-key'
+};</pre>
     </li>
     <li>
     Install packages with
