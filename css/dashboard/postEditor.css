@@ -1,0 +1,60 @@
+.editor-container {
+    margin-top: 20px;
+}
+
+.post-title-container {
+    margin-bottom: 20px;
+}
+
+.post-title-container .post-title {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid black;
+    padding: 5px 15px;
+    outline: none;
+    margin: 0 auto;
+    width: 75%;
+}
+
+.post-title-container .post-title.error {
+    border-bottom: 1px solid red;
+}
+
+.post-title-container .errorText {
+    display: none;
+}
+
+.post-title-container .errorText.show {
+    padding-top: 5px;
+    display: block;
+    color: red;
+}
+
+.post-title-container .errorText.show::before {
+    content: '* ';
+}
+
+.post-title-container .post-title::placeholder { /* Firefox, Chrome, Opera */ 
+    color: gray;
+} 
+  
+.post-title-container .post-title:-ms-input-placeholder { /* Internet Explorer 10-11 */ 
+    color: gray; 
+} 
+  
+.post-title-container .post-title::-ms-input-placeholder { /* Microsoft Edge */ 
+    color: gray; 
+} 
+
+.post-title-container .post-title[placeholder]:focus::-webkit-input-placeholder {
+    transition: text-indent 1.5s 0.4s ease; 
+    text-indent: -100%;
+    opacity: 1;
+}
+
+@media(max-width: 768px) {
+    .post-title-container .post-title {
+        width: 100%;
+    }
+}

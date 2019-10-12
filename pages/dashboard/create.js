@@ -1,29 +1,38 @@
 import React from 'react'
 import Head from 'next/head';
+import { connect } from 'react-redux';
 
 import withAuth from '../../components/withAuth';
 import Preloader from '../../components/preloader';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
 import AdminFAB from '../../components/adminFAB';
+import PostEditor from '../../components/dashboard/postEditor';
+import PostSidebar from '../../components/dashboard/postSidebar';
+import FullScreenLoader from '../../components/fullScreenLoader';
 
 const CreatePost = props => {
-  const createPostView = (
-    <div>
-      Create Post here!
-    </div>
-  );
+  const { title, loading } = props.dashboardPosts;
+
+  if (loading) {
+    return <FullScreenLoader />;
+  }
 
   return (
     <div>
       <Head>
-        <title>Create Post</title>
+        <title>{title.trim().length > 0 ? `${title} | New Post` : 'Create Post'}</title>
       </Head>
       <Preloader />
       <Header />
       {/* position relative needed for jquery scroll */}
       <div className='main-body-content' style={{maxWidth: '100%', position: 'relative'}}>
-          { createPostView }
+        <div className='container'>
+          <div className='row'>
+            <PostEditor />
+            <PostSidebar />
+          </div>
+        </div>
           <Footer />
           { props.auth.admin && <AdminFAB /> }
       </div>
@@ -31,4 +40,4 @@ const CreatePost = props => {
   );
 };
 
-export default withAuth(CreatePost);
+export default withAuth(connect(state => state, null)(CreatePost));
