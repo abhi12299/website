@@ -1,11 +1,11 @@
 import React from 'react'
 import Head from 'next/head';
 
-import withAuth from '../components/withAuth';
-import Preloader from '../components/preloader';
-import Header from '../components/header';
-import Footer from '../components/footer';
-import AdminFAB from '../components/adminFAB';
+import withAuth from '../../components/withAuth';
+import Preloader from '../../components/preloader';
+import Header from '../../components/header';
+import Footer from '../../components/footer';
+import AdminFAB from '../../components/adminFAB';
 
 const Dashboard = props => {
   const dashboardView = (

@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import $ from 'jquery';
+import { withRouter } from 'next/router';
+
 import goToPage from '../utils/goToPage';
 
 import '../css/header.css';
@@ -8,7 +10,10 @@ import '../css/header.css';
 // used to differentiate b/w diff states of header
 let isMobileView = false;
 const Header = props => {
+    const { router, admin } = props;
+
     let [showMenu, toggleMenu] = useState(false);
+    let [dashboardLinks, toggleDashboardLinks] = useState(false);
     const header = useRef();
     // const cvDownloadElem = useRef();
 
@@ -39,6 +44,14 @@ const Header = props => {
         }
     }, []);
 
+    useEffect(() => {
+        if (router.pathname.includes('/dashboard')) {
+            toggleDashboardLinks(true);
+        } else {
+            toggleDashboardLinks(false);
+        }
+    }, [router.pathname]);
+
     const handleMenuToggle = (e, forceToggle = false) => {
         let expander;
         if (forceToggle) {
@@ -62,18 +75,58 @@ const Header = props => {
     //     }
     // }
 
-    const handleLinksClick = (page='/', scrollToElement) => {
+    const handleLinksClick = (page = '/', scrollToElement) => {
         const opts = {};
         if (scrollToElement) {
             opts.scrollToElement = scrollToElement;
         }
         if (isMobileView) {
-            opts.cbAfterAnimate = () => handleMenuToggle(null, true);   
-        }    
+            opts.cbAfterAnimate = () => handleMenuToggle(null, true);
+        }
         goToPage(page, opts);
     }
 
     const handleSearch = () => console.log('click');
+
+    const navLinks = (
+        <ul>
+            <li onClick={() => handleLinksClick('/')}>
+                <a>Home</a>
+            </li>
+            <li onClick={() => handleLinksClick('/', '.about-me')}>
+                <a>About Me</a>
+            </li>
+            <li onClick={() => handleLinksClick('/', '.contact')}>
+                <a>Contact</a>
+            </li>
+            <li onClick={() => handleLinksClick('/', '.projects')}>
+                <a>Projects</a>
+            </li>
+            <li onClick={() => handleSearch()} id='search-nav'>
+                <a>Search</a>
+            </li>
+            {/* <li onClick={() => handleLinksClick('/', '.blog')}>
+                <a>Blog</a>
+            </li> */}
+            {/* <li onClick={downloadCV}>
+                <a ref={cvDownloadElem} href='../static/pdf/Abhishek.pdf' download='AbhishekCV'>Download My CV</a>
+            </li> */}
+        </ul>
+    );
+
+    const adminLinks = (
+        <ul>
+            <li onClick={() => handleLinksClick('/dashboard/posts')}>
+                <a>View Posts</a>
+            </li>
+            <li onClick={() => handleLinksClick('/dashboard/create')}>
+                <a>Write a Post</a>
+            </li>
+            <li onClick={() => handleSearch()} id='search-nav'>
+                <a>Search</a>
+            </li>
+        </ul>
+    );
 
     return (
         <section className='header-wrapper' ref={header}>
@@ -87,36 +140,14 @@ const Header = props => {
                     </div>
                     <div className='col-lg-8 col-md-12'>
                         <nav id='main-menu' className='text-center'>
-                            <ul>
-                                <li onClick={() => handleLinksClick('/')}>
-                                    <a>Home</a>
-                                </li>
-                                <li onClick={() => handleLinksClick('/', '.about-me')}>
-                                    <a>About Me</a>
-                                </li>
-                                <li onClick={() => handleLinksClick('/', '.contact')}>
-                                    <a>Contact</a>
-                                </li>
-                                <li onClick={() => handleLinksClick('/', '.projects')}>
-                                    <a>Projects</a>
-                                </li>
-                                <li onClick={() => handleSearch()} id='search-nav'>
-                                    <a>Search</a>
-                                </li>
-                                {/* <li onClick={() => handleLinksClick('/', '.blog')}>
-                                    <a>Blog</a>
-                                </li> */}
-                                {/* <li onClick={downloadCV}>
-                                    <a ref={cvDownloadElem} href='../static/pdf/Abhishek.pdf' download='AbhishekCV'>Download My CV</a>
-                                </li> */}
-                            </ul>
+                            { (admin && dashboardLinks) ? adminLinks : navLinks }
                         </nav>
-                    </div>
-                    <div className='col-lg-2 col-md-4 text-right'>
-                        <a className='search-icon' onClick={() => handleSearch()}>
-                            <img className='search-area' src='../static/png/icons8-search-50.png' />
-                        </a>
-                    </div>
+            </div>
+            <div className='col-lg-2 col-md-4 text-right'>
+                <a className='search-icon' onClick={() => handleSearch()}>
+                    <img className='search-area' src='../static/png/icons8-search-50.png' />
+                </a>
+            </div>
                 </div>
             </div>
         </section>
@@ -125,4 +156,4 @@ const Header = props => {
 
 const mapStateToProps = state => state.auth;
 
-export default connect(mapStateToProps, null)(Header);
+export default connect(mapStateToProps, null)(withRouter(Header));
