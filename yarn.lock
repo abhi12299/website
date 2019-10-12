@@ -889,6 +889,13 @@
   dependencies:
     "@hapi/hoek" "8.x.x"
 
+"@tinymce/tinymce-react@^3.3.2":
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/@tinymce/tinymce-react/-/tinymce-react-3.3.2.tgz#044e21c54f123d0d85933e7e994a6ed20702297b"
+  integrity sha512-5STyLVPtkvYwKrd5srXC++vrhoOhC8cx525PGVGOWIYK2Oqe5ey6o5s31Abg79XPJsCxiWU4daHBL5eaMBBhEg==
+  dependencies:
+    prop-types "^15.6.2"
+
 "@webassemblyjs/ast@1.8.5":
   version "1.8.5"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.8.5.tgz#51b1c5fe6576a34953bf4b253df9f0d490d9e359"
