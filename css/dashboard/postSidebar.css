@@ -21,7 +21,7 @@
     content: '* ';
 }
 
-.sidebar-container .post-header-image-url {
+.sidebar-container .post-header-image-url, .sidebar-container .post-meta-desc {
     border-top: none;
     border-left: none;
     border-right: none;
@@ -32,25 +32,50 @@
     width: 93%;
 }
 
-.sidebar-container .post-header-image-url.error {
+.sidebar-container .post-meta-desc-container .counter {
+    text-align: right !important;
+    font-size: 12px;
+    padding-right: 13px;
+    color: gray;
+}
+
+.sidebar-container .post-meta-desc::-webkit-scrollbar {
+    cursor: pointer;
+    width: 10px;  
+    /* height: 12px;  */
+}
+
+.sidebar-container .post-meta-desc::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-container .post-meta-desc::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.sidebar-container .post-meta-desc {
+    height: 200px;
+}
+
+.sidebar-container .post-header-image-url.error, .sidebar-container .post-meta-desc.error {
     border-bottom: 1px solid red;
 }
 
-.sidebar-container .post-header-image-url[placeholder]:focus::-webkit-input-placeholder {
+.sidebar-container .post-header-image-url[placeholder]:focus::-webkit-input-placeholder, .sidebar-container .post-meta-desc[placeholder]:focus::-webkit-input-placeholder {
     transition: text-indent 0.5s 0.4s ease; 
-    text-indent: -100%;
+    text-indent: -110%;
     opacity: 1;
 }
 
-.post-header-image-container .post-header-image-url::placeholder { /* Firefox, Chrome, Opera */ 
+.post-header-image-container .post-header-image-url::placeholder, .post-meta-desc-container .post-meta-desc::placeholder { /* Firefox, Chrome, Opera */ 
     color: gray;
 } 
   
-.post-header-image-container .post-header-image-url:-ms-input-placeholder { /* Internet Explorer 10-11 */ 
+.post-header-image-container .post-header-image-url:-ms-input-placeholder, .post-meta-desc-container .post-meta-desc:-ms-input-placeholder { /* Internet Explorer 10-11 */ 
     color: gray; 
 } 
   
-.post-header-image-container .post-header-image-url::-ms-input-placeholder { /* Microsoft Edge */ 
+.post-header-image-container .post-header-image-url::-ms-input-placeholder, .post-meta-desc-container .post-meta-desc::-ms-input-placeholder { /* Microsoft Edge */ 
     color: gray; 
 } 
 

@@ -4,9 +4,9 @@ import {
     SETTITLE, 
     SETBODY, 
     SETHEADERIMAGE, 
-    SAVEPOST, 
-    SETMETATAGS,
-    RESTOREPOST 
+    SAVEPOST,
+    RESTOREPOST,
+    SETMETADESC 
 } from '../types';
 
 const initialState = {
@@ -16,7 +16,7 @@ const initialState = {
   title: 'Untitled Post',
   body: 'Write something awesome!',
   headerImage: '',
-  metaTags: []
+  metaDescription: null
 };
 
 export default (state = initialState, action) => {
@@ -31,8 +31,8 @@ export default (state = initialState, action) => {
       return Object.assign({}, state, { error: true, loading: false, errorMessage: action.payload });
     case SETHEADERIMAGE:
       return Object.assign({}, state, { headerImage: action.payload });
-    case SETMETATAGS:
-      return Object.assign({}, state, { metaTags: action.payload });
+    case SETMETADESC:
+      return Object.assign({}, state, { metaDescription: action.payload });
     default:
       return state;
   }

@@ -10,6 +10,6 @@ export const DASHBOARDPOSTLOADING = 'dashboardpostloading';
 export const SETTITLE = 'settitle';
 export const SETBODY = 'setbody';
 export const SETHEADERIMAGE = 'setheaderimage';
-export const SETMETATAGS = 'setmetatags';
+export const SETMETADESC = 'setmetadesc';
 export const SAVEPOST = 'savepost';
 export const RESTOREPOST = 'restorepost';

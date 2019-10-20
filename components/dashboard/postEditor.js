@@ -70,9 +70,6 @@ function PostEditor(props) {
                     toolbar: 'undo redo | formatselect blockquote | bold italic backcolor | \
                             alignleft aligncenter alignright alignjustify | \
                             bullist numlist outdent indent | removeformat | help',
-                    allow_script_urls: true,
-                    valid_elements: '*[*]',
-                    extended_valid_elements: 'script[language|type|src]',
                     menubar: 'file edit view insert format tools table tc help',
                     autosave_ask_before_unload: true
                 }}
