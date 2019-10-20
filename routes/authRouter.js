@@ -3,7 +3,7 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 
 const Session = require('../models/session.model');
-const verifyUserToken = require('../utils/verifyUserToken');
+const verifyAdminToken = require('../utils/verifyAdminToken');
 const emailHelperFunction = require('../utils/emailHelper');
 
 const authRouter = Router();
@@ -11,7 +11,7 @@ const authRouter = Router();
 authRouter.get('/login', async (req, res, next) => {
     const { token } = req.cookies;
     if (token) {
-        const { valid, error } = await verifyUserToken(token);
+        const { valid, error } = await verifyAdminToken(token);
         if (valid) {
             return res.redirect('/dashboard');
         } else {
@@ -62,7 +62,7 @@ authRouter.get('/verify', async (req, res) => {
         return res.json({ valid: false, emptyToken: true });
     }
 
-    const { valid, error } = await verifyUserToken(token);
+    const { valid, error } = await verifyAdminToken(token);
     if (valid) {
         return res.json({ valid: true });
     } else {

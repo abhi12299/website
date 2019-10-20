@@ -14,7 +14,7 @@ module.exports = server => {
     server.use(cookieParser());
     server.use(compression());
     server.use((req, res, next) => {
-        if (req.path.startsWith('/auth')) {
+        if (req.path.startsWith('/auth') || req.path.startsWith('/api/dashboard')) {
             return next();
         }
 

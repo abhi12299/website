@@ -13,6 +13,18 @@ function postTitleValidate(title) {
     return '';
 }
 
+function validateMetaDesc(desc) {
+    if (desc.length < 80) {
+        return 'Meta description must be at least 80 characters long!';
+    } else if (desc.length > 250) {
+        return 'Meta description must be at most 250 characters long!';        
+    } else if (!new RegExp(/^[A-Z]{1,}.*/).test(desc)) {
+        return 'Meta description must begin with uppercase letter!';
+    } else if (!new RegExp(/.* .*/).test(desc)) {
+        return 'Meta description must have at least a few words!';
+    }
+}
+
 async function validateHeaderImageURL(url) {
     let error = '';
     if (!new RegExp(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpe?g|png)/i).test(url)) {
@@ -33,5 +45,6 @@ async function validateHeaderImageURL(url) {
 
 module.exports = {
     postTitleValidate,
-    validateHeaderImageURL
+    validateHeaderImageURL,
+    validateMetaDesc
 };
