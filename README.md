@@ -12,7 +12,8 @@ To run this locally, clone this repo and `cd` in the project directory
     CLIENT_SECRET='your-google-ouath-client-secret'
     JWT_SECRET='your-jwt-secret'
     GMAIL_USER='gmail-email'
-    GMAIL_PASS='gmail-pass'" > .env</pre>
+    GMAIL_PASS='gmail-pass'
+    ELASTIC_URL='elastic-url'" > .env</pre>
     <small>(* The server uses NodeMailer to send emails to admins!)</small>
     </li>
     <li>
@@ -21,6 +22,7 @@ To run this locally, clone this repo and `cd` in the project directory
     TINY_MCE_API_KEY: 'your-api-key'
 };</pre>
     </li>
+    <li>For the first time execution, run <pre>node elasticClient/createIndex.js</pre></li>
     <li>
     Install packages with
     <pre>yarn</pre>

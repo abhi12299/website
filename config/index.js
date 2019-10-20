@@ -14,7 +14,8 @@ const envVarsSchema = Joi.object({
     CLIENT_SECRET: Joi.string().required(),
     JWT_SECRET: Joi.string().required(),
     GMAIL_USER: Joi.string().required(),
-    GMAIL_PASS: Joi.string().required()
+    GMAIL_PASS: Joi.string().required(),
+    ELASTIC_URL: Joi.string().required()
 }).unknown().required();
 
 const { error } = Joi.validate(process.env, envVarsSchema);
