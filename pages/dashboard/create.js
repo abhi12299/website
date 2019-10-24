@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Head from 'next/head';
 import { connect } from 'react-redux';
 
@@ -10,9 +10,18 @@ import AdminFAB from '../../components/adminFAB';
 import PostEditor from '../../components/dashboard/postEditor';
 import PostSidebar from '../../components/dashboard/postSidebar';
 import FullScreenLoader from '../../components/fullScreenLoader';
+import restoreFromLS from '../../utils/restoreFromLS';
+import { RESTOREPOST } from '../../redux/types';
 
 const CreatePost = props => {
   const { title, loading } = props.dashboardPosts;
+  
+  useEffect(() => {
+    const prevArticleData = restoreFromLS();
+    if (prevArticleData) {
+      props.dispatch({ type: RESTOREPOST, payload: prevArticleData });
+    }
+  }, []);
 
   if (loading) {
     return <FullScreenLoader />;

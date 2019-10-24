@@ -44,6 +44,8 @@ export default (state = initialState, action) => {
     case SETMETAKEYWORDS:
         backupToLS('metaKeywords', action.payload);
       return Object.assign({}, state, { metaKeywords: action.payload });
+    case RESTOREPOST:
+      return Object.assign({}, state, { ...action.payload });
     default:
       return state;
   }
