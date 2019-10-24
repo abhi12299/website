@@ -43,8 +43,23 @@ async function validateHeaderImageURL(url) {
     return error;
 }
 
+function validateMetaKeywords(keywords) {
+    let error = '';
+    let keywordArr = keywords.split(',');
+    keywordArr = keywordArr.filter(k => k.trim().length > 0);
+    if (keywordArr.length === 0) {
+        error = 'Meta keywords cannot be empty';
+    } else if (keywordArr.length === 1) {
+        error = 'Please enter more than 1 meta keywords!';
+    } else if (!keywordArr.every(k => new RegExp(/^[A-Z]{1,}.*/).test(k.trim()))) {
+        error = 'Meta keywords must begin with upper case letter';
+    }
+    return error;
+}
+
 module.exports = {
     postTitleValidate,
     validateHeaderImageURL,
-    validateMetaDesc
+    validateMetaDesc,
+    validateMetaKeywords
 };

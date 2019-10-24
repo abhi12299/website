@@ -6,7 +6,8 @@ import {
     SETHEADERIMAGE, 
     SAVEPOST,
     RESTOREPOST,
-    SETMETADESC 
+    SETMETADESC ,
+    SETMETAKEYWORDS
 } from '../types';
 
 const initialState = {
@@ -16,7 +17,8 @@ const initialState = {
   title: 'Untitled Post',
   body: 'Write something awesome!',
   headerImage: '',
-  metaDescription: null
+  metaDescription: null,
+  metaKeywords: null
 };
 
 export default (state = initialState, action) => {
@@ -33,6 +35,8 @@ export default (state = initialState, action) => {
       return Object.assign({}, state, { headerImage: action.payload });
     case SETMETADESC:
       return Object.assign({}, state, { metaDescription: action.payload });
+    case SETMETAKEYWORDS:
+      return Object.assign({}, state, { metaKeywords: action.payload });
     default:
       return state;
   }

@@ -13,3 +13,4 @@ export const SETHEADERIMAGE = 'setheaderimage';
 export const SETMETADESC = 'setmetadesc';
 export const SAVEPOST = 'savepost';
 export const RESTOREPOST = 'restorepost';
+export const SETMETAKEYWORDS= 'setmetakeywords';

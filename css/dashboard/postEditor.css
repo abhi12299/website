@@ -19,6 +19,14 @@
 
 .post-title-container .post-title.error {
     border-bottom: 1px solid red;
+    position: relative;
+    animation: shake .1s linear;
+    animation-iteration-count: 3;
+}
+
+@keyframes shake {
+    0% { left: -3px; }
+    100% { right: -3px; }
 }
 
 .post-title-container .errorText {
