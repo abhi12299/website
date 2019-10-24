@@ -41,22 +41,29 @@
     color: gray;
 }
 
-.sidebar-container .post-meta-desc::-webkit-scrollbar {
+.sidebar-container .post-meta-desc::-webkit-scrollbar,
+.sidebar-container .post-meta-keywords-input::-webkit-scrollbar {
     cursor: pointer;
     width: 10px;
     /* height: 12px;  */
 }
 
-.sidebar-container .post-meta-desc::-webkit-scrollbar-track {
+.sidebar-container .post-meta-desc::-webkit-scrollbar-track,
+.sidebar-container .post-meta-keywords-input::-webkit-scrollbar-track {
     background: rgba(0, 0, 0, 0.1);
 }
 
-.sidebar-container .post-meta-desc::-webkit-scrollbar-thumb {
+.sidebar-container .post-meta-desc::-webkit-scrollbar-thumb,
+.sidebar-container .post-meta-keywords-input::-webkit-scrollbar-thumb {
     background: rgba(0, 0, 0, 0.5);
 }
 
 .sidebar-container .post-meta-desc {
     height: 200px;
+}
+
+.sidebar-container .post-meta-keywords-input {
+    height: 100px;
 }
 
 .sidebar-container .post-header-image-url.error, 

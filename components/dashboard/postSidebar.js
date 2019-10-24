@@ -153,7 +153,7 @@ function PostSidebar(props) {
                             if (k.trim().length > 0) {
                                 return (
                                     <div 
-                                        className='post-meta-keyword col-4 mr-2 my-1' 
+                                        className='post-meta-keyword col-lg-4 col-md-4 col-4 my-1' 
                                         key={k}
                                         onClick={() => handleRemoveMetaKeyword(i)}
                                     >
