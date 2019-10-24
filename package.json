@@ -44,7 +44,6 @@
     "react": "16.9.0",
     "react-dom": "16.9.0",
     "react-redux": "^7.1.1",
-    "react-transition-group": "^4.3.0",
     "redis": "^2.8.0",
     "redux": "^4.0.4",
     "redux-devtools-extension": "^2.13.8",
