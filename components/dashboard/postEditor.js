@@ -3,34 +3,54 @@ import { connect } from 'react-redux';
 import { Editor } from '@tinymce/tinymce-react';
 
 import apiKeys from '../../constants/apiKeys';
-import { postTitleValidate } from '../../utils/validate';
+import { validatePostTitle, validatePostBody } from '../../utils/validate';
 import { SETTITLE, SETBODY } from '../../redux/types';
 
 import '../../css/dashboard/postEditor.css';
 
 function PostEditor(props) {
-    const { title, body } = props;
+    const { title, body, postRestored } = props;
+
     const titleInput = useRef();
     const titleError = useRef();
+    const bodyError = useRef();
 
     useEffect(() => {
-        if (title) {
-            handleTitleInputBlur();
+        if (postRestored) {
+            if (title) {
+                handleTitleInputBlur();
+            }
+            if (body) {
+                handleEditorBlur();
+            }
         }
-    }, []);
+    }, [postRestored]);
 
     const handleTitleInputBlur = () => {
         const titleElem = titleInput.current;
         const errorElem = titleError.current;
 
         const title = titleElem.value.trim();
-        const errorMsg = postTitleValidate(title);
+        const errorMsg = validatePostTitle(title);
         if (errorMsg) {
             titleElem.classList.add('error');
             errorElem.classList.add('show');
             errorElem.innerText = errorMsg;
         } else {
             titleElem.classList.remove('error');
+            errorElem.classList.remove('show');
+            errorElem.innerText = '';
+        }
+    }
+
+    const handleEditorBlur = () => {
+        const errorElem = bodyError.current;
+
+        const errorMsg = validatePostBody(body);
+        if (errorMsg) {
+            errorElem.classList.add('show');
+            errorElem.innerText = errorMsg;
+        } else {
             errorElem.classList.remove('show');
             errorElem.innerText = '';
         }
@@ -61,7 +81,7 @@ function PostEditor(props) {
             <Editor
                 apiKey={apiKeys ? apiKeys.TINY_MCE_API_KEY : ''}
                 init={{
-                    height: 500,
+                    height: 570,
                     plugins: [
                         'advlist autolink lists link codesample image charmap print preview anchor',
                         'searchreplace visualblocks code fullscreen',
@@ -75,7 +95,9 @@ function PostEditor(props) {
                 }}
                 onChange={handleEditorChange}
                 value={body}
+                onBlur={handleEditorBlur}
             />
+            <small ref={bodyError} className='errorText'></small>
         </div>
     );
 }

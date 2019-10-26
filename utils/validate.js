@@ -1,6 +1,13 @@
 import fetch from 'isomorphic-unfetch';
 
-function postTitleValidate(title) {
+function validatePostBody(body) {
+    if (body.length < 200) {
+        return 'Body should be more than 200 characters long!';
+    }
+    return '';
+}
+
+function validatePostTitle(title) {
     if(title.length < 10) {
         return 'Title should be at least 10 characters long!';
     } else if (title.length > 200) {
@@ -58,8 +65,9 @@ function validateMetaKeywords(keywords) {
 }
 
 module.exports = {
-    postTitleValidate,
+    validatePostTitle,
     validateHeaderImageURL,
     validateMetaDesc,
-    validateMetaKeywords
+    validateMetaKeywords,
+    validatePostBody
 };

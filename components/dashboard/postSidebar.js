@@ -11,7 +11,7 @@ import { SETHEADERIMAGE, SETMETADESC, SETMETAKEYWORDS } from '../../redux/types'
 import LoadingSVG from '../loadingSVG';
 
 function PostSidebar(props) {
-    const { headerImage, metaDescription, metaKeywords } = props;
+    const { headerImage, metaDescription, metaKeywords, postRestored } = props;
     
     let [imageLoading, setImageLoading] = useState(false);
     let [isImageValid, setIsImageValid] = useState(false);
@@ -24,10 +24,18 @@ function PostSidebar(props) {
     const metaKeywordsError = useRef();
 
     useEffect(() => {
-        if (headerImage) {
-            handleHeaderImageInputBlur();
+        if (postRestored) {
+            if (headerImage) {
+                handleHeaderImageInputBlur();
+            }
+            if (metaDescription) {
+                handleMetaDescInputBlur();
+            }
+            if (metaKeywords) {
+                handleMetaKeywordsBlur();
+            }
         }
-    }, []);
+    }, [postRestored]);
 
     const handleHeaderImageInputBlur = async () => {
         setImageLoading(true);
@@ -100,7 +108,6 @@ function PostSidebar(props) {
         props.dispatch({ type: SETMETAKEYWORDS, payload: e.target.value });
 
     const headerImageURL = isImageValid ? headerImage : 'https://via.placeholder.com/200x170.png?text=Header+image+shown+here';
-
     return (
         <div className='col-lg-3 col-md-4 col-sm-12 sidebar-container'>
             <div className='post-header-image-container'>
@@ -154,7 +161,7 @@ function PostSidebar(props) {
                                 return (
                                     <div 
                                         className='post-meta-keyword col-lg-4 col-md-4 col-4 my-1' 
-                                        key={k}
+                                        key={k + i}
                                         onClick={() => handleRemoveMetaKeyword(i)}
                                     >
                                         <span>{k}</span>
