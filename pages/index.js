@@ -14,7 +14,7 @@ import AdminFAB from '../components/adminFAB';
 
 import actions from '../redux/actions';
 import { getCookie, removeCookie } from '../utils/cookies';
-import { notAdminToast } from '../utils/toasts';
+import { showToast } from '../utils/toasts';
 
 const Home = props => {
   useEffect(() => {
@@ -25,7 +25,7 @@ const Home = props => {
 
     if (props.notAdminError) {
       removeCookie('notAdmin');
-      setTimeout(() => notAdminToast(), 500);
+      setTimeout(() => showToast('You are not an administrator!', 'error'), 500);
     }
   }, []);
 

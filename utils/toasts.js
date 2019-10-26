@@ -1,21 +1,19 @@
 import toastr from 'toastr';
-import Router from 'next/router';
 
-export const comingSoonToast = () => {
-    toastr.options = { positionClass: 'toast-bottom-right' };
-    toastr.info('Coming soon!');
-};
-
-export const notAdminToast = () => {
-    toastr.options = { positionClass: 'toast-bottom-right' };
-    toastr.error('You are not an administrator!');
-}
-
-export const loggedOutToast = status => {
-    toastr.options = { positionClass: 'toast-bottom-right' };
-    if (status) {
-        toastr.success('You\'ve been logged out!');
-    }
+export const showToast = (text, type) => {
+    return new Promise(resolve => {
+        toastr.options = { 
+            positionClass: 'toast-bottom-right',
+            onHidden: resolve
+        };
+        if (type === 'error') {
+            toastr.error(text);
+        } else if (type === 'success') {
+            toastr.success(text);
+        } else {
+            toastr.info(text);
+        }
+    });
 }
 
 export const forceLogoutToast = async text => {

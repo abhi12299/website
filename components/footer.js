@@ -7,7 +7,7 @@ import toastr from 'toastr';
 import fetch from 'isomorphic-unfetch';
 
 import LoadingSVG from './loadingSVG';
-import { comingSoonToast } from '../utils/toasts';
+import { showToast } from '../utils/toasts';
 import goToPage from '../utils/goToPage';
 import '../css/footer.css';
 
@@ -62,7 +62,7 @@ function Footer() {
                             </li>
 
                             <li>
-                                <a onClick={comingSoonToast}>Blog</a>
+                                <a onClick={() => showToast('Coming soon!')}>Blog</a>
                             </li>
                         </ul>
                     </div>

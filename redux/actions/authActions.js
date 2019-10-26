@@ -1,8 +1,9 @@
 import fetch from 'isomorphic-unfetch';
 import Router from 'next/router';
 
-import { loggedOutToast } from '../../utils/toasts';
+import { showToast } from '../../utils/toasts';
 import { LOADING, LOGIN, ERROR, /* RESET, */ LOGOUT } from '../types';
+import baseURL from '../../constants/apiURL';
 
 const authenticate = req => {
   const fetchOpts = {
@@ -18,7 +19,7 @@ const authenticate = req => {
   return dispatch => {
     dispatch({ type: LOADING });
     
-    return fetch('http://localhost:3001/auth/verify', fetchOpts)
+    return fetch(baseURL + '/auth/verify', fetchOpts)
         .then(res => res.json())
         .then(resp => {
             if (resp.valid) {
@@ -44,13 +45,15 @@ const authenticate = req => {
 const logout = () => {
   return dispatch => {
     dispatch({ type: LOADING });
-    return fetch('http://localhost:3001/auth/logout', {
+    return fetch(baseURL + '/auth/logout', {
       method: 'GET',
       credentials: 'include'
     })
       .then(resp => resp.json())
       .then(resp => {
-        loggedOutToast(resp.loggedOut);
+        if (resp.loggedOut) {
+          showToast('You have been logged out!', 'success');
+        }
         dispatch({ type: LOGOUT });
         Router.push('/');
       })
