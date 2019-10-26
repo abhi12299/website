@@ -19,6 +19,10 @@ const PostSchema = new Schema({
         type: String,
         required: true
     },
+    metaKeywords: {
+        type: [String],
+        required: true
+    },
     postedDate: {
         type: Number,
         required: true,
