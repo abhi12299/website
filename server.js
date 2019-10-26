@@ -40,7 +40,8 @@ function childProcess() {
     mongoose.connect(process.env.MONGO_URI, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        autoIndex: false
+        autoIndex: false,
+        useFindAndModify: false
     });
     const db = mongoose.connection;
     db.once('error', err => {
