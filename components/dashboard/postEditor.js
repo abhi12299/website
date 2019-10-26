@@ -56,8 +56,8 @@ function PostEditor(props) {
         }
     }
 
-    const handleEditorChange = e =>
-        props.dispatch({ type: SETBODY, payload: e.target.getContent()});
+    const handleEditorChange = (e, editor) =>
+        props.dispatch({ type: SETBODY, payload: editor.getContent()});
 
     const handleTitleChange = e => 
         props.dispatch({ type: SETTITLE, payload: e.target.value });
@@ -94,7 +94,8 @@ function PostEditor(props) {
                     autosave_ask_before_unload: true
                 }}
                 onChange={handleEditorChange}
-                value={body}
+                onKeyUp={handleEditorChange}
+                initialValue={body}
                 onBlur={handleEditorBlur}
             />
             <small ref={bodyError} className='errorText'></small>

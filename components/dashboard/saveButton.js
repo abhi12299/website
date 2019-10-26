@@ -2,16 +2,18 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookmark } from '@fortawesome/free-solid-svg-icons';
-
 import { 
     validateHeaderImageURL, 
     validateMetaDesc, 
     validateMetaKeywords,
-    validatePostTitle
+    validatePostTitle,
+    validatePostBody
 } from '../../utils/validate';
 import '../../css/dashboard/saveButtons.css';
 import LoadingSVG from '../loadingSVG';
 import { showToast } from '../../utils/toasts';
+import { dashboardActions } from '../../redux/actions';
+import transformMetaKeywords from '../../utils/transformMetaKeywords';
 
 function SaveButton(props) {
     const { 
@@ -19,19 +21,42 @@ function SaveButton(props) {
         metaDescription, 
         metaKeywords,
         title,
-        saving
+        saving,
+        body,
     } = props;
 
     const handleSavePost = async () => {
         let errorText = '';
         errorText = await validateHeaderImageURL(headerImage);
+        if (errorText) {
+            showToast(errorText, 'error')
+            return;
+        }
+        errorText = await validatePostBody(body);
+        if (errorText) {
+            showToast(errorText, 'error')
+            return;
+        }
         errorText = validateMetaDesc(metaDescription);
+        if (errorText) {
+            showToast(errorText, 'error')
+            return;
+        }
         errorText = validatePostTitle(title);
+        if (errorText) {
+            showToast(errorText, 'error')
+            return;
+        }
         errorText = validateMetaKeywords(metaKeywords);
         if (errorText) {
             showToast(errorText, 'error')
             return;
         }
+        console.log(transformMetaKeywords(metaKeywords));
+        // await dashboardActions.savePost({
+        //     title, body, metaDescription,
+        //     headerImage, metaKeywords
+        // });
     }
 
     return (
