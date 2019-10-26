@@ -34,7 +34,7 @@ function validateMetaDesc(desc) {
 
 async function validateHeaderImageURL(url) {
     let error = '';
-    if (!new RegExp(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpe?g|png)/i).test(url)) {
+    if (!new RegExp(/(http(s?):).*?\.(?:jpe?g|png)/i).test(url)) {
         error = 'Header Image URL doesn\'t look like a valid one!';
     } else {
         try {

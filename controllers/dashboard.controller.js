@@ -22,6 +22,7 @@ dashboardRouter.post('/savePost', async (req, res) => {
         title,
         headerImageURL,
         metaDescription,
+        metaKeywords,
         postedDate = Date.now(),
         body,
         published = 0,
@@ -36,7 +37,8 @@ dashboardRouter.post('/savePost', async (req, res) => {
                 .substr(0, 200);
     
     const savedPost = await Post.savePost({
-        _id, title, headerImageURL, metaDescription, postedDate, body, published
+        _id, title, headerImageURL, metaKeywords,
+        metaDescription, postedDate, body, published
     });
     if (savedPost) {
         let body = savedPost.body.replace(/\s/ig, ' ')
