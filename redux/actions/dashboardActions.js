@@ -22,13 +22,19 @@ const savePost = postData => {
     return fetch(baseURL + '/api/dashboard/savePost', fetchOpts)
         .then(res => res.json())
         .then(resp => {
-            console.log('Resp from api', resp);
+          console.log('Resp from api', resp);
+          if (resp.error) {
+            console.error(resp);
+            dispatch({ type: POSTSAVING, payload: false });
+            showToast('There was some error submitting the post!', 'error');
+          } else {
             showToast('Post was submitted successfully!', 'success')
             .then(() => {
-                    dispatch({ type: POSTSAVING, payload: false });
-                    removePostFromLS();
-                    Router.push('/dashboard');
-                });
+                dispatch({ type: POSTSAVING, payload: false });
+                removePostFromLS();
+                Router.push('/dashboard');
+            });
+          }
         }).catch(err => {
             console.error(err);
             dispatch({ type: POSTSAVING, payload: false });

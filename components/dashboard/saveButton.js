@@ -12,7 +12,7 @@ import {
 import '../../css/dashboard/saveButtons.css';
 import LoadingSVG from '../loadingSVG';
 import { showToast } from '../../utils/toasts';
-import { dashboardActions } from '../../redux/actions';
+import actions from '../../redux/actions';
 import transformMetaKeywords from '../../utils/transformMetaKeywords';
 
 function SaveButton(props) {
@@ -52,11 +52,10 @@ function SaveButton(props) {
             showToast(errorText, 'error')
             return;
         }
-        console.log(transformMetaKeywords(metaKeywords));
-        // await dashboardActions.savePost({
-        //     title, body, metaDescription,
-        //     headerImage, metaKeywords
-        // });
+        props.dispatch(actions.dashboardActions.savePost({
+            title, body, metaDescription, headerImageURL: headerImage,
+            metaKeywords: transformMetaKeywords(metaKeywords)
+        }));
     }
 
     return (
