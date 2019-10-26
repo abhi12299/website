@@ -2,6 +2,8 @@ const Router = require('express').Router;
 const striptags = require('striptags');
 
 const Post = require('../models/post.model');
+const createIndex = require('../elasticClient/createIndex');
+const bulkInsertPosts = require('../elasticClient/bulkInsertPosts');
 const elasticSearchHelper = require('../elasticClient/helper');
 const logger = require('../logger');
 
@@ -37,13 +39,14 @@ dashboardRouter.post('/savePost', async (req, res) => {
         _id, title, headerImageURL, metaDescription, postedDate, body, published
     });
     if (savedPost) {
+        let body = savedPost.body.replace(/\s/ig, ' ')
+                    .replace(/<code.*?<\/code>/ig, '');
         const elasticPostBody = {
             id: savedPost._id,
-            body: {
-                title: savedPost.title,
-                text: striptags(savedPost.body),
-                published: savedPost.published
-            }
+            title: savedPost.title,
+            body: striptags(body),
+            published: savedPost.published,
+            postedDate: savedPost.postedDate
         };
         const { error } = await elasticSearchHelper.addPost(elasticPostBody);
         if (error) {
@@ -64,6 +67,19 @@ dashboardRouter.post('/savePost', async (req, res) => {
             msg: 'Something went wrong while saving the post! Please check the server logs.'
         });
     }
+});
+
+dashboardRouter.get('/bulkIndex', async (req, res) => {
+    let error = await createIndex();
+    if (error) {
+        return res.status(500).json({ error: true, msg: 'Something went wrong!', reason: error });
+    }
+    let response = await bulkInsertPosts();
+    if (response.error) {
+        return res.status(500).json({ error: true, msg: 'Something went wrong!', reason: error });
+    }
+
+    return res.json({ error: false, msg: `${response.postCount} posts indexed!` });
 });
 
 module.exports = dashboardRouter;

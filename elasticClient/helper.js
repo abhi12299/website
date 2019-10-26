@@ -5,11 +5,15 @@ async function addPost(doc) {
     try {
         const resp = await client.index({
             index: 'post',
-            id: doc._id,
-            type: 'article',
-            body: doc.body
+            body: {
+                id: doc.id,
+                title: doc.title,
+                body: doc.body,
+                published: doc.published,
+                postedDate: doc.postedDate
+            }
         });
-        console.log('from elastic resp is', resp);
+        logger.info('add post, elastic resp is', resp);
         return { error: false };
     } catch (error) {
         logger.error('Error adding post to elastic search!', error);
