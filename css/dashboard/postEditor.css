@@ -29,17 +29,20 @@
     100% { right: -3px; }
 }
 
-.post-title-container .errorText {
+.post-title-container .errorText, 
+.editor-container .errorText {
     display: none;
 }
 
-.post-title-container .errorText.show {
+.post-title-container .errorText.show,
+.editor-container .errorText.show {
     padding-top: 5px;
     display: block;
     color: red;
 }
 
-.post-title-container .errorText.show::before {
+.post-title-container .errorText.show::before,
+.editor-container .errorText.show::before {
     content: '* ';
 }
 

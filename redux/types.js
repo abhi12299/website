@@ -14,3 +14,4 @@ export const SETMETADESC = 'setmetadesc';
 export const SAVEPOST = 'savepost';
 export const RESTOREPOST = 'restorepost';
 export const SETMETAKEYWORDS= 'setmetakeywords';
+export const POSTSAVING = 'postsaving';

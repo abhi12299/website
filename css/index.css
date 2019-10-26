@@ -385,6 +385,10 @@ blockquote p {
     z-index: 1;
 }
 
+.button-4:hover a:hover {
+    color: #fff !important;
+}
+
 .button-4:hover .eff-4 {
     left: 0;
 }

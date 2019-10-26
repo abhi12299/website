@@ -7,7 +7,8 @@ import {
     SAVEPOST,
     RESTOREPOST,
     SETMETADESC ,
-    SETMETAKEYWORDS
+    SETMETAKEYWORDS,
+    POSTSAVING
 } from '../types';
 
 import backupToLS from '../../utils/backupToLS';
@@ -20,7 +21,8 @@ const initialState = {
   body: 'Write something awesome!',
   headerImage: '',
   metaDescription: null,
-  metaKeywords: null
+  metaKeywords: null,
+  saving: false,
 };
 
 export default (state = initialState, action) => {
@@ -46,6 +48,8 @@ export default (state = initialState, action) => {
       return Object.assign({}, state, { metaKeywords: action.payload });
     case RESTOREPOST:
       return Object.assign({}, state, { ...action.payload });
+    case POSTSAVING:
+      return Object.assign({}, state, { saving: action.payload });
     default:
       return state;
   }

@@ -150,6 +150,7 @@
     color: white;
     justify-content: space-evenly;
     cursor: pointer;
+    max-width: 30%;
 }
 
 @media(max-width: 768px) {
