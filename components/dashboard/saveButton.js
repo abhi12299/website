@@ -82,4 +82,4 @@ function SaveButton(props) {
     );
 }
 
-export default connect(state => state.dashboardPosts, null)(SaveButton);
+export default connect(state => state.dashboardPost, null)(SaveButton);

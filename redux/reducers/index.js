@@ -4,5 +4,5 @@ import dashboardPostReducer from './dashboardPostReducer';
 
 export const rootReducer = combineReducers({
   auth: authReducer,
-  dashboardPosts: dashboardPostReducer
+  dashboardPost: dashboardPostReducer
 });

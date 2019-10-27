@@ -105,4 +105,4 @@ function PostEditor(props) {
     );
 }
 
-export default connect(state => state.dashboardPosts, null)(PostEditor);
+export default connect(state => state.dashboardPost, null)(PostEditor);

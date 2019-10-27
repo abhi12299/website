@@ -15,7 +15,7 @@ import restoreFromLS from '../../utils/restoreFromLS';
 import { RESTOREPOST } from '../../redux/types';
 
 const CreatePost = props => {
-  const { title, loading } = props.dashboardPosts;
+  const { title, loading } = props.dashboardPost;
   let [isPostRestored, setIsPostRestored] = useState(false);
 
   useEffect(() => {

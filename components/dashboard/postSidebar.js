@@ -182,4 +182,4 @@ function PostSidebar(props) {
     );
 }
 
-export default connect(state => state.dashboardPosts, null)(PostSidebar);
+export default connect(state => state.dashboardPost, null)(PostSidebar);
