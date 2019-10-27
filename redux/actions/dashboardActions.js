@@ -15,20 +15,21 @@ const savePost = postData => {
     },
     body: JSON.stringify(postData)
   };
-  console.log({ postData });
   return dispatch => {
     dispatch({ type: POSTSAVING, payload: true });
     
     return fetch(baseURL + '/api/dashboard/savePost', fetchOpts)
         .then(res => res.json())
         .then(resp => {
-          console.log('Resp from api', resp);
           if (resp.error) {
             console.error(resp);
             dispatch({ type: POSTSAVING, payload: false });
             showToast('There was some error submitting the post!', 'error');
           } else {
-            showToast('Post was submitted successfully!', 'success')
+            showToast('Post was submitted successfully!', 'success', {
+              timeOut: 1000,
+              extendedTimeout: 1000
+            })
             .then(() => {
                 dispatch({ type: POSTSAVING, payload: false });
                 removePostFromLS();

@@ -1,10 +1,11 @@
 import toastr from 'toastr';
 
-export const showToast = (text, type) => {
+export const showToast = (text, type, opts={}) => {
     return new Promise(resolve => {
         toastr.options = { 
             positionClass: 'toast-bottom-right',
-            onHidden: resolve
+            onHidden: resolve,
+            ...opts
         };
         if (type === 'error') {
             toastr.error(text);
