@@ -1,4 +1,5 @@
 import React from 'react';
+import Head from 'next/head';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 
@@ -24,6 +25,9 @@ function Error(props) {
 
     return (
         <div>
+            <Head>
+                <title>Page not found</title>
+            </Head>
             <Header />
             <div className='main-body-content'>
                 <section className='pad-75'>

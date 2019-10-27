@@ -11,7 +11,8 @@ import { SETHEADERIMAGE, SETMETADESC, SETMETAKEYWORDS } from '../../redux/types'
 import LoadingSVG from '../loadingSVG';
 
 function PostSidebar(props) {
-    const { headerImage, metaDescription, metaKeywords, postRestored } = props;
+    const { headerImage, metaDescription, saving,
+        metaKeywords, postRestored } = props;
     
     let [imageLoading, setImageLoading] = useState(false);
     let [isImageValid, setIsImageValid] = useState(false);
@@ -119,7 +120,7 @@ function PostSidebar(props) {
                     onBlur={handleHeaderImageInputBlur}
                     onChange={handleHeaderImageURLChange}
                     value={headerImage}
-                    disabled={imageLoading}
+                    disabled={imageLoading || saving}
                 />
                 { imageLoading && <div className='loader-wait'><LoadingSVG width='20px' height='20px'/></div> }
                 <small ref={headerImageError} className='errorText'></small>
@@ -130,6 +131,7 @@ function PostSidebar(props) {
             <hr />
             <div className='post-meta-desc-container'>
                 <textarea 
+                    disabled={saving}
                     ref={metaDescInput}
                     onChange={handleMetaDescriptionChange}
                     placeholder='Enter meta description here'
@@ -145,6 +147,7 @@ function PostSidebar(props) {
             </div>
             <div className='post-meta-keywords-container'>
                 <textarea
+                    disabled={saving}
                     ref={metaKeywordsInput}
                     onChange={handleMetaKeywordsChange}
                     placeholder='Enter meta keywords here (separated by comma)'
@@ -162,7 +165,7 @@ function PostSidebar(props) {
                                     <div 
                                         className='post-meta-keyword col-lg-4 col-md-4 col-4 my-1' 
                                         key={k + i}
-                                        onClick={() => handleRemoveMetaKeyword(i)}
+                                        onClick={saving ? null : () => handleRemoveMetaKeyword(i)}
                                     >
                                         <span>{k}</span>
                                         <span className='remove-keyword'>&times;</span>

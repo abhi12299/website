@@ -9,7 +9,7 @@ import { SETTITLE, SETBODY } from '../../redux/types';
 import '../../css/dashboard/postEditor.css';
 
 function PostEditor(props) {
-    const { title, body, postRestored } = props;
+    const { title, body, postRestored, saving } = props;
 
     const titleInput = useRef();
     const titleError = useRef();
@@ -74,6 +74,7 @@ function PostEditor(props) {
                         onBlur={handleTitleInputBlur}
                         onChange={handleTitleChange}
                         value={title}
+                        disabled={saving}
                     />
                 </h3>
                 <small ref={titleError} className='errorText'></small>
@@ -97,6 +98,7 @@ function PostEditor(props) {
                 onKeyUp={handleEditorChange}
                 initialValue={body}
                 onBlur={handleEditorBlur}
+                disabled={saving}
             />
             <small ref={bodyError} className='errorText'></small>
         </div>

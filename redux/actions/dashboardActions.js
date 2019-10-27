@@ -24,7 +24,7 @@ const savePost = postData => {
           if (resp.error) {
             console.error(resp);
             dispatch({ type: POSTSAVING, payload: false });
-            showToast('There was some error submitting the post!', 'error');
+            showToast(resp.msg || 'There was some error submitting the post!', 'error');
           } else {
             showToast('Post was submitted successfully!', 'success', {
               timeOut: 1000,
