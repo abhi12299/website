@@ -33,7 +33,7 @@ const savePost = postData => {
             .then(() => {
                 dispatch({ type: POSTSAVING, payload: false });
                 removePostFromLS();
-                Router.push('/dashboard');
+                Router.push('/dashboard/posts');
             });
           }
         }).catch(err => {
