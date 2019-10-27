@@ -1,7 +1,7 @@
 import fetch from 'isomorphic-unfetch';
 import Router from 'next/router';
 
-import { POSTSAVING } from '../types';
+import { POSTSAVING, POSTSLOADING, POSTSERROR, POSTSSUCCESS } from '../types';
 import baseURL from '../../constants/apiURL';
 import { showToast } from '../../utils/toasts';
 import removePostFromLS from '../../utils/removePostFromLS';
@@ -44,6 +44,38 @@ const savePost = postData => {
   };
 };
 
+const fetchPosts = ({ req, filters }) => {
+  const fetchOpts = {
+    method: 'GET',
+    credentials: 'include',
+  };
+  if (req && 'token' in req.cookies) {
+    fetchOpts.headers = {
+      'authorization': `Bearer ${req.cookies['token']}`
+    };
+  }
+
+  return dispatch => {
+    dispatch({ type: POSTSLOADING, payload: true });
+    
+    return fetch(baseURL + '/api/dashboard/getPosts', fetchOpts)
+        .then(res => res.json())
+        .then(resp => {
+          if (resp.error) {
+            console.error(resp);
+            dispatch({ type: POSTSERROR, payload: 'Something went wrong while fetching the posts.' });
+          } else {
+            console.log('resp from server is', resp);
+            dispatch({ type: POSTSSUCCESS, payload: [] });
+          }
+        }).catch(err => {
+            console.error(err);
+            dispatch({ type: POSTSERROR, payload: 'Something went wrong while fetching the posts.' });
+        });
+  };
+};
+
 export default {
-    savePost
+    savePost,
+    fetchPosts
 };

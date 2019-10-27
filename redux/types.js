@@ -4,7 +4,7 @@ export const ERROR = 'error';
 export const LOGIN = 'login';
 export const LOGOUT = 'logout';
 
-// dashboard posts
+// dashboard post
 export const DASHBOARDPOSTERROR = 'dashboardposterror';
 export const DASHBOARDPOSTLOADING = 'dashboardpostloading';
 export const SETTITLE = 'settitle';
@@ -14,3 +14,8 @@ export const SETMETADESC = 'setmetadesc';
 export const RESTOREPOST = 'restorepost';
 export const SETMETAKEYWORDS= 'setmetakeywords';
 export const POSTSAVING = 'postsaving';
+
+// posts
+export const POSTSERROR = 'postserror';
+export const POSTSLOADING = 'postsloading';
+export const POSTSSUCCESS = 'postssuccess';
