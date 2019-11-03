@@ -9,7 +9,7 @@ import Footer from '../components/footer';
 import '../css/error.css';
 
 function Error(props) {
-    let { statusCode = 404 } = props;
+    let { statusCode = 404, title='Something went wrong!' } = props;
     let errorText = '';
 
     switch (statusCode) {
@@ -26,7 +26,7 @@ function Error(props) {
     return (
         <div>
             <Head>
-                <title>Page not found</title>
+                <title>{title}</title>
             </Head>
             <Header />
             <div className='main-body-content'>
@@ -64,7 +64,8 @@ function Error(props) {
 
 Error.proptypes = {
     statusCode: PropTypes.number.isRequired,
-    errorText: PropTypes.string
+    errorText: PropTypes.string,
+    title: PropTypes.string.isRequired
 };
 
 export default Error;

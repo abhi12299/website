@@ -84,4 +84,22 @@ dashboardRouter.get('/bulkIndex', async (req, res) => {
     return res.json({ error: false, msg: `${response.postCount} posts indexed!` });
 });
 
+dashboardRouter.get('/getPosts', async (req, res) => {
+    let {
+        published, sortBy, sortOrder=-1, skip=0, limit=5
+    } = req.query;
+
+    skip = parseInt(skip) || 0;
+    limit = parseInt(limit) || 5;
+    const posts = await Post.getPosts({ published, sortBy, sortOrder, skip, limit });
+    if (!posts) {
+        return res.status(500).json({ error: true, msg: 'Something went wrong!' });
+    }
+
+    return res.json({
+        error: false,
+        data: posts
+    });
+});
+
 module.exports = dashboardRouter;

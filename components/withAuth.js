@@ -11,6 +11,15 @@ export default function(WrappedComponent) {
     class WithAuth extends Component {
         static async getInitialProps(ctx) {
             await ctx.store.dispatch(actions.authActions.authenticate(ctx.req));
+            const store = ctx.store.getState();
+            if (store.auth.admin) {
+                if (WrappedComponent.getInitialProps) {
+                    const { fetchPosts } = await WrappedComponent.getInitialProps();
+                    if (fetchPosts) {
+                        await ctx.store.dispatch(actions.dashboardActions.fetchPosts({ req: ctx.req }));
+                    }
+                }
+            }
             return {};
         }
 
@@ -22,6 +31,14 @@ export default function(WrappedComponent) {
             const { initiateForceLogout } = this.props.auth;
 
             this.setState({ forceLogout: initiateForceLogout });
+        }
+
+        componentDidUpdate(prevProps) {
+            const { initiateForceLogout } = this.props.auth;
+            const { initiateForceLogout:prevForceLogout } = prevProps.auth;
+            if (initiateForceLogout && prevForceLogout !== initiateForceLogout) {
+                this.setState({ forceLogout: initiateForceLogout });
+            }
         }
 
         render() {
@@ -39,7 +56,11 @@ export default function(WrappedComponent) {
                 return <WrappedComponent {...this.props} />
             } else if (error) {
                 return (
-                    <Error statusCode={400} errorText={errorMessage || 'Awwww Snap!'} />
+                    <Error 
+                        statusCode={400} 
+                        title='Something went wrong!' 
+                        errorText={errorMessage || 'Awwww Snap!'} 
+                    />
                 );
             }
             return <FullScreenLoader />;

@@ -7,7 +7,6 @@ import Preloader from '../../components/preloader';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
 import AdminFAB from '../../components/adminFAB';
-import FullScreenLoader from '../../components/fullScreenLoader';
 
 const ViewPosts = props => {
 //   if (loading) {
@@ -33,4 +32,10 @@ const ViewPosts = props => {
   );
 };
 
+ViewPosts.getInitialProps = async ctx => {
+    return {
+        fetchPosts: true
+    };
+}
+  
 export default withAuth(connect(state => state, null)(ViewPosts));

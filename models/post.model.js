@@ -84,6 +84,48 @@ PostSchema.statics = {
             logger.error('Cannot update post', err);
             return null;
         }
+    },
+    async getPosts({ published, sortBy='postedDate', sortOrder=-1, skip=0, limit=5 }) {
+        try {
+            let aggrQuery = [];
+            if (typeof published !== 'undefined') {
+                aggrQuery.push({
+                    $match: { published }
+                });
+            }
+            if (typeof sortBy !== 'undefined') {
+                aggrQuery.push({
+                    $sort: {
+                        [sortBy]: sortOrder
+                    }
+                });
+            }
+    
+            aggrQuery = [
+                ...aggrQuery, 
+                {
+                    $skip: skip
+                },
+                {
+                    $limit: limit
+                },
+                {
+                    $project: {
+                        _id: 1,
+                        title: 1,
+                        published: 1,
+                        postedDate: 1,
+                        headerImageURL: 1,
+                        metaKeywords: 1,
+                        metaDescription: 1
+                    }
+                }
+            ];
+            return await this.aggregate(aggrQuery);
+        } catch (err) {
+            logger.error('Cannot get posts', err);
+            return null;
+        }
     }
 };
 
