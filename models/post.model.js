@@ -116,8 +116,6 @@ PostSchema.statics = {
                         published: 1,
                         postedDate: 1,
                         headerImageURL: 1,
-                        metaKeywords: 1,
-                        metaDescription: 1
                     }
                 }
             ];

@@ -1,7 +1,13 @@
 import fetch from 'isomorphic-unfetch';
 import Router from 'next/router';
 
-import { POSTSAVING, POSTSLOADING, POSTSERROR, POSTSSUCCESS, ERROR, LOGIN } from '../types';
+import { POSTSAVING, 
+  POSTSLOADING, 
+  POSTSERROR, 
+  POSTSSUCCESS, 
+  ERROR,
+  TOGGLEPOSTSUCCESS
+} from '../types';
 import baseURL from '../../constants/apiURL';
 import { showToast } from '../../utils/toasts';
 import removePostFromLS from '../../utils/removePostFromLS';
@@ -92,7 +98,50 @@ const fetchPosts = ({ req, filters }) => {
   };
 };
 
+const togglePublish = (postData) => {
+  const { _id, published } = postData;
+  const fetchOpts = {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ _id, published })
+  };
+  return dispatch => {
+    return fetch(baseURL + '/api/dashboard/setPublished', fetchOpts)
+      .then(res => {
+        if (res.status === 401) {
+          return Promise.resolve({
+            error: true,
+            forceLogout: true,
+            msg: 'You are not authorized!'
+          });
+        }
+        return res.json();
+      }).then(resp => {
+        if (resp.error) {
+          console.error(resp);
+          if (resp.forceLogout) {
+            dispatch({ type: ERROR, payload: 'Invalid user token! You will be logged out!', initiateForceLogout: true });
+            // to remove admin=true from store
+            // so error page renders in withAuth
+            // dispatch({ type: LOGIN, payload: false });
+          } else {
+            showToast(resp.msg || 'There was some error changing the publish status of the post!', 'error');
+          }
+        } else {
+          dispatch({ type: TOGGLEPOSTSUCCESS, payload: { _id, published } });
+        }
+      }).catch(err => {
+        console.error(err);
+        showToast('There was some error changing the publish status of the post!', 'error');
+    });;
+  }
+}
+
 export default {
     savePost,
-    fetchPosts
+    fetchPosts,
+    togglePublish
 };

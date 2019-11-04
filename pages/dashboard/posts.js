@@ -7,11 +7,14 @@ import Preloader from '../../components/preloader';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
 import AdminFAB from '../../components/adminFAB';
+import Post from '../../components/dashboard/post';
 
 const ViewPosts = props => {
 //   if (loading) {
 //     return <FullScreenLoader />;
 //   }
+
+  const posts = props.posts.data;
 
   return (
     <div>
@@ -23,7 +26,9 @@ const ViewPosts = props => {
       {/* position relative needed for jquery scroll */}
       <div className='main-body-content' style={{maxWidth: '100%', position: 'relative'}}>
         <div className='container'>
-          All posts show up here
+          {
+            posts.map(p => <Post key={p._id} post={p} />)
+          }
         </div>
           <Footer />
           { props.auth.admin && <AdminFAB /> }
@@ -32,7 +37,7 @@ const ViewPosts = props => {
   );
 };
 
-ViewPosts.getInitialProps = async ctx => {
+ViewPosts.getInitialProps = async () => {
     return {
         fetchPosts: true
     };
