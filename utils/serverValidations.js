@@ -19,6 +19,16 @@ function validatePost({title, headerImageURL, metaKeywords,
     return error;
 }
 
+function validateSetPublished(body) {
+    const schema = Joi.object({
+        _id: Joi.string().required(),
+        published: Joi.number().allow(0, 1).required()
+    });
+    const { error } = Joi.validate(body, schema);
+    return error;
+}
+
 module.exports = {
-    validatePost
+    validatePost,
+    validateSetPublished
 };

@@ -89,7 +89,7 @@ const fetchPosts = ({ req, filters }) => {
             console.error(resp);
             dispatch({ type: POSTSERROR, payload: 'Something went wrong while fetching the posts.' });
           } else {
-            dispatch({ type: POSTSSUCCESS, payload: resp.data });
+            dispatch({ type: POSTSSUCCESS, payload: { data: resp.data, count: resp.count } });
           }
         }).catch(err => {
             console.error(err);
@@ -132,6 +132,7 @@ const togglePublish = (postData) => {
           }
         } else {
           dispatch({ type: TOGGLEPOSTSUCCESS, payload: { _id, published } });
+          showToast(`The post was successfully ${published ? 'published': 'unpublished'}.`, 'success');
         }
       }).catch(err => {
         console.error(err);

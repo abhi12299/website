@@ -9,7 +9,8 @@ const initialState = {
   loading: false,
   errorMessage: null,
   error: false,
-  data: null
+  data: null,
+  count: 0
 };
 
 export default (state = initialState, action) => {
@@ -19,7 +20,7 @@ export default (state = initialState, action) => {
     case POSTSERROR:
       return Object.assign({}, state, { error: true, loading: false, errorMessage: action.payload });
     case POSTSSUCCESS:
-      return Object.assign({}, state, { error: false, loading: false, errorMessage: null, data: action.payload });
+      return Object.assign({}, state, { error: false, loading: false, errorMessage: null, ...action.payload });
     case TOGGLEPOSTSUCCESS:
       const { _id, published } = action.payload;
       let data = state.data;

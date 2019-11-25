@@ -88,10 +88,12 @@ PostSchema.statics = {
     async getPosts({ published, sortBy='postedDate', sortOrder=-1, skip=0, limit=5 }) {
         try {
             let aggrQuery = [];
+            let countQuery = {};
             if (typeof published !== 'undefined') {
                 aggrQuery.push({
                     $match: { published }
                 });
+                countQuery.published = published;
             }
             if (typeof sortBy !== 'undefined') {
                 aggrQuery.push({
@@ -119,11 +121,16 @@ PostSchema.statics = {
                     }
                 }
             ];
-            return await this.aggregate(aggrQuery);
+            const count = await this.countDocuments(countQuery);
+            const posts = await this.aggregate(aggrQuery);
+            return { posts, count };
         } catch (err) {
             logger.error('Cannot get posts', err);
             return null;
         }
+    },
+    async setPublished(_id, published) {
+        await this.findOneAndUpdate({ _id }, { $set: {published} });
     }
 };
 

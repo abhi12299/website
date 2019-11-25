@@ -7,7 +7,9 @@ const bulkInsertPosts = require('../elasticClient/bulkInsertPosts');
 const elasticSearchHelper = require('../elasticClient/helper');
 const logger = require('../logger');
 
-const { validatePost } = require('../utils/serverValidations');
+const {
+    validatePost, validateSetPublished
+} = require('../utils/serverValidations');
 
 const dashboardRouter = Router();
 
@@ -86,20 +88,39 @@ dashboardRouter.get('/bulkIndex', async (req, res) => {
 
 dashboardRouter.get('/getPosts', async (req, res) => {
     let {
-        published, sortBy, sortOrder=-1, skip=0, limit=5
+        published, sortBy, sortOrder=-1, skip=0, limit=10
     } = req.query;
 
     skip = parseInt(skip) || 0;
-    limit = parseInt(limit) || 5;
-    const posts = await Post.getPosts({ published, sortBy, sortOrder, skip, limit });
+    limit = parseInt(limit) || 10;
+    const { posts, count } = await Post.getPosts({ published, sortBy, sortOrder, skip, limit });
     if (!posts) {
         return res.status(500).json({ error: true, msg: 'Something went wrong!' });
     }
 
     return res.json({
         error: false,
-        data: posts
+        data: posts,
+        count
     });
+});
+
+dashboardRouter.post('/setPublished', async (req, res) => {
+    const error = validateSetPublished(req.body);
+    if (error) {
+        logger.error('Post validation failed with error:', { error, body: req.body });
+        return res.status(400).json({ error: true, msg: 'Incorrect info submitted!' });
+    }
+    const { _id, published } = req.body;
+    try {
+        await Post.setPublished(_id, published);
+        return res.json({
+            error: false
+        });
+    } catch (err) {
+        logger.error('Error in setPublished:', err);
+        return res.json({ error: true })
+    }
 });
 
 module.exports = dashboardRouter;
