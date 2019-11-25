@@ -27,7 +27,7 @@
     "isomorphic-unfetch": "^3.0.0",
     "joi": "^14.3.1",
     "jquery": "^3.4.1",
-    "mongoose": "^5.7.0",
+    "mongoose": "^5.7.5",
     "next": "9.0.5",
     "next-compose-plugins": "^2.2.0",
     "next-offline": "^4.0.5",
