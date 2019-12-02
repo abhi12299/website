@@ -6,6 +6,14 @@
     align-content: center;
 }
 
+.dashboard-post .dashboard-post-header-img-container {
+    text-align: center;
+}
+
+.dashboard-post .post-header-img {
+    max-height: 100px;
+}
+
 .dashboard-post a:hover, a:active {
     color: black !important;
 }

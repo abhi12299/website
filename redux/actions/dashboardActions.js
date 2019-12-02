@@ -68,7 +68,7 @@ const savePost = postData => {
   };
 };
 
-const fetchPosts = ({ req, filters }) => {
+const fetchPosts = ({ req, filters, perPage=10, pageNo=1 }) => {
   const fetchOpts = {
     method: 'GET',
     credentials: 'include',
@@ -78,11 +78,20 @@ const fetchPosts = ({ req, filters }) => {
       'authorization': `Bearer ${req.cookies['token']}`
     };
   }
-
+  let appendToQuery = false;
+  let url = `${baseURL}/api/dashboard/getPosts`;
+  if (perPage) {
+    appendToQuery = true;
+    url += `?limit=${perPage}`;
+  }
+  if (pageNo) {
+    url += `${appendToQuery ? '&' : '?'}skip=${(pageNo-1) * perPage}`;
+    appendToQuery = true;
+  }
   return dispatch => {
     dispatch({ type: POSTSLOADING, payload: true });
     
-    return fetch(baseURL + '/api/dashboard/getPosts', fetchOpts)
+    return fetch(url, fetchOpts)
         .then(res => res.json())
         .then(resp => {
           if (resp.error) {

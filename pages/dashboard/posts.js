@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react'
+import { withRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { connect } from 'react-redux';
 
@@ -8,13 +10,25 @@ import Header from '../../components/header';
 import Footer from '../../components/footer';
 import AdminFAB from '../../components/adminFAB';
 import Post from '../../components/dashboard/post';
+const Pagination = dynamic(() => import('../../components/pagination'), { ssr: false });
 
+const perPage = 2;
 const ViewPosts = props => {
+  const { router } = props;
+  let [pageNo, setPageNo] = useState(1);
+  useEffect(() => {
+    let { page = 1} = router.query;
+    page = parseInt(page) || 1;
+    page = page > 0 ? page : 1;
+    setPageNo(page);
+  }, [router.query]);
+
 //   if (loading) {
 //     return <FullScreenLoader />;
 //   }
 
   const posts = props.posts.data;
+  const { count } = props.posts;
 
   return (
     <div>
@@ -29,6 +43,11 @@ const ViewPosts = props => {
           {
             posts.map(p => <Post key={p._id} post={p} />)
           }
+          <Pagination 
+            pageNo={pageNo} 
+            perPage={perPage} 
+            totalItems={count}
+          />
         </div>
           <Footer />
           { props.auth.admin && <AdminFAB /> }
@@ -37,10 +56,11 @@ const ViewPosts = props => {
   );
 };
 
-ViewPosts.getInitialProps = async () => {
-    return {
-        fetchPosts: true
-    };
+ViewPosts.getInitialProps = () => {
+  return {
+      fetchPosts: true,
+      perPage
+  };
 }
   
-export default withAuth(connect(state => state, null)(ViewPosts));
+export default withAuth(connect(state => state, null)(withRouter(ViewPosts)));

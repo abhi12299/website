@@ -35,7 +35,7 @@ const Post = props => {
 
     return (
         <div className='dashboard-post row mx-auto'>
-            <div className='dashboard-post-header-img-container col-lg-3 col-md-3 col-3'>
+            <div className='dashboard-post-header-img-container col-lg-3 col-md-3 col-3 mx-auto'>
                 <img src={headerImageURL} crossOrigin='anonymous' className='post-header-img' />
             </div>
             <div className='dashboard-post-content-container col-lg-9 col-md-9 col-9'>
