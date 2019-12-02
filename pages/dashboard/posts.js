@@ -12,7 +12,7 @@ import AdminFAB from '../../components/adminFAB';
 import Post from '../../components/dashboard/post';
 const Pagination = dynamic(() => import('../../components/pagination'), { ssr: false });
 
-const perPage = 2;
+const perPage = 10;
 const ViewPosts = props => {
   const { router } = props;
   let [pageNo, setPageNo] = useState(1);
