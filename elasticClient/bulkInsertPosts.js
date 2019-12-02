@@ -39,6 +39,7 @@ async function bulkInsertPosts() {
                 posts.push({
                     index: {
                         _index: 'post',
+                        _id: post.id
                     }
                 });
                 posts.push({ ...post, body: striptags(post.body) });
@@ -47,9 +48,9 @@ async function bulkInsertPosts() {
         const resp = await client.bulk({
             body: posts
         });
-        if (resp.error) {
+        if (resp.error || resp.errors) {
             logger.error('Error while inserting posts', resp);
-            return { error: resp.error };
+            return { error: resp.error || resp.errors };
         }
 
         logger.info('from elastic client, resp is', resp);

@@ -20,7 +20,7 @@ dashboardRouter.post('/savePost', async (req, res) => {
         return res.status(400).json({ error: true, msg: 'Incorrect info submitted!' });
     }
     
-    const {
+    let {
         title,
         headerImageURL,
         metaDescription,
@@ -37,7 +37,9 @@ dashboardRouter.post('/savePost', async (req, res) => {
                 .replace(/\s/g, '-')
                 .replace(/[^\w\-]/g, '')
                 .substr(0, 200);
-    
+    // remove html entities
+    body = body.replace(/&.*?;/ig, '');
+
     const savedPost = await Post.savePost({
         _id, title, headerImageURL, metaKeywords,
         metaDescription, postedDate, body, published
