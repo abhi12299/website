@@ -27,11 +27,20 @@
 }
 
 .dashboard-post .toggle-publish {
-    cursor: pointer;
     font-size: 1.5rem;
 }
 
 .dashboard-post .toggle-publish.toggle-wait {
     cursor: not-allowed;
     color: gray;
+}
+
+.dashboard-post .preview {
+    font-size: 1.2rem;
+}
+
+.dashboard-post .actions ul li {
+    cursor: pointer;
+    display: inline;
+    margin-right: 20px;
 }

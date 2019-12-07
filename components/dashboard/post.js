@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import actions from '../../redux/actions/index';
 
 import '../../css/dashboard/post.css';
@@ -33,6 +34,10 @@ const Post = props => {
         })).then(() => setLoading(false));
     };
 
+    const handlePreview = () => {
+        window.open(`/preview/${_id}`, '_blank');
+    };
+
     return (
         <div className='dashboard-post row mx-auto'>
             <div className='dashboard-post-header-img-container col-lg-3 col-md-3 col-3 mx-auto'>
@@ -55,6 +60,14 @@ const Post = props => {
                                 className={'toggle-publish' + (loading ? ' toggle-wait': '')}
                                 title={published ? 'Unpublish': 'Publish'}
                                 onClick={loading ? null : togglePublish}
+                            />
+                        </li>
+                        <li>
+                            <FontAwesomeIcon 
+                                className='preview'
+                                icon={faExternalLinkAlt} 
+                                title={'Preview'}
+                                onClick={handlePreview}
                             />
                         </li>
                     </ul>
