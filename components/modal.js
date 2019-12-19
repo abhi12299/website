@@ -1,64 +1,63 @@
-import React, { useEffect, useRef } from 'react';
+import React, { Component,  createRef } from 'react';
 import PropTypes from 'prop-types';
 
 import '../css/modal.css';
 
-let initialRender = false;
-
-function Modal(props) {
-    const {
-        title,
-        show,
-        children,
-        positiveActionButtonName,
-        negativeActionButtonName,
-        promptBeforeClose=false,
-        onNegativeAction,
-        onPositiveAction,
-        onClose,
-    } = props;
-
-    const customModal = useRef();
-
-    useEffect(() => {
-        window.addEventListener('keydown', escapeKeyCloseModal);
-        window.addEventListener('click', outsideClickCloseModal);
-        return () => {
-            window.removeEventListener('click', outsideClickCloseModal);
-            window.removeEventListener('keydown', escapeKeyCloseModal);
-        }
-    }, []);
-
-    useEffect(() => {
-        if (customModal.current && initialRender) {
-            show ? openModal() : closeModal();
-        }
-        initialRender = true;
-    }, [show]);
-
-    const escapeKeyCloseModal = e => {
-        // escape key close
-        if (e.keyCode === 27) {
-            beforeClose(false);
-        }
-    };
-
-    const outsideClickCloseModal = e => {
-        if (e.target === customModal.current) {
-            beforeClose(false);
-        }
-    };
-
-    const openModal = () => {
-        customModal.current.style.display = 'block';
-    };
-
-    const closeModal = () => {
-        customModal.current.style.display = 'none';
+class Modal extends Component {
+    constructor(props) {
+        super(props);
+        this.customModal = createRef();
+        this.outsideClickCloseModal = this.outsideClickCloseModal.bind(this);
+        this.escapeKeyCloseModal = this.escapeKeyCloseModal.bind(this);
     }
 
-    const beforeClose = isPositiveActionPerformed => {
-        if (promptBeforeClose && !confirm('Are you sure you want to quit?')) {
+    componentDidUpdate(prevProps) {
+        const {
+            show
+        } = this.props;
+        if (this.customModal.current && prevProps.show !== show) {
+            if (show) {
+                window.addEventListener('keydown', this.escapeKeyCloseModal, true);
+                window.addEventListener('click', this.outsideClickCloseModal, true);
+                this.openModal();
+            } else {
+                window.removeEventListener('click', this.outsideClickCloseModal, true);
+                window.removeEventListener('keydown', this.escapeKeyCloseModal, true);
+                this.closeModal();
+            }
+        }
+    }
+
+    openModal = () => {
+        this.customModal.current.style.display = 'block';
+    };
+
+    closeModal = () => {
+        this.customModal.current.style.display = 'none';
+    }
+
+    outsideClickCloseModal = e => {
+        if (e.target === this.customModal.current) {
+            this.beforeClose(false);
+        }
+    };
+
+    escapeKeyCloseModal = e => {
+        // escape key close
+        if (e.keyCode === 27) {
+            this.beforeClose(false);
+        }
+    };
+
+    beforeClose = (isPositiveActionPerformed, forceClose=false) => {
+        const {
+            onNegativeAction,
+            onPositiveAction,
+            promptBeforeClose=false,
+            onClose
+        } = this.props;
+
+        if (!forceClose && promptBeforeClose && !confirm('Are you sure you want to quit?')) {
             return;
         }
         isPositiveActionPerformed ?
@@ -66,19 +65,24 @@ function Modal(props) {
         :
         (onNegativeAction && onNegativeAction());
         onClose();
-    }
+    };
+    
+    showFooter = () => {
+        const {
+            positiveActionButtonName,
+            negativeActionButtonName,
+        } = this.props;
 
-    const showFooter = () => {
         return (
             <div className='modal-footer'>
                 <button 
-                    onClick={onNegativeAction ? onNegativeAction : null}
+                    onClick={() => this.beforeClose(false)}
                     className='btn btn-secondary'
                 >
                     {negativeActionButtonName}
                 </button>
                 <button 
-                    onClick={onPositiveAction ? onPositiveAction : null}
+                    onClick={() => this.beforeClose(true, true)}
                     className='btn btn-primary'
                 >
                     {positiveActionButtonName}
@@ -87,29 +91,38 @@ function Modal(props) {
         );
     };
 
-    return (
-        <div ref={customModal} className='custom-modal'>
-            <div className='custom-modal-content'>
-                <div className='modal-header'>
-                    <h5 className='modal-title'>{title}</h5>
-                    <button 
-                        type='button' 
-                        className='close' 
-                        onClick={() => beforeClose(false)}
-                    >
-                        <span aria-hidden='true'>&times;</span>
-                    </button>
+    render() {
+        const {
+            title,
+            children,
+            positiveActionButtonName,
+            negativeActionButtonName,
+        } = this.props;
+
+        return (
+            <div ref={this.customModal} className='custom-modal'>
+                <div className='custom-modal-content'>
+                    <div className='modal-header'>
+                        <h5 className='modal-title'>{title}</h5>
+                        <button
+                            type='button'
+                            className='close'
+                            onClick={() => this.beforeClose(false)}
+                        >
+                            <span aria-hidden='true'>&times;</span>
+                        </button>
+                    </div>
+                    <div className='modal-body'>
+                        {children}
+                    </div>
+                    {
+                        (positiveActionButtonName || negativeActionButtonName)
+                            ? this.showFooter() : null
+                    }
                 </div>
-                <div className='modal-body'>
-                    {children}
-                </div>
-                {
-                    (positiveActionButtonName || negativeActionButtonName) 
-                    ? showFooter() : null
-                }
             </div>
-        </div>
-    );
+        );
+    }
 }
 
 Modal.propTypes = {
