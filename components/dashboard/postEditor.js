@@ -6,18 +6,28 @@ import dynamic from 'next/dynamic';
 import apiKeys from '../../constants/apiKeys';
 import { validatePostTitle, validatePostBody } from '../../utils/validate';
 import { SETTITLE, SETBODY } from '../../redux/types';
+import baseURL from '../../constants/apiURL';
+import { showToast } from '../../utils/toasts';
+import copyToClipboard from '../../utils/copyToClipboard';
+import checkFileType from '../../utils/checkfileType';
+import uploadMedia from '../../utils/uploadMedia';
+
 const ImageCropper = dynamic(() => import('./imageCropper.js'), { ssr: false });
 
 import '../../css/dashboard/postEditor.css';
 
+// for the file to be uploaded!
+let filename = '';
 function PostEditor(props) {
     const { title, body, postRestored, saving } = props;
     let [imageBlob, setImageBlob] = useState('');
+    let [isMediaUploading, setIsMediaUploading] = useState(false);
 
     const titleInput = useRef();
     const titleError = useRef();
     const bodyError = useRef();
     const mediaUploadInput = useRef();
+    const uploadStatusRef = useRef();
 
     useEffect(() => {
         if (postRestored) {
@@ -70,37 +80,98 @@ function PostEditor(props) {
         const { files } = e.target;
         if (files && files.length > 0) {
             const file = files[0];
-            let url;
-            if (URL) {
-                url = URL.createObjectURL(file);
-                setImageBlob(url);
-            } else if (FileReader) {
-                reader = new FileReader();
-                reader.onload = function (e) {
-                    url = reader.result;
-                    setImageBlob(url);
-                };
-                reader.readAsDataURL(file);
+            const type = checkFileType(file);
+            filename = file.name;
+            switch(type) {
+                case'image-gif':
+                    upload(file, filename);
+                    break;
+                case 'image':
+                    let url;
+                    if (URL) {
+                        url = URL.createObjectURL(file);
+                        setImageBlob(url);
+                    } else if (FileReader) {
+                        reader = new FileReader();
+                        reader.onload = function (e) {
+                            url = reader.result;
+                            setImageBlob(url);
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                    break;
+                case 'video':
+                    const fileSizeInMB = file.size * 1e-6;
+                    if (fileSizeInMB >= 20) {
+                        showToast('File size too large!', 'error');
+                        return;
+                    }
+                    upload(file, filename);
+                    break;
+                default:
+                    showToast('Unknown file type!', 'error');
             }
         }
+    };
+
+    const isBlobImage = blob => {
+        const mimeType = blob.type;
+        return /^image\/.*/i.test(mimeType);
     };
 
     const closeImageCropper = () => {
         setImageBlob('');
     }
-    
-    const uploadImage = blob => {
-        if (blob) {
-            console.log('Cropped image blob received:', blob);
-            // at the end, clear file upload input field
+
+    const handleUploadProgress = e => {
+        const percent = (e.loaded / e.total) * 100;
+        const progress = Math.round(percent);
+        uploadStatusRef.current.innerText = `${progress}% done`;
+        setIsMediaUploading(true);
+    };
+
+    const handleUploadComplete = resp => {
+        if (!resp.error) {
+            const { path } = resp;
+            copyToClipboard(baseURL + path);
+            showToast('Upload successful! Link copied!', 'success');
         } else {
-            // toast error!
+            showToast('Upload successful! Link could not be copied', 'info');
         }
+        uploadStatusRef.current.innerText = 'Upload';
         mediaUploadInput.current.value = '';
+        setIsMediaUploading(false);
+    };
+
+    const handleUploadError = () => {
+        showToast('Upload failed!', 'error');
+        uploadStatusRef.current.innerText = 'Upload';
+        mediaUploadInput.current.value = '';
+        setIsMediaUploading(false);
+    };
+
+    const upload = (blob, filename) => {
+        if (blob) {
+            const blobSizeInMB = blob.size * 1e-6;
+            // imageCropper onComplete calls it directly
+            // hence the check
+            if (isBlobImage(blob) && blobSizeInMB >= 5) {
+                showToast('File size too large!', 'error');
+                mediaUploadInput.current.value = '';
+                return;
+            }
+            uploadMedia(blob, filename, {
+                cbOnProgress: handleUploadProgress,
+                cbOnComplete: handleUploadComplete,
+                cbOnError: handleUploadError
+            });
+        } else {
+            showToast('Something went wrong!', 'error');
+        }
     }
 
     const handleImageCropCancel = () => {
-        // clear file upload input field
+        showToast('Upload cancelled!', 'info');
         mediaUploadInput.current.value = '';
     };
 
@@ -123,14 +194,14 @@ function PostEditor(props) {
                 <div className='my-auto post-media-upload-container'>
                     <label className='post-media-upload-label my-auto'>
                         <input 
-                            disabled={false}
+                            disabled={isMediaUploading}
                             ref={mediaUploadInput}
                             type='file' 
                             className='post-media-upload' 
                             onChange={handlePostMedia} 
                             accept='image/*' 
                         />
-                        <span>Upload</span>
+                        <span ref={uploadStatusRef}>Upload</span>
                     </label>
                 </div>
             </div>
@@ -138,7 +209,7 @@ function PostEditor(props) {
                 show={!!imageBlob} 
                 blob={imageBlob}
                 onClose={closeImageCropper} 
-                onComplete={uploadImage}
+                onComplete={blob => upload(blob, filename)}
                 onCancel={handleImageCropCancel}
             />
             <Editor

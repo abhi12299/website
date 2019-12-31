@@ -1,4 +1,7 @@
 const Router = require('express').Router;
+const fs = require('fs');
+const path = require('path');
+const multer = require('multer');
 const striptags = require('striptags');
 
 const Post = require('../models/post.model');
@@ -123,6 +126,49 @@ dashboardRouter.post('/setPublished', async (req, res) => {
         logger.error('Error in setPublished:', err);
         return res.json({ error: true })
     }
+});
+
+// multer init
+const storage = multer.diskStorage({
+    destination: path.join(__dirname, '../public/static/blogs'),
+    filename: (req, file, cb) => {
+        let filePath = path.join('__dirname', '../public/static/blogs', file.originalname);
+        if (fs.existsSync(filePath)) {
+            const newFilename = `${file.originalname.split('.')[0]}-${Date.now()}.${file.originalname.split('.')[1]}`.replace(/ /g, '');
+            cb(null, newFilename);
+        } else {
+            cb(null, file.originalname.replace(/ /g, ''));
+        }
+    }
+});
+
+const upload = multer({
+    storage,
+    limits: {
+        fileSize: 20 * 1e6, // 20MB
+        files: 1
+    },
+    fileFilter: (req, file, cb) => {
+        // check if mimetype begins with image or video
+        let isFileAccepted = /^(image|video)/i.test(file.mimetype);
+
+        cb(null, isFileAccepted);
+    }
+}).single('file');
+
+dashboardRouter.post('/uploadMedia', (req, res, next) => {
+    upload(req, res, err => {
+        if (err) {
+            logger.error('File upload error:', err);
+            next(err);
+        } else {
+            console.log('files are:', req.files, req.file);
+            res.json({
+                error: false,
+                path: `/static/blogs/${req.file.filename}`
+            });
+        }
+    });
 });
 
 module.exports = dashboardRouter;
