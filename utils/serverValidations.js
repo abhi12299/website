@@ -28,7 +28,16 @@ function validateSetPublished(body) {
     return error;
 }
 
+function validateDeleteMedia(body) {
+    const schema = Joi.object({
+        _id: Joi.string().required()
+    });
+    const { error } = Joi.validate(body, schema);
+    return error;
+}
+
 module.exports = {
     validatePost,
-    validateSetPublished
+    validateSetPublished,
+    validateDeleteMedia
 };

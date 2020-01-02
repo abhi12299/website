@@ -5,4 +5,4 @@ if (process.env.NODE_ENV === 'production') {
     console.log('we in prod build');
 }
 
-export default baseURL;
+module.exports = baseURL;

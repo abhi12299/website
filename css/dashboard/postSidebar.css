@@ -84,7 +84,7 @@
 .sidebar-container .post-meta-desc[placeholder]:focus::-webkit-input-placeholder,
 .sidebar-container .post-meta-keywords-input[placeholder]:focus::-webkit-input-placeholder {
     transition: text-indent 0.5s 0.4s ease;
-    text-indent: -200%;
+    text-indent: -300%;
     opacity: 1;
 }
 

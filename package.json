@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "npx rimraf .next/ && node server.js",
+    "dev": "npx rimraf .next/ && npx cross-env NODE_ENV=development node server.js",
     "build": "next build",
     "start": "npx cross-env NODE_ENV=production node server.js",
     "analyse-server": "BUNDLE_ANALYZE=server yarn build",
@@ -19,6 +19,7 @@
     "@zeit/next-css": "^1.0.1",
     "body-parser": "^1.19.0",
     "bootstrap": "^4.3.1",
+    "cheerio": "^1.0.0-rc.3",
     "cluster": "^0.7.7",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.4",

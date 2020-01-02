@@ -4,6 +4,7 @@ const path = require('path');
 const multer = require('multer');
 const striptags = require('striptags');
 
+const Media = require('../models/media.model');
 const Post = require('../models/post.model');
 const createIndex = require('../elasticClient/createIndex');
 const bulkInsertPosts = require('../elasticClient/bulkInsertPosts');
@@ -11,8 +12,9 @@ const elasticSearchHelper = require('../elasticClient/helper');
 const logger = require('../logger');
 
 const {
-    validatePost, validateSetPublished
+    validatePost, validateSetPublished, validateDeleteMedia
 } = require('../utils/serverValidations');
+const findAttachedMedia = require('../utils/findAttachedMedia');
 
 const dashboardRouter = Router();
 
@@ -43,9 +45,12 @@ dashboardRouter.post('/savePost', async (req, res) => {
     // remove html entities
     body = body.replace(/&.*?;/ig, '');
 
+    const attachedMedia = findAttachedMedia(headerImageURL, body);
+
     const savedPost = await Post.savePost({
         _id, title, headerImageURL, metaKeywords,
-        metaDescription, postedDate, body, published
+        metaDescription, postedDate, body, published,
+        media: attachedMedia
     });
     if (savedPost) {
         let body = savedPost.body.replace(/\s/ig, ' ')
@@ -118,7 +123,15 @@ dashboardRouter.post('/setPublished', async (req, res) => {
     }
     const { _id, published } = req.body;
     try {
-        await Post.setPublished(_id, published);
+        const post = await Post.setPublished(_id, published);
+        /*const { error } = */ await elasticSearchHelper.updatePost(_id, { published });
+
+        const { media } = post ? post : { media: [] };
+
+        await Media.updateMedias(media, {
+            $inc: { usedInPosts: published ? 1 : -1 }
+        });
+
         return res.json({
             error: false
         });
@@ -132,7 +145,7 @@ dashboardRouter.post('/setPublished', async (req, res) => {
 const storage = multer.diskStorage({
     destination: path.join(__dirname, '../public/static/blogs'),
     filename: (req, file, cb) => {
-        let filePath = path.join('__dirname', '../public/static/blogs', file.originalname);
+        let filePath = path.join(__dirname, '../public/static/blogs', file.originalname);
         if (fs.existsSync(filePath)) {
             const newFilename = `${file.originalname.split('.')[0]}-${Date.now()}.${file.originalname.split('.')[1]}`.replace(/ /g, '');
             cb(null, newFilename);
@@ -157,18 +170,40 @@ const upload = multer({
 }).single('file');
 
 dashboardRouter.post('/uploadMedia', (req, res, next) => {
-    upload(req, res, err => {
+    upload(req, res, async err => {
         if (err) {
             logger.error('File upload error:', err);
             next(err);
         } else {
-            console.log('files are:', req.files, req.file);
+            await Media.saveMedia({ _id: req.file.filename });
             res.json({
                 error: false,
                 path: `/static/blogs/${req.file.filename}`
             });
         }
     });
+});
+
+dashboardRouter.delete('/deleteMedia', async (req, res) => {
+    const error = validateDeleteMedia(req.body);
+    if (error) {
+        logger.error('Post validation failed with error:', { error, body: req.body });
+        return res.status(400).json({ error: true, msg: 'Incorrect info submitted!' });
+    }
+
+    const { _id } = req.body;    
+    const media = await Media.deleteMedia(_id);
+
+    if (!media) {
+        logger.error('Media to delete not found in db', { _id });
+        return res.status(400).json({ error: true, msg: 'Invalid media name!' })
+    }
+
+    const mediaPath = path.join(__dirname, '../public/static/blogs/', media._id);
+    fs.unlinkSync(mediaPath);
+    logger.info('File deleted successfully!', { _id });
+
+    res.json({ error: false });
 });
 
 module.exports = dashboardRouter;

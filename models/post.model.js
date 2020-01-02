@@ -36,6 +36,12 @@ const PostSchema = new Schema({
     published: {
         type: Number,
         default: 0,
+    },
+    // media attached to the post hosted on the same server
+    // includes images and videos
+    media: {
+        type: [String],
+        default: []
     }
 }, { timestamps: true });
 
@@ -130,7 +136,7 @@ PostSchema.statics = {
         }
     },
     async setPublished(_id, published) {
-        await this.findOneAndUpdate({ _id }, { $set: {published} });
+        return await this.findOneAndUpdate({ _id }, { $set: {published} }, { new: true });
     }
 };
 
