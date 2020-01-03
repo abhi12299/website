@@ -1,0 +1,11 @@
+.media-upload-label {
+    border: 2px solid black;
+    border-radius: 2px;
+    padding: 4px 8px;
+    display: inline-block;
+}
+
+.media-upload {
+    position: absolute;
+    top: -10000px;
+}

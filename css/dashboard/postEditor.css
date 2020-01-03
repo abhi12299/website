@@ -67,18 +67,6 @@
     opacity: 1;
 }
 
-.post-media-upload {
-    position: absolute;
-    top: -10000px;
-}
-
-.post-media-upload-label {
-    border: 2px solid black;
-    border-radius: 2px;
-    padding: 4px 8px;
-    display: inline-block;
-}
-
 @media(max-width: 991px) {
     .post-title-container .post-title {
         width: 90%;
@@ -91,9 +79,5 @@
     }
     .post-title-container {
         flex-direction: column;
-    }
-
-    .post-media-upload-container {
-        margin-top: 5px;
     }
 }
