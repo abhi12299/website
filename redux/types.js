@@ -16,6 +16,11 @@ export const SETMETAKEYWORDS= 'setmetakeywords';
 export const POSTSAVING = 'postsaving';
 export const TOGGLEPOSTSUCCESS = 'togglepostsuccess';
 
+// dashboard media
+export const MEDIALOADING = "medialoading";
+export const MEDIAERROR = "mediaerror";
+export const MEDIASUCCESS = "mediasuccess";
+
 // posts
 export const POSTSERROR = 'postserror';
 export const POSTSLOADING = 'postsloading';

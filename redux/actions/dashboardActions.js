@@ -6,7 +6,10 @@ import { POSTSAVING,
   POSTSERROR, 
   POSTSSUCCESS, 
   ERROR,
-  TOGGLEPOSTSUCCESS
+  TOGGLEPOSTSUCCESS,
+  MEDIALOADING,
+  MEDIAERROR,
+  MEDIASUCCESS
 } from '../types';
 import baseURL from '../../constants/apiURL';
 import { showToast } from '../../utils/toasts';
@@ -107,6 +110,45 @@ const fetchPosts = ({ req, filters, perPage=10, pageNo=1 }) => {
   };
 };
 
+const fetchMedia = ({ req, filters, perPage=10, pageNo=1 }) => {
+  const fetchOpts = {
+    method: 'GET',
+    credentials: 'include',
+  };
+  if (req && 'token' in req.cookies) {
+    fetchOpts.headers = {
+      'authorization': `Bearer ${req.cookies['token']}`
+    };
+  }
+  let appendToQuery = false;
+  let url = `${baseURL}/api/dashboard/getMedia`;
+  if (perPage) {
+    appendToQuery = true;
+    url += `?limit=${perPage}`;
+  }
+  if (pageNo) {
+    url += `${appendToQuery ? '&' : '?'}skip=${(pageNo-1) * perPage}`;
+    appendToQuery = true;
+  }
+  return dispatch => {
+    dispatch({ type: MEDIALOADING, payload: true });
+    
+    return fetch(url, fetchOpts)
+        .then(res => res.json())
+        .then(resp => {
+          if (resp.error) {
+            console.error(resp);
+            dispatch({ type: MEDIAERROR, payload: 'Something went wrong while fetching the posts.' });
+          } else {
+            dispatch({ type: MEDIASUCCESS, payload: { data: resp.data, count: resp.count } });
+          }
+        }).catch(err => {
+            console.error(err);
+            dispatch({ type: MEDIAERROR, payload: 'Something went wrong while fetching the posts.' });
+        });
+  };
+};
+
 const togglePublish = (postData) => {
   const { _id, published } = postData;
   const fetchOpts = {
@@ -153,5 +195,6 @@ const togglePublish = (postData) => {
 export default {
     savePost,
     fetchPosts,
-    togglePublish
+    togglePublish,
+    fetchMedia
 };

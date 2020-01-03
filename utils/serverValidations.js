@@ -36,8 +36,21 @@ function validateDeleteMedia(body) {
     return error;
 }
 
+function validateGetMedia(query) {
+    const schema = Joi.object({
+        skip: Joi.string().regex(/^\d+$/).default('0'),
+        limit: Joi.string().regex(/^\d+$/).default('20'),
+        sortBy: Joi.string().regex(/^usedInPosts$/),
+        sortOrder: Joi.string().regex(/^(-1|1)$/).default('-1')
+    });
+
+    const { error } = Joi.validate(query, schema);
+    return error;
+}
+
 module.exports = {
     validatePost,
     validateSetPublished,
-    validateDeleteMedia
+    validateDeleteMedia,
+    validateGetMedia
 };

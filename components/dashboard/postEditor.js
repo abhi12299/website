@@ -199,7 +199,7 @@ function PostEditor(props) {
                             type='file' 
                             className='post-media-upload' 
                             onChange={handlePostMedia} 
-                            accept='image/*' 
+                            accept='image/*, video/*' 
                         />
                         <span ref={uploadStatusRef}>Upload</span>
                     </label>

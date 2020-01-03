@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const logger = require('../logger');
+const baseURL = require('../constants/apiURL');
 
 const Schema = mongoose.Schema;
 const MediaSchema = new Schema({
@@ -31,7 +32,7 @@ MediaSchema.statics = {
             return null;
         }
     },
-    async getMedia({ sortBy='createdAt', sortOrder=-1, skip=0, limit=5 }) {
+    async getMedia({ sortBy='createdAt', sortOrder=-1, skip=0, limit=20 }) {
         try {
             let aggrQuery = [];
             let countQuery = {};
@@ -52,8 +53,16 @@ MediaSchema.statics = {
                     $limit: limit
                 },
                 {
+                    $addFields: {
+                        url: {
+                            $concat: [baseURL, '/static/blogs/', '$_id']
+                        }
+                    }
+                },
+                {
                     $project: {
-                        updatedAt: 0
+                        updatedAt: 0,
+                        __v: 0
                     }
                 }
             ];

@@ -12,7 +12,8 @@ const elasticSearchHelper = require('../elasticClient/helper');
 const logger = require('../logger');
 
 const {
-    validatePost, validateSetPublished, validateDeleteMedia
+    validatePost, validateSetPublished, 
+    validateDeleteMedia, validateGetMedia
 } = require('../utils/serverValidations');
 const findAttachedMedia = require('../utils/findAttachedMedia');
 
@@ -103,6 +104,8 @@ dashboardRouter.get('/getPosts', async (req, res) => {
 
     skip = parseInt(skip) || 0;
     limit = parseInt(limit) || 10;
+    sortOrder = parseInt(sortOrder) || -1;
+
     const { posts, count } = await Post.getPosts({ published, sortBy, sortOrder, skip, limit });
     if (!posts) {
         return res.status(500).json({ error: true, msg: 'Something went wrong!' });
@@ -184,10 +187,28 @@ dashboardRouter.post('/uploadMedia', (req, res, next) => {
     });
 });
 
+dashboardRouter.get('/getMedia', async (req, res) => {
+    const error = validateGetMedia(req.query);
+    if (error) {
+        logger.error('Get media validation failed with error', error);
+        return res.status(400).json({ error: true, msg: 'Incorrect query params!' });
+    }
+    let {skip=0, limit=10, sortBy, sortOrder=-1} = req.query;
+
+    skip = parseInt(skip) || 0;
+    limit = parseInt(limit) || 10
+    limit = Math.min(50, limit);
+    sortOrder = parseInt(sortOrder) || -1;
+
+    const { media, count } = await Media.getMedia({ sortBy, sortOrder, skip, limit });
+
+    res.json({ error: false, data: media, count });
+});
+
 dashboardRouter.delete('/deleteMedia', async (req, res) => {
     const error = validateDeleteMedia(req.body);
     if (error) {
-        logger.error('Post validation failed with error:', { error, body: req.body });
+        logger.error('Media delete validation failed with error:', { error, body: req.body });
         return res.status(400).json({ error: true, msg: 'Incorrect info submitted!' });
     }
 
@@ -200,10 +221,15 @@ dashboardRouter.delete('/deleteMedia', async (req, res) => {
     }
 
     const mediaPath = path.join(__dirname, '../public/static/blogs/', media._id);
-    fs.unlinkSync(mediaPath);
-    logger.info('File deleted successfully!', { _id });
-
-    res.json({ error: false });
+    try {
+        fs.statSync(mediaPath);
+        fs.unlinkSync(mediaPath);
+        logger.info('File deleted successfully!', { _id });
+        res.json({ error: false });
+    } catch (error) {
+        logger.error('File not found in file system', error);
+        res.json({ error: true, msg: 'Something went wrong!' });
+    }
 });
 
 module.exports = dashboardRouter;

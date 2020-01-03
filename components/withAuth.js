@@ -14,7 +14,7 @@ export default function(WrappedComponent) {
             const store = ctx.store.getState();
             if (store.auth.admin) {
                 if (WrappedComponent.getInitialProps) {
-                    const { fetchPosts, perPage, page:pageFromQuery } = await WrappedComponent.getInitialProps();
+                    const { fetchPosts, perPage, page:pageFromQuery, fetchMedia } = await WrappedComponent.getInitialProps();
 
                     let { page } = ctx.req ? ctx.req.query : ( ctx.query ? ctx.query : {});
                     page = page ? (isNaN(parseInt(page)) ? 1 : parseInt(page))  : 1;
@@ -24,6 +24,10 @@ export default function(WrappedComponent) {
                     }
                     if (fetchPosts) {
                         await ctx.store.dispatch(actions.dashboardActions.fetchPosts({ req: ctx.req, perPage, pageNo: page }));
+                    }
+
+                    if (fetchMedia) {
+                        await ctx.store.dispatch(actions.dashboardActions.fetchMedia({ req: ctx.req, perPage, pageNo: page }));
                     }
                 }
             }
