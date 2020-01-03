@@ -20,6 +20,7 @@ export const TOGGLEPOSTSUCCESS = 'togglepostsuccess';
 export const MEDIALOADING = "medialoading";
 export const MEDIAERROR = "mediaerror";
 export const MEDIASUCCESS = "mediasuccess";
+export const DELETEMEDIALOADING = "deletemedialoading";
 
 // posts
 export const POSTSERROR = 'postserror';

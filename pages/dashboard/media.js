@@ -10,11 +10,18 @@ import Media from '../../components/dashboard/media';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
 import AdminFAB from '../../components/adminFAB';
+import Modal from '../../components/modal';
 const Pagination = dynamic(() => import('../../components/pagination'), { ssr: false });
+
+import actions from '../../redux/actions';
+
+import '../../css/dashboard/mediaContainer.css';
 
 const perPage = 20;
 const DashboardMedia = props => {
-    useEffect(() => console.log(props), [])
+  let [showDeleteModal, setShowDeleteModal] = useState(false);
+  let [selectedMedia, setSelectedMedia] = useState(null);
+
   const { router } = props;
   let [pageNo, setPageNo] = useState(1);
   useEffect(() => {
@@ -28,14 +35,23 @@ const DashboardMedia = props => {
 //     return <FullScreenLoader />;
 //   }
 
-    const media = props.dashboardMedia.data;
-    const { count } = props.dashboardMedia;
+  const media = props.dashboardMedia.data;
+  const { count, deleteMediaLoading } = props.dashboardMedia;
 
-    // make array of 3 elems each in the media
-    let chunksOfMedia = [];
-    if (media && media.length) {
-        //TODO: logic here
-    }
+  const handleDeleteClose = () => {
+    setShowDeleteModal(false);
+  }
+
+  const handleDelete = () => {
+    selectedMedia && props.dispatch(actions.dashboardActions.deleteMedia(selectedMedia._id));
+  };
+
+  const openDeleteModal = _id => {
+    setShowDeleteModal(true);
+    const tempMedia = media.filter(m => m._id === _id);
+
+    setSelectedMedia(tempMedia ? tempMedia[0] : null);
+  }
 
   return (
     <div>
@@ -46,9 +62,41 @@ const DashboardMedia = props => {
       <Header />
       {/* position relative needed for jquery scroll */}
       <div className='main-body-content' style={{maxWidth: '100%', position: 'relative'}}>
+        <Modal 
+          maxWidth='50%'
+          promptBeforeClose={false}
+          onClose={handleDeleteClose}
+          onPositiveAction={handleDelete}
+          onNegativeAction={handleDeleteClose}
+          positiveActionButtonName='Delete'  
+          negativeActionButtonName='Dismiss'
+          title='Delete this media?'
+          show={showDeleteModal}
+        >
+          {
+            selectedMedia &&
+            (
+              <div className='delete-media-container'>
+                {
+                  selectedMedia.type === 'image' ? 
+                  <img src={selectedMedia.url} className='delete-media-img' />
+                  :
+                  <video controls={true} muted={true} src={selectedMedia.url} className='deleted-media-video' />
+                }
+              </div>
+            )
+          }
+        </Modal>
         <div className='container'>
-            <div className='row'>
-                { media.map(m => <Media key={m._id} media={m} />) }
+            <div className='row media-container'>
+                {media.map(m => (
+                  <Media 
+                    key={m._id} 
+                    media={m}
+                    onDeleteClick={openDeleteModal}
+                    deleteMediaLoading={deleteMediaLoading}
+                  />
+                ))}
             </div>
           <Pagination 
             pageNo={pageNo} 

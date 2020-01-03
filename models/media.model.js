@@ -26,7 +26,9 @@ MediaSchema.statics = {
     },
     async deleteMedia(mediaName) {
         try {
-            return await this.deleteOne({ _id: mediaName });
+            const media = await this.findOne({ _id: mediaName });
+            await this.deleteOne({ _id: mediaName });
+            return media;
         } catch (err) {
             logger.error('Cannot delete media', err);
             return null;
@@ -56,6 +58,15 @@ MediaSchema.statics = {
                     $addFields: {
                         url: {
                             $concat: [baseURL, '/static/blogs/', '$_id']
+                        },
+                        type: {
+                            $cond: {
+                                if: {
+                                    $regexMatch: { input: '$_id' , regex: /\.(png|jpe?g|gif)$/i }
+                                },
+                                then: 'image',
+                                else: 'video'
+                            }
                         }
                     }
                 },

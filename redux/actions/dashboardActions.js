@@ -9,7 +9,8 @@ import { POSTSAVING,
   TOGGLEPOSTSUCCESS,
   MEDIALOADING,
   MEDIAERROR,
-  MEDIASUCCESS
+  MEDIASUCCESS,
+  DELETEMEDIALOADING
 } from '../types';
 import baseURL from '../../constants/apiURL';
 import { showToast } from '../../utils/toasts';
@@ -190,11 +191,61 @@ const togglePublish = (postData) => {
         showToast('There was some error changing the publish status of the post!', 'error');
     });;
   }
-}
+};
+
+const deleteMedia = _id => {
+  const fetchOpts = {
+    method: 'DELETE',
+    credentials: 'include',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ _id })
+  };
+  return dispatch => {
+    dispatch({ type: DELETEMEDIALOADING, payload: true });
+    return fetch(baseURL + '/api/dashboard/deleteMedia', fetchOpts)
+      .then(res => {
+        if (res.status === 401) {
+          return Promise.resolve({
+            error: true,
+            forceLogout: true,
+            msg: 'You are not authorized!'
+          });
+        }
+        return res.json();
+      }).then(resp => {
+        if (resp.error) {
+          console.error(resp);
+          if (resp.forceLogout) {
+            dispatch({ type: ERROR, payload: 'Invalid user token! You will be logged out!', initiateForceLogout: true });
+            // to remove admin=true from store
+            // so error page renders in withAuth
+            // dispatch({ type: LOGIN, payload: false });
+          } else {
+            showToast(resp.msg || 'There was some error deleting the media!', 'error');
+            dispatch({ type: DELETEMEDIALOADING, payload: false });
+          }
+        } else {
+          showToast('The post was successfully deleted.', 'success', {
+            timeOut: 1000,
+            extendedTimeout: 1000
+          }).then(() => {
+            window.location.reload(true);
+          });
+        }
+      }).catch(err => {
+        console.error(err);
+        showToast('There was some error deleting the media!', 'error');
+        dispatch({ type: DELETEMEDIALOADING, payload: false });
+    });
+  }
+};
 
 export default {
     savePost,
     fetchPosts,
     togglePublish,
-    fetchMedia
+    fetchMedia,
+    deleteMedia
 };

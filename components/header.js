@@ -125,6 +125,9 @@ const Header = props => {
             <li onClick={() => handleSearch()} id='search-nav'>
                 <a>Search</a>
             </li>
+            <li onClick={() => handleLinksClick('/dashboard/media')}>
+                <a>Media</a>
+            </li>
         </ul>
     );
 

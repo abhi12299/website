@@ -1,40 +1,62 @@
-import React, { useState } from 'react';
-import Link from 'next/link';
-import { connect } from 'react-redux';
+import React from 'react';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faThumbtack } from '@fortawesome/free-solid-svg-icons';
 import { faCopy, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
+
 import copyToClipboard from '../../utils/copyToClipboard';
-import actions from '../../redux/actions/index';
+import { showToast } from '../../utils/toasts';
 
 import '../../css/dashboard/media.css';
 
 const Media = props => {
-    const { _id, usedInPosts,
-        createdAt, url
-    } = props.media;
+    const { _id, usedInPosts, url } = props.media;
 
-    let [loading, setLoading] = useState(false);
-
-    const getUploadedDate = () => {
-        const d = new Date(createdAt);
-        let hrs = d.getHours() + 1;
-        let am = hrs >= 12 ? 'pm' : 'am';
-        hrs = hrs > 12 ? hrs - 12 : hrs;
-        let mins = d.getMinutes();
-        mins = mins > 10 ? mins : `0${mins}`;
-
-        return `${d.toDateString()}, ${hrs}:${mins} ${am}`;
-    };
+    const { 
+        deleteMediaLoading,
+        onDeleteClick
+    } = props;
 
     const handlePreview = () => {
         window.open(url, '_blank');
     };
 
-    return (
-        <div className='col-'>
-            I am a media
+    const handleCopyLink = () => {
+        copyToClipboard(url);
+        showToast('Link copied!', 'success');
+    };
+
+    return (            
+        <div className='col-lg-3 col-md-3 col-6 media-card'>
+            <div className='card'>
+                <img className='card-img-top media-card-img' src={url} alt='Card image cap' onClick={handlePreview} />
+                <div className='card-body row c2a-btns mx-auto'>
+                    <div className='col-4' title='Used In Posts'>
+                        <div style={{width: '50px'}}>
+                            <FontAwesomeIcon icon={faThumbtack} />
+                            &nbsp;{usedInPosts}
+                        </div>
+                    </div>
+                    <div className='col-4'>
+                        <FontAwesomeIcon 
+                            icon={faCopy} 
+                            className={`media-copy-btn ${deleteMediaLoading ? 'disabled': ''}`} 
+                            title='Copy link' 
+                            onClick={handleCopyLink}
+                        />
+                    </div>
+                    <div className='col-4'>
+                        <FontAwesomeIcon 
+                            icon={faTrashAlt} 
+                            className={`media-delete-btn ${deleteMediaLoading ? 'disabled': ''}`} 
+                            title='Delete' 
+                            onClick={deleteMediaLoading ? null: () => onDeleteClick(_id)} 
+                        />
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };
 
-export default connect(null, null)(Media);
+export default Media;

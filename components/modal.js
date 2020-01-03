@@ -97,11 +97,20 @@ class Modal extends Component {
             children,
             positiveActionButtonName,
             negativeActionButtonName,
+            maxWidth
         } = this.props;
 
+        const containerStyle = {};
+        if (maxWidth) {
+            containerStyle.width = maxWidth;
+        }
+        
         return (
             <div ref={this.customModal} className='custom-modal'>
-                <div className='custom-modal-content'>
+                <div
+                    style={containerStyle} 
+                    className='custom-modal-content'
+                >
                     <div className='modal-header'>
                         <h5 className='modal-title'>{title}</h5>
                         <button
@@ -136,6 +145,7 @@ Modal.propTypes = {
     negativeActionButtonName: PropTypes.string,
     title: PropTypes.string.isRequired,
     show: PropTypes.bool.isRequired,
+    maxWidth: PropTypes.string
 };
 
 export default Modal;

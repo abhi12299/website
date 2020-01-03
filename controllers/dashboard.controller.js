@@ -212,6 +212,7 @@ dashboardRouter.delete('/deleteMedia', async (req, res) => {
         return res.status(400).json({ error: true, msg: 'Incorrect info submitted!' });
     }
 
+    console.log({ body: req.body });
     const { _id } = req.body;    
     const media = await Media.deleteMedia(_id);
 
