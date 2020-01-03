@@ -11,6 +11,7 @@ import Header from '../../components/header';
 import Footer from '../../components/footer';
 import AdminFAB from '../../components/adminFAB';
 import Modal from '../../components/modal';
+import DashboardMediaHeader from '../../components/dashboard/mediaHeader';
 const Pagination = dynamic(() => import('../../components/pagination'), { ssr: false });
 
 import actions from '../../redux/actions';
@@ -88,7 +89,8 @@ const DashboardMedia = props => {
           }
         </Modal>
         <div className='container'>
-            <div className='row media-container'>
+          <DashboardMediaHeader />
+            <div className='row container media-container'>
                 {media.map(m => (
                   <Media 
                     key={m._id} 

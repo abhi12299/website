@@ -40,9 +40,10 @@ const ViewPosts = props => {
       {/* position relative needed for jquery scroll */}
       <div className='main-body-content' style={{maxWidth: '100%', position: 'relative'}}>
         <div className='container'>
-          {
-            posts.map(p => <Post key={p._id} post={p} />)
-          }
+          {/* TODO: add filter dropdown */}
+          <div className='posts-container'>
+            { posts.map(p => <Post key={p._id} post={p} />) }
+          </div>
           <Pagination 
             pageNo={pageNo} 
             perPage={perPage} 
