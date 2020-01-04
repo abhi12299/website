@@ -2,7 +2,7 @@ import { LOADING, LOGIN, ERROR, /*RESET,*/ LOGOUT } from '../types';
 
 const initialState = {
   admin: null,
-  loading: false,
+  loading: true,
   initiateForceLogout: false,
   errorMessage: '',
   error: false,

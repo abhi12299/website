@@ -17,6 +17,7 @@ const Pagination = dynamic(() => import('../../components/pagination'), { ssr: f
 import actions from '../../redux/actions';
 
 import '../../css/dashboard/mediaContainer.css';
+import FullScreenLoader from '../../components/fullScreenLoader';
 
 const perPage = 20;
 const DashboardMedia = props => {
@@ -24,7 +25,9 @@ const DashboardMedia = props => {
   let [selectedMedia, setSelectedMedia] = useState(null);
 
   const { router } = props;
+  const { loading } = props.dashboardMedia;
   let [pageNo, setPageNo] = useState(1);
+
   useEffect(() => {
     let { page = 1} = router.query;
     page = parseInt(page) || 1;
@@ -32,9 +35,9 @@ const DashboardMedia = props => {
     setPageNo(page);
   }, [router.query]);
 
-//   if (loading) {
-//     return <FullScreenLoader />;
-//   }
+  // if (loading) {
+  //   return <FullScreenLoader />;
+  // }
 
   const media = props.dashboardMedia.data;
   const { count, deleteMediaLoading } = props.dashboardMedia;
@@ -61,6 +64,7 @@ const DashboardMedia = props => {
       </Head>
       <Preloader />
       <Header />
+      <FullScreenLoader loading={loading} />
       {/* position relative needed for jquery scroll */}
       <div className='main-body-content' style={{maxWidth: '100%', position: 'relative'}}>
         <Modal 

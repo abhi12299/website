@@ -27,7 +27,13 @@ export default function(WrappedComponent) {
                     }
 
                     if (fetchMedia) {
-                        await ctx.store.dispatch(actions.dashboardActions.fetchMedia({ req: ctx.req, perPage, pageNo: page }));
+                        // extract sortBy and sortOrder from query
+                        let {
+                            sortBy='createdAt',
+                            sortOrder='-1' 
+                        } = ctx.req ? ctx.req.query : ( ctx.query ? ctx.query : {});
+
+                        await ctx.store.dispatch(actions.dashboardActions.fetchMedia({ req: ctx.req, perPage, pageNo: page, filters: {sortBy, sortOrder} }));
                     }
                 }
             }

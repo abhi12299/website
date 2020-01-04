@@ -40,7 +40,7 @@ function validateGetMedia(query) {
     const schema = Joi.object({
         skip: Joi.string().regex(/^\d+$/).default('0'),
         limit: Joi.string().regex(/^\d+$/).default('20'),
-        sortBy: Joi.string().regex(/^usedInPosts$/),
+        sortBy: Joi.string().regex(/^(usedInPosts|createdAt)$/),
         sortOrder: Joi.string().regex(/^(-1|1)$/).default('-1')
     });
 

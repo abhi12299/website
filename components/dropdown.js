@@ -16,7 +16,10 @@ class Dropdown extends Component{
     this.close = this.close.bind(this);
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
+    if (prevProps.defaultIndex !== this.props.defaultIndex) {
+      this.setState({ selectedIndex: this.props.defaultIndex });
+    }
     const { listOpen } = this.state;
     setTimeout(() => {
       if (listOpen) {
