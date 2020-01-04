@@ -29,9 +29,10 @@ const Home = props => {
     }
   }, []);
 
-  if (props.auth.loading) {
-    return <FullScreenLoader />;
-  }
+  const { loading } = props.auth;
+  // if (props.auth.loading) {
+  //   return <FullScreenLoader />;
+  // }
 
   return (
     <div>
@@ -41,6 +42,7 @@ const Home = props => {
       <Preloader />
       <IntroHeader />
       <Header />
+      <FullScreenLoader loading={loading} />
       {/* position relative needed for jquery scroll */}
       <div className='main-body-content' style={{maxWidth: '100%', position: 'relative'}}>
         <AboutMe />
