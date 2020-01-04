@@ -70,7 +70,7 @@ export default function(WrappedComponent) {
         }
 
         render() {
-            const { admin, error, errorMessage } = this.props.auth;
+            const { admin, error, errorMessage, loading } = this.props.auth;
 
             if (this.state.forceLogout) {
                 this.setState({ forceLogout: false }, () => {
@@ -91,7 +91,7 @@ export default function(WrappedComponent) {
                     />
                 );
             }
-            return <FullScreenLoader />;
+            return <FullScreenLoader loading={loading} />;
         }
     }
     return connect(state => state)(WithAuth);

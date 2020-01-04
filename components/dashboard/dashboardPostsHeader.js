@@ -50,7 +50,7 @@ function DashboardPostsHeader() {
     };
 
     return (
-        <div className='row container dashboard-posts-header'>
+        <div className='row dashboard-posts-header'>
             <div className='col-6'>
             </div>
             <div className='col-6'>
