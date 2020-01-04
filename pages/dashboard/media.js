@@ -12,6 +12,7 @@ import Footer from '../../components/footer';
 import AdminFAB from '../../components/adminFAB';
 import Modal from '../../components/modal';
 import DashboardMediaHeader from '../../components/dashboard/mediaHeader';
+import Error from '../_error';
 const Pagination = dynamic(() => import('../../components/pagination'), { ssr: false });
 
 import actions from '../../redux/actions';
@@ -35,10 +36,6 @@ const DashboardMedia = props => {
     setPageNo(page);
   }, [router.query]);
 
-  // if (loading) {
-  //   return <FullScreenLoader />;
-  // }
-
   const media = props.dashboardMedia.data;
   const { count, deleteMediaLoading } = props.dashboardMedia;
 
@@ -55,6 +52,15 @@ const DashboardMedia = props => {
     const tempMedia = media.filter(m => m._id === _id);
 
     setSelectedMedia(tempMedia ? tempMedia[0] : null);
+  }
+
+  if (!media) {
+    return (
+      <Error 
+        statusCode={500} 
+        errorText='Media not available! Please check the server logs!' 
+      />
+    );
   }
 
   return (
