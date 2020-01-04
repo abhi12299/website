@@ -48,9 +48,23 @@ function validateGetMedia(query) {
     return error;
 }
 
+const validateGetPosts = query => {
+    const schema = Joi.object({
+        skip: Joi.string().regex(/^\d+$/),
+        limit: Joi.string().regex(/^\d+$/),
+        sortBy: Joi.string().regex(/^(postedDate)$/),
+        sortOrder: Joi.string().regex(/^(-1|1)$/),
+        published: Joi.string().regex(/^(1|0|all)$/)
+    });
+
+    const { error } = Joi.validate(query, schema);
+    return error;
+};
+
 module.exports = {
     validatePost,
     validateSetPublished,
     validateDeleteMedia,
-    validateGetMedia
+    validateGetMedia,
+    validateGetPosts
 };

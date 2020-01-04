@@ -95,7 +95,8 @@ PostSchema.statics = {
         try {
             let aggrQuery = [];
             let countQuery = {};
-            if (typeof published !== 'undefined') {
+            if (published !== 'all' && typeof published !== 'undefined') {
+                published = parseInt(published);
                 aggrQuery.push({
                     $match: { published }
                 });

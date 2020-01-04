@@ -92,6 +92,13 @@ const fetchPosts = ({ req, filters, perPage=10, pageNo=1 }) => {
     url += `${appendToQuery ? '&' : '?'}skip=${(pageNo-1) * perPage}`;
     appendToQuery = true;
   }
+  if (filters) {
+    for (const [key, val] of Object.entries(filters)) {
+      url += `${appendToQuery ? '&' : '?'}${key}=${val}`;
+      appendToQuery = true;
+    }
+  }
+
   return dispatch => {
     dispatch({ type: POSTSLOADING, payload: true });
     
@@ -137,6 +144,7 @@ const fetchMedia = ({ req, filters, perPage=10, pageNo=1 }) => {
       appendToQuery = true;
     }
   }
+  
   return dispatch => {
     dispatch({ type: MEDIALOADING, payload: true });
     

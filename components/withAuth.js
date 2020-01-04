@@ -23,7 +23,18 @@ export default function(WrappedComponent) {
                         page = pageFromQuery;
                     }
                     if (fetchPosts) {
-                        await ctx.store.dispatch(actions.dashboardActions.fetchPosts({ req: ctx.req, perPage, pageNo: page }));
+                        // extract sortBy, sortOrder, published from query
+                        let {
+                            sortBy='postedDate',
+                            sortOrder='-1',
+                            published='all' 
+                        } = ctx.req ? ctx.req.query : ( ctx.query ? ctx.query : {});
+                        await ctx.store.dispatch(actions.dashboardActions.fetchPosts({
+                            req: ctx.req,
+                            perPage,
+                            pageNo: page,
+                            filters: { sortOrder, sortBy, published }
+                        }));
                     }
 
                     if (fetchMedia) {

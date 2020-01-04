@@ -1,31 +1,38 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
-import UploadMediaButton from './uploadMediaButton';
 import Dropdown from '../dropdown';
 
-import '../../css/dashboard/mediaHeader.css';
+import '../../css/dashboard/dashboardPostsHeader.css';
 
 const dropdownOptions = [
-    { title: 'Time (Latest first)', query: {sortBy: 'createdAt', sortOrder: '-1', page: 1} },
-    { title: 'Time (Oldest first)', query: {sortBy: 'createdAt', sortOrder: '1', page: 1} },
-    { title: 'Usage Freq (Desc)', query: {sortBy: 'usedInPosts', sortOrder: '-1', page: 1} },
-    { title: 'Usage Freq (Asc)', query: {sortBy: 'usedInPosts', sortOrder: '1', page: 1} }
+    { title: 'Published (Desc)', query: {sortBy: 'postedDate', published: '1', sortOrder: '-1', page: 1} },
+    { title: 'Published (Asc)', query: {sortBy: 'postedDate', published: '1', sortOrder: '1', page: 1} },
+    { title: 'Unpublished (Desc)', query: {sortBy: 'postedDate', published: '0', sortOrder: '-1', page: 1} },
+    { title: 'Unpublished (Asc)', query: {sortBy: 'postedDate', published: '0', sortOrder: '1', page: 1} },
+    { title: 'All (Asc)', query: {sortBy: 'postedDate', published: 'all', sortOrder: '1', page: 1} },
+    { title: 'All (Desc)', query: {sortBy: 'postedDate', published: 'all', sortOrder: '-1', page: 1} }
 ];
 
-function MediaHeader() {
+function DashboardPostsHeader() {
     const router = useRouter();
+
     let [defaultIndex, setDefaultIndex] = useState(0);
 
     useEffect(() => {
-        // by default sort by time latest first
-        const { sortBy='createdAt', sortOrder='-1' } = router.query;
-        const filteredOpts = dropdownOptions.findIndex(op => (
+        // by default sort by all posts, latest first
+        const {
+            sortBy='postedDate',
+            sortOrder='-1',
+            published='all'
+        } = router.query;
+        const filteredIndex = dropdownOptions.findIndex(op => (
             op.query.sortBy === sortBy && 
-            op.query.sortOrder === sortOrder
+            op.query.sortOrder === sortOrder &&
+            op.query.published === published
         ));
         // when not in array, findIndex returns -1
-        setDefaultIndex(Math.max(0, filteredOpts));
+        setDefaultIndex(Math.max(0, filteredIndex));
     }, []);
 
     const delayedReload = () => {
@@ -43,11 +50,8 @@ function MediaHeader() {
     };
 
     return (
-        <div className='row container media-header'>
+        <div className='row container dashboard-posts-header'>
             <div className='col-6'>
-                <UploadMediaButton 
-                    onUploadComplete={delayedReload}
-                />
             </div>
             <div className='col-6'>
                 <div className='row'>
@@ -73,4 +77,4 @@ function MediaHeader() {
     );
 }
 
-export default MediaHeader;
+export default DashboardPostsHeader;

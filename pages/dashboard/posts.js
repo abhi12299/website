@@ -12,6 +12,7 @@ import AdminFAB from '../../components/adminFAB';
 import Post from '../../components/dashboard/post';
 import Error from '../_error';
 import FullScreenLoader from '../../components/fullScreenLoader';
+import DashboardPostsHeader from '../../components/dashboard/DashboardPostsHeader';
 const Pagination = dynamic(() => import('../../components/pagination'), { ssr: false });
 
 const perPage = 10;
@@ -48,7 +49,7 @@ const ViewPosts = props => {
       {/* position relative needed for jquery scroll */}
       <div className='main-body-content' style={{maxWidth: '100%', position: 'relative'}}>
         <div className='container'>
-          {/* <DashboardPostsHeader /> */}
+          <DashboardPostsHeader />
           <div className='posts-container'>
             { posts.map(p => <Post key={p._id} post={p} />) }
           </div>

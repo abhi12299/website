@@ -19,9 +19,7 @@ module.exports = (headerImage, postBody) => {
     }
     
     const imgTags = $(postBody).find('img');
-    console.log('Image tags are:', imgTags);
     imgTags.each((index, img) => {
-        console.log('At index', index, 'src of img is', img.attribs.src);
         if (fullURLRegex.test(img.attribs.src) || shortURLRegex.test(img.attribs.src)) {
             const temp = img.attribs.src.split('/');
             assetNames.add(temp[temp.length - 1]);

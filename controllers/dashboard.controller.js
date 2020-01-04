@@ -13,7 +13,8 @@ const logger = require('../logger');
 
 const {
     validatePost, validateSetPublished, 
-    validateDeleteMedia, validateGetMedia
+    validateDeleteMedia, validateGetMedia,
+    validateGetPosts
 } = require('../utils/serverValidations');
 const findAttachedMedia = require('../utils/findAttachedMedia');
 
@@ -98,8 +99,15 @@ dashboardRouter.get('/bulkIndex', async (req, res) => {
 });
 
 dashboardRouter.get('/getPosts', async (req, res) => {
+    const error = validateGetPosts(req.query);
+    if (error) {
+        logger.error('Get posts validation failed with error:', { error, query: req.query });
+        return res.status(400).json({ error: true, msg: 'Incorrect info submitted!' });
+    }
+
+    // published can be 1, 0 or 'all'
     let {
-        published, sortBy, sortOrder=-1, skip=0, limit=10
+        published='all', sortBy, sortOrder=-1, skip=0, limit=10
     } = req.query;
 
     skip = parseInt(skip) || 0;
@@ -212,7 +220,6 @@ dashboardRouter.delete('/deleteMedia', async (req, res) => {
         return res.status(400).json({ error: true, msg: 'Incorrect info submitted!' });
     }
 
-    console.log({ body: req.body });
     const { _id } = req.body;    
     const media = await Media.deleteMedia(_id);
 
