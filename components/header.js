@@ -20,6 +20,8 @@ const Header = props => {
     // on scroll, toggle sticky class
     useEffect(() => {
         const headerComponent = header.current;
+        const mainBodyWrapper = document.querySelector('.main-body-content');
+
         if (headerComponent) {
             const initialHeaderOffset = headerComponent.offsetTop;
             // header is in collapsed view
@@ -27,14 +29,17 @@ const Header = props => {
 
             if (window.pageYOffset > initialHeaderOffset) {
                 headerComponent.classList.add('sticky');
+                mainBodyWrapper.classList.add('pt-75');
             }
 
             window.onscroll = () => {
                 if (window.pageYOffset <= initialHeaderOffset) {
                     headerComponent.classList.remove('sticky');
+                    mainBodyWrapper.classList.remove('pt-75');
                 }
                 if (window.pageYOffset > headerComponent.offsetTop) {
                     headerComponent.classList.add('sticky');
+                    mainBodyWrapper.classList.add('pt-75');
                 }
             }
 

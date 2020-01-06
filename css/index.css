@@ -38,6 +38,10 @@ body {
     touch-action: manipulation;
 }
 
+.pt-75 {
+    padding-top: 75px !important;
+}
+
 dl, dt, dd, ol, ul, li {
     margin: 0;
     padding: 0;

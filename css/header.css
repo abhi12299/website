@@ -6,9 +6,10 @@
     background-color: #FFF;
 }
 
+/* DOESN'T WORK! 
 .header-wrapper.sticky+.main-body-content {
     padding-top: 75px;
-}
+} */
 
 .header-wrapper {
     padding: 13px 0;
