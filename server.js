@@ -67,6 +67,10 @@ function childProcess() {
         server.use(passport.initialize());
         server.use('/api', apiRouter);
         server.use('/auth', authRouter);
+        
+        server.get('/static/blogs/:assetPath', (req, res) => {
+            res.sendFile(path.join(__dirname, './public', req.path));
+        });
 
         server.get('/service-worker.js', (req, res) => {
             res.sendFile(path.join(__dirname, '.next', 'service-worker.js'));
