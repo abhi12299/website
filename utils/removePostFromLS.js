@@ -1,3 +1,3 @@
-export default () => {
-    localStorage.removeItem('tempSavePost');
+export default (keyName='tempSavePost') => {
+    localStorage.removeItem(keyName);
 }

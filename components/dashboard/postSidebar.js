@@ -12,7 +12,7 @@ import LoadingSVG from '../loadingSVG';
 
 function PostSidebar(props) {
     const { headerImage, metaDescription, saving,
-        metaKeywords, postRestored } = props;
+        metaKeywords, postRestored, lsKeyName } = props;
     
     let [imageLoading, setImageLoading] = useState(false);
     let [isImageValid, setIsImageValid] = useState(false);
@@ -25,7 +25,9 @@ function PostSidebar(props) {
     const metaKeywordsError = useRef();
 
     useEffect(() => {
-        if (postRestored) {
+        // if we restore post from LS in /create or we enter /edit route
+        // indicated by presence of lsKeyName
+        if (postRestored || !!lsKeyName) {
             if (headerImage) {
                 handleHeaderImageInputBlur();
             }
@@ -97,16 +99,16 @@ function PostSidebar(props) {
         const metaKeywordsArr = metaKeywords.split(',');
         metaKeywordsArr.splice(i, 1);
         const newMetaKeywords = metaKeywordsArr.join(',');
-        props.dispatch({ type: SETMETAKEYWORDS, payload: newMetaKeywords });
+        props.dispatch({ type: SETMETAKEYWORDS, payload: newMetaKeywords, keyName: lsKeyName });
         handleMetaKeywordsBlur();
     }
 
     const handleHeaderImageURLChange = e => 
-        props.dispatch({ type: SETHEADERIMAGE, payload: e.target.value });
+        props.dispatch({ type: SETHEADERIMAGE, payload: e.target.value, keyName: lsKeyName });
     const handleMetaDescriptionChange = e =>
-        props.dispatch({ type: SETMETADESC, payload: e.target.value });
+        props.dispatch({ type: SETMETADESC, payload: e.target.value, keyName: lsKeyName });
     const handleMetaKeywordsChange = e => 
-        props.dispatch({ type: SETMETAKEYWORDS, payload: e.target.value });
+        props.dispatch({ type: SETMETAKEYWORDS, payload: e.target.value, keyName: lsKeyName });
 
     const headerImageURL = isImageValid ? headerImage : 'https://via.placeholder.com/200x170.png?text=Header+image+shown+here';
     return (
@@ -167,7 +169,7 @@ function PostSidebar(props) {
                                         key={k + i}
                                         onClick={saving ? null : () => handleRemoveMetaKeyword(i)}
                                     >
-                                        <span>{k}</span>
+                                        <span className='span-text'>{k}</span>
                                         <span className='remove-keyword'>&times;</span>
                                     </div>
                                 );

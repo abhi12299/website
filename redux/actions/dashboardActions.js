@@ -10,7 +10,10 @@ import { POSTSAVING,
   MEDIALOADING,
   MEDIAERROR,
   MEDIASUCCESS,
-  DELETEMEDIALOADING
+  DELETEMEDIALOADING,
+  FETCHPOSTLOADING,
+  FETCHPOSTSUCCESS,
+  FETCHPOSTERROR  
 } from '../types';
 import baseURL from '../../constants/apiURL';
 import { showToast } from '../../utils/toasts';
@@ -256,10 +259,116 @@ const deleteMedia = _id => {
   }
 };
 
+const fetchPost = ({ req, _id }) => {
+  const fetchOpts = {
+    method: 'GET',
+    credentials: 'include'
+  };
+  if (req && 'token' in req.cookies) {
+    fetchOpts.headers = {
+      'authorization': `Bearer ${req.cookies['token']}`
+    };
+  }
+  return dispatch => {
+    dispatch({ type: FETCHPOSTLOADING, payload: true });
+    return fetch(baseURL + `/api/dashboard/getPost?id=${_id}`, fetchOpts)
+      .then(res => {
+        if (res.status === 401) {
+          return Promise.resolve({
+            error: true,
+            forceLogout: true,
+            msg: 'You are not authorized!'
+          });
+        }
+        return res.json();
+      }).then(resp => {
+        console.log('RESP EDIT POST:', resp);
+        if (resp.error) {
+          console.error(resp);
+          if (resp.forceLogout) {
+            dispatch({ type: ERROR, payload: 'Invalid user token! You will be logged out!', initiateForceLogout: true });
+            // to remove admin=true from store
+            // so error page renders in withAuth
+            // dispatch({ type: LOGIN, payload: false });
+          } else {
+            dispatch({ type: FETCHPOSTERROR, payload: 'There was some error!' });
+          }
+        } else {
+          dispatch({ type: FETCHPOSTSUCCESS, payload: resp.data })
+        }
+      }).catch(err => {
+        console.error(err);
+        dispatch({ type: FETCHPOSTERROR, payload: 'Something went wrong while fetching the post!' });
+    });
+  }
+};
+
+const editPost = (postData, keyName) => {
+  const fetchOpts = {
+    method: 'PATCH',
+    credentials: 'include',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(postData)
+  };
+  return dispatch => {
+    dispatch({ type: POSTSAVING, payload: true });
+    
+    return fetch(baseURL + '/api/dashboard/editPost', fetchOpts)
+        .then(res => {
+          // means we're unauthorized
+          if (res.status === 401) {
+            return Promise.resolve({
+              error: true,
+              forceLogout: true,
+              msg: 'You are not authorized!'
+            });
+          }
+          return res.json();
+        })
+        .then(resp => {
+          if (resp.error) {
+            console.error(resp);
+
+            if (resp.forceLogout) {
+              dispatch({ type: ERROR, payload: 'Invalid user token! You will be logged out!', initiateForceLogout: true });
+              // to remove admin=true from store
+              // so error page renders in withAuth
+              // dispatch({ type: LOGIN, payload: false });
+            } else {
+              dispatch({ type: POSTSAVING, payload: false });
+              showToast(resp.msg || 'There was some error updating the post!', 'error');
+            }
+          } else {
+            showToast('Post was updated successfully!', 'success', {
+              timeOut: 1000,
+              extendedTimeout: 1000
+            })
+            .then(() => {
+                dispatch({ type: POSTSAVING, payload: false });
+                if (keyName) {
+                  removePostFromLS(keyName);
+                } else {
+                  removePostFromLS();
+                }
+                Router.push('/dashboard/posts');
+            });
+          }
+        }).catch(err => {
+            console.error(err);
+            dispatch({ type: POSTSAVING, payload: false });
+            showToast('There was some error updating the post!', 'error');
+        });
+  };
+};
+
 export default {
     savePost,
     fetchPosts,
     togglePublish,
     fetchMedia,
-    deleteMedia
+    deleteMedia,
+    fetchPost,
+    editPost
 };

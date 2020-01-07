@@ -14,7 +14,8 @@ const logger = require('../logger');
 const {
     validatePost, validateSetPublished, 
     validateDeleteMedia, validateGetMedia,
-    validateGetPosts
+    validateGetPosts, validateGetPost,
+    validateEditPost
 } = require('../utils/serverValidations');
 const findAttachedMedia = require('../utils/findAttachedMedia');
 
@@ -44,8 +45,6 @@ dashboardRouter.post('/savePost', async (req, res) => {
                 .replace(/\s/g, '-')
                 .replace(/[^\w\-]/g, '')
                 .substr(0, 200);
-    // remove html entities
-    body = body.replace(/&.*?;/ig, '');
 
     const attachedMedia = findAttachedMedia(headerImageURL, body);
 
@@ -57,15 +56,19 @@ dashboardRouter.post('/savePost', async (req, res) => {
     if (savedPost) {
         let body = savedPost.body.replace(/\s/ig, ' ')
                     .replace(/<code.*?<\/code>/ig, '');
+
+        body = decodeURI(striptags(body));
+        console.log('Body is', body);
         const elasticPostBody = {
             id: savedPost._id,
             title: savedPost.title,
-            body: striptags(body),
+            body,
             published: savedPost.published,
             postedDate: savedPost.postedDate
         };
         const { error } = await elasticSearchHelper.addPost(elasticPostBody);
         if (error) {
+            logger.error('Cannot index post', post, error);
             // delete the savedPost
             await Post.deleteOne({ _id: savedPost._id });
             return res.json({
@@ -126,6 +129,20 @@ dashboardRouter.get('/getPosts', async (req, res) => {
     });
 });
 
+dashboardRouter.get('/getPost', async (req, res) => {
+    const error = validateGetPost(req.query);
+    if (error) {
+        logger.error('Get post validation failed with error', { error, query: req.query });
+        return res.status(400).json({ error: true, msg: 'Incorrect info submitted!' });
+    }
+    const { id } = req.query;
+    const post = await Post.getPost(id);
+    if (!post) {
+        return res.status(404).json({ error: true, msg: 'No post found' });
+    }
+    return res.json({ error: false, data: post });
+});
+
 dashboardRouter.post('/setPublished', async (req, res) => {
     const error = validateSetPublished(req.body);
     if (error) {
@@ -152,13 +169,112 @@ dashboardRouter.post('/setPublished', async (req, res) => {
     }
 });
 
+dashboardRouter.patch('/editPost', async (req, res) => {
+    const error = validateEditPost(req.body);
+    if (error) {
+        logger.error('Post validation failed with error:', { error, body: req.body });
+        return res.status(400).json({ error: true, msg: 'Incorrect info submitted!' });
+    }
+    
+    let {
+        title,
+        headerImageURL,
+        metaDescription,
+        metaKeywords,
+        body,
+        _id
+    } = req.body;
+
+    let oldPost = await Post.findOne({ _id });
+    if (!oldPost) {
+        return res.status(500).json({ error: true, msg: 'Post not found with that id'});
+    }
+
+    let newPost = oldPost;
+    let newAttachedMedia = findAttachedMedia(headerImageURL, body);
+
+    // create a new post, deleting old one
+    if (title !== oldPost.title) {
+        // delete old post
+        await Post.deleteOne({ _id: oldPost._id });
+        try {
+            await elasticSearchHelper.deletePost(oldPost._id);  
+        } catch (error) {} // not a fatal error
+        
+        // index in elastic search
+        let newId = title
+                        .trim()
+                        .toLowerCase()
+                        .replace(/\s/g, '-')
+                        .replace(/[^\w\-]/g, '')
+                        .substr(0, 200);
+
+        try {
+            newPost = await Post.savePost({
+                _id: newId, title, headerImageURL, metaKeywords,
+                metaDescription, postedDate: oldPost.postedDate,
+                body, published: oldPost.published, media: newAttachedMedia
+            });
+
+            let newBody = body
+                            .replace(/\s/ig, ' ')
+                            .replace(/<code.*?<\/code>/ig, '');
+
+            newBody = decodeURI(striptags(newBody));
+            const elasticPostBody = {
+                id: newPost._id,
+                title: newPost.title,
+                body: newBody,
+                published: newPost.published,
+                postedDate: newPost.postedDate
+            };
+            await elasticSearchHelper.addPost(elasticPostBody)
+        } catch (error) {
+            // we do not want to delete this post from db here unlike in savePost
+            logger.error('Edit post cannot add updated post to elasticsearch', error);
+        } 
+    } else {
+        // update the old post
+        newPost = await Post.updatePost(oldPost._id, {
+            title, headerImageURL, metaDescription, metaKeywords, body
+        });
+        try {
+            let newBody = newPost.body
+                                    .replace(/\s/ig, ' ')
+                                    .replace(/<code.*?<\/code>/ig, '');
+
+            newBody = decodeURI(striptags(newBody));
+            const elasticPostUpdates = {
+                title: newPost.title,
+                body: newBody
+            };
+            await elasticSearchHelper.updatePost(newPost._id, elasticPostUpdates);
+        } catch (error) {
+            logger.error('Cannot update post', error);
+        }
+    }
+
+    // find current attached media
+    const newMedia = findAttachedMedia(newPost.headerImageURL, newPost.body);
+    const oldMedia = oldPost.media;
+    if (newPost.published) {
+        // decrement usedInPosts for oldMedia
+        await Media.updateMedias(oldMedia, { $inc: {usedInPosts: -1} });
+        // increment usedInPosts for newMedia
+        await Media.updateMedias(newMedia, { $inc: {usedInPosts: 1} });
+    }
+
+    return res.json({ error: false, msg: 'Post updated successfully!' });
+});
+
+// MEDIA RELATED CODE
 // multer init
 const storage = multer.diskStorage({
     destination: path.join(__dirname, '../public/static/blogs'),
     filename: (req, file, cb) => {
-        let filePath = path.join(__dirname, '../public/static/blogs', file.originalname);
+        let filePath = path.join(__dirname, '../public/static/blogs', file.originalname.toLowerCase());
         if (fs.existsSync(filePath)) {
-            const newFilename = `${file.originalname.split('.')[0]}-${Date.now()}.${file.originalname.split('.')[1]}`.replace(/ /g, '');
+            const newFilename = `${file.originalname.toLowerCase().split('.')[0]}-${Date.now()}.${file.originalname.split('.')[1]}`.replace(/ /g, '');
             cb(null, newFilename);
         } else {
             cb(null, file.originalname.replace(/ /g, ''));

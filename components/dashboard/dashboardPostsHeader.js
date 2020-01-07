@@ -6,12 +6,12 @@ import Dropdown from '../dropdown';
 import '../../css/dashboard/dashboardPostsHeader.css';
 
 const dropdownOptions = [
-    { title: 'Published (Desc)', query: {sortBy: 'postedDate', published: '1', sortOrder: '-1', page: 1} },
-    { title: 'Published (Asc)', query: {sortBy: 'postedDate', published: '1', sortOrder: '1', page: 1} },
-    { title: 'Unpublished (Desc)', query: {sortBy: 'postedDate', published: '0', sortOrder: '-1', page: 1} },
-    { title: 'Unpublished (Asc)', query: {sortBy: 'postedDate', published: '0', sortOrder: '1', page: 1} },
-    { title: 'All (Asc)', query: {sortBy: 'postedDate', published: 'all', sortOrder: '1', page: 1} },
-    { title: 'All (Desc)', query: {sortBy: 'postedDate', published: 'all', sortOrder: '-1', page: 1} }
+    { title: 'Published (Latest first)', query: {sortBy: 'postedDate', published: '1', sortOrder: '-1', page: 1} },
+    { title: 'Published (Oldest first)', query: {sortBy: 'postedDate', published: '1', sortOrder: '1', page: 1} },
+    { title: 'Unpublished (Latest first)', query: {sortBy: 'postedDate', published: '0', sortOrder: '-1', page: 1} },
+    { title: 'Unpublished (Oldest first)', query: {sortBy: 'postedDate', published: '0', sortOrder: '1', page: 1} },
+    { title: 'All (Oldest first)', query: {sortBy: 'postedDate', published: 'all', sortOrder: '1', page: 1} },
+    { title: 'All (Latest first)', query: {sortBy: 'postedDate', published: 'all', sortOrder: '-1', page: 1} }
 ];
 
 function DashboardPostsHeader() {

@@ -23,6 +23,9 @@ function SaveButton(props) {
         title,
         saving,
         body,
+        type='save',
+        _id,
+        lsKeyName
     } = props;
 
     const handleSavePost = async () => {
@@ -52,10 +55,17 @@ function SaveButton(props) {
             showToast(errorText, 'error')
             return;
         }
-        props.dispatch(actions.dashboardActions.savePost({
-            title, body, metaDescription, headerImageURL: headerImage,
-            metaKeywords: transformMetaKeywords(metaKeywords)
-        }));
+        if (type === 'save') {
+            props.dispatch(actions.dashboardActions.savePost({
+                title, body, metaDescription, headerImageURL: headerImage,
+                metaKeywords: transformMetaKeywords(metaKeywords)
+            }));
+        } else if (type === 'edit') {
+            props.dispatch(actions.dashboardActions.editPost({
+                title, body, metaDescription, headerImageURL: headerImage,
+                metaKeywords: transformMetaKeywords(metaKeywords), _id
+            }, lsKeyName));
+        }
     }
 
     return (

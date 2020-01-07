@@ -136,6 +136,14 @@ PostSchema.statics = {
             return null;
         }
     },
+    async getPost(_id) {
+        try {
+            return await this.findOne({ _id }, '_id title headerImageURL metaDescription metaKeywords postedDate body');
+        } catch (error) {
+            logger.error('Cannot get post', error);
+            return null;
+        }
+    },
     async setPublished(_id, published) {
         return await this.findOneAndUpdate({ _id }, { $set: {published} }, { new: true });
     }

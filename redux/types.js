@@ -15,6 +15,9 @@ export const RESTOREPOST = 'restorepost';
 export const SETMETAKEYWORDS= 'setmetakeywords';
 export const POSTSAVING = 'postsaving';
 export const TOGGLEPOSTSUCCESS = 'togglepostsuccess';
+export const FETCHPOSTLOADING = 'fetchpostloading';
+export const FETCHPOSTSUCCESS = 'fetchpostsuccess';
+export const FETCHPOSTERROR = 'fetchposterror';
 
 // dashboard media
 export const MEDIALOADING = "medialoading";

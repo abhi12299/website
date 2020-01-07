@@ -61,10 +61,37 @@ const validateGetPosts = query => {
     return error;
 };
 
+const validateGetPost = query => {
+    const schema = Joi.object({
+        id: Joi.string().required()
+    });
+
+    const { error } = Joi.validate(query, schema);
+    return error;
+};
+
+const validateEditPost = ({title, headerImageURL, metaKeywords,
+    metaDescription, body}) => {
+    const schema = Joi.object({
+        title: Joi.string(),
+        headerImageURL: Joi.string(),
+        metaDescription: Joi.string(),
+        body: Joi.string(),
+        metaKeywords: Joi.array().items(Joi.string())
+    });
+    const { error } = Joi.validate({
+        title, headerImageURL, metaDescription, 
+        body, metaKeywords
+    }, schema);
+    return error;  
+};
+
 module.exports = {
     validatePost,
     validateSetPublished,
     validateDeleteMedia,
     validateGetMedia,
-    validateGetPosts
+    validateGetPosts,
+    validateGetPost,
+    validateEditPost
 };

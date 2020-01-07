@@ -1,3 +1,3 @@
-export default () => {
-    return JSON.parse(localStorage.getItem('tempSavePost'));
+export default (keyName='tempSavePost') => {
+    return JSON.parse(localStorage.getItem(keyName));
 }

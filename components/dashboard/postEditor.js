@@ -11,7 +11,7 @@ import { SETTITLE, SETBODY } from '../../redux/types';
 import '../../css/dashboard/postEditor.css';
 
 function PostEditor(props) {
-    const { title, body, postRestored, saving } = props;
+    const { title, body, postRestored, saving, lsKeyName } = props;
 
     const titleInput = useRef();
     const titleError = useRef();
@@ -59,10 +59,10 @@ function PostEditor(props) {
     }
 
     const handleEditorChange = (e, editor) =>
-        props.dispatch({ type: SETBODY, payload: editor.getContent()});
+        props.dispatch({ type: SETBODY, payload: editor.getContent(), keyName: lsKeyName });
 
     const handleTitleChange = e => 
-        props.dispatch({ type: SETTITLE, payload: e.target.value });
+        props.dispatch({ type: SETTITLE, payload: e.target.value, keyName: lsKeyName });
 
     return (
         <div className='col-lg-9 col-md-8 col-sm-12 editor-container'>
