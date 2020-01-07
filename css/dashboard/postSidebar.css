@@ -150,7 +150,13 @@
     color: white;
     justify-content: space-evenly;
     cursor: pointer;
-    max-width: 30%;
+}
+
+.sidebar-container .post-meta-keywords-container .post-meta-keyword .span-text {
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 @media(max-width: 768px) {

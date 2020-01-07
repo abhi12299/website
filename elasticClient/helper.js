@@ -30,7 +30,7 @@ async function updatePost(_id, updates) {
         for (const key of Object.keys(updates)) {
             script.inline += `ctx._source.${key} = `;
             if (typeof updates[key] === 'string') {
-                script.inline += `'${updates[key]}; '`;
+                script.inline += `'${updates[key]}';`;
             } else {
                 script.inline += `${updates[key]}; `;
             }
@@ -55,7 +55,27 @@ async function updatePost(_id, updates) {
     }
 }
 
+async function deletePost(_id) {
+    try {
+        const resp = await client.deleteByQuery({
+            index: 'post',
+            type: '_doc',
+            body: {
+                query: {
+                    match: { id: _id }
+                }
+            }
+        });
+        logger.info('Delete post, elastic resp is', resp);
+        return { error: false };
+    } catch (error) {
+        logger.error('Error deleting post from elastic search', error);
+        return { error: true };
+    }
+}
+
 module.exports = {
     addPost,
-    updatePost
+    updatePost,
+    deletePost
 };

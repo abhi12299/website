@@ -45,7 +45,7 @@ const Post = props => {
             </div>
             <div className='dashboard-post-content-container col-lg-9 col-md-9 col-9'>
                 <div className='row col-lg-12 col-md-12 col-12'>
-                    <Link href={`/dashboard/edit/${_id}`}>
+                    <Link href={`/dashboard/edit?id=${_id}`}>
                         <a><h3>{title}</h3></a>
                     </Link>
                 </div>
