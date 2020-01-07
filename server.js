@@ -7,6 +7,7 @@ const next = require('next');
 const path = require('path');
 const mongoose = require('mongoose');
 const passport = require('passport');
+const fs = require('fs');
 
 const logger = require('./logger');
 const serverMiddleware = require('./server-middleware');
@@ -67,9 +68,14 @@ function childProcess() {
         server.use(passport.initialize());
         server.use('/api', apiRouter);
         server.use('/auth', authRouter);
-        
+
         server.get('/static/blogs/:assetPath', (req, res) => {
-            res.sendFile(path.join(__dirname, './public', req.path));
+            const filePath = path.join(__dirname, './public', req.path);
+            if (fs.existsSync(filePath)) {
+                return res.sendFile(path.join(__dirname, './public', req.path));
+            } else {
+                res.status(404).send('File not found!');
+            }
         });
 
         server.get('/service-worker.js', (req, res) => {
