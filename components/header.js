@@ -107,9 +107,9 @@ const Header = props => {
             <li onClick={() => handleLinksClick('/', '.projects')}>
                 <a>Projects</a>
             </li>
-            <li onClick={() => handleSearch()} id='search-nav'>
+            {/* <li onClick={() => handleSearch()} id='search-nav'>
                 <a>Search</a>
-            </li>
+            </li> */}
             {/* <li onClick={() => handleLinksClick('/', '.blog')}>
                 <a>Blog</a>
             </li> */}
@@ -144,7 +144,14 @@ const Header = props => {
                         <a className='logo' onClick={() => goToPage('/')}>
                             <img src='../static/png/logo.png' alt='logo' />
                         </a>
-                        <a className={'menu-click' + (showMenu ? ' open' : '')} onClick={handleMenuToggle}><span></span><span></span><span></span></a>
+                        <div className='search-menu-container'>
+                            <div className='search-mobile-container'>
+                                <a onClick={() => handleSearch()}>
+                                    <img className='search-img-mobile' src='../static/png/icons8-search-50.png' />
+                                </a>
+                            </div>
+                            <a className={'menu-click' + (showMenu ? ' open' : '')} onClick={handleMenuToggle}><span></span><span></span><span></span></a>
+                        </div>
                     </div>
                     <div className='col-lg-8 col-md-12'>
                         <nav id='main-menu' className='text-center'>
