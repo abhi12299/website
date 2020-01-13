@@ -33,7 +33,8 @@ body {
     font-family: 'Poppins', sans-serif;
     font-size: 14px;
     font-weight: 400;
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
+    overflow: auto;
     height: 100%;
     touch-action: manipulation;
 }
@@ -1417,18 +1418,6 @@ li {
     .widget {
         margin-top: 30px;
     }
-    .search-section .centered {
-        width: 500px;
-        margin-left: -250px;
-    }
-    .search-section .centered form input {
-        width: 70%;
-        font-size: 20px;
-    }
-    .search-section .centered form button {
-        width: 30%;
-        font-size: 20px;
-    }
     .fullpage-wrapper .left-side.large.dark .hover-blog-image {
         width: 80%;
         height: 90% !important;
@@ -1889,18 +1878,6 @@ li {
     }
     .slider-6 .slider-image .entry-meta-content h2, .slider-image .entry-meta-content h2 {
         line-height: 25px;
-    }
-    .search-section .centered {
-        width: 320px;
-        margin-left: -160px;
-    }
-    .search-section .centered form input {
-        width: 70%;
-        font-size: 20px;
-    }
-    .search-section .centered form button {
-        width: 30%;
-        font-size: 20px;
     }
     .social-text li a {
         font-size: 10px;

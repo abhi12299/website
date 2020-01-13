@@ -29,3 +29,9 @@ export const DELETEMEDIALOADING = "deletemedialoading";
 export const POSTSERROR = 'postserror';
 export const POSTSLOADING = 'postsloading';
 export const POSTSSUCCESS = 'postssuccess';
+
+// search
+export const SHOWPOSTSEARCHOVERLAY = 'showpostsearchoverlay';
+export const SEARCHSUGGESTIONSUCCESS = 'searchsuggestionsuccess';
+export const SEARCHSUGGESTIONSLOADING = 'searchsuggestionsloading';
+export const SEARCHSUGGESTIONSERROR = 'searchsuggestionserror';

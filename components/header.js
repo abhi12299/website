@@ -1,9 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Fragment } from 'react';
 import { connect } from 'react-redux';
 import $ from 'jquery';
 import { withRouter } from 'next/router';
 
+import Search from './search';
+
 import goToPage from '../utils/goToPage';
+import { SHOWPOSTSEARCHOVERLAY } from '../redux/types';
 
 import '../css/header.css';
 
@@ -91,7 +94,9 @@ const Header = props => {
         goToPage(page, opts);
     }
 
-    const handleSearch = () => console.log('click');
+    const handleSearch = () => {
+        props.dispatch({ type: SHOWPOSTSEARCHOVERLAY, payload: true });
+    };
 
     const navLinks = (
         <ul>
@@ -137,35 +142,38 @@ const Header = props => {
     );
 
     return (
-        <section className='header-wrapper' ref={header}>
-            <div className='container'>
-                <div className='row'>
-                    <div className='col-lg-2 col-md-12 text-left'>
-                        <a className='logo' onClick={() => goToPage('/')}>
-                            <img src='../static/png/logo.png' alt='logo' />
-                        </a>
-                        <div className='search-menu-container'>
-                            <div className='search-mobile-container'>
-                                <a onClick={() => handleSearch()}>
-                                    <img className='search-img-mobile' src='../static/png/icons8-search-50.png' />
-                                </a>
+        <Fragment>
+            <Search />
+            <section className='header-wrapper' ref={header}>
+                <div className='container'>
+                    <div className='row'>
+                        <div className='col-lg-2 col-md-12 text-left'>
+                            <a className='logo' onClick={() => goToPage('/')}>
+                                <img src='../static/png/logo.png' alt='logo' />
+                            </a>
+                            <div className='search-menu-container'>
+                                <div className='search-mobile-container'>
+                                    <a onClick={() => handleSearch()}>
+                                        <img className='search-img-mobile' src='../static/png/icons8-search-50.png' />
+                                    </a>
+                                </div>
+                                <a className={'menu-click' + (showMenu ? ' open' : '')} onClick={handleMenuToggle}><span></span><span></span><span></span></a>
                             </div>
-                            <a className={'menu-click' + (showMenu ? ' open' : '')} onClick={handleMenuToggle}><span></span><span></span><span></span></a>
+                        </div>
+                        <div className='col-lg-8 col-md-12'>
+                            <nav id='main-menu' className='text-center'>
+                                { (admin && dashboardLinks) ? adminLinks : navLinks }
+                            </nav>
+                        </div>
+                        <div className='col-lg-2 col-md-4 text-right'>
+                            <a className='search-icon' onClick={() => handleSearch()}>
+                                <img className='search-area' src='../static/png/icons8-search-50.png' />
+                            </a>
                         </div>
                     </div>
-                    <div className='col-lg-8 col-md-12'>
-                        <nav id='main-menu' className='text-center'>
-                            { (admin && dashboardLinks) ? adminLinks : navLinks }
-                        </nav>
-            </div>
-            <div className='col-lg-2 col-md-4 text-right'>
-                <a className='search-icon' onClick={() => handleSearch()}>
-                    <img className='search-area' src='../static/png/icons8-search-50.png' />
-                </a>
-            </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </Fragment>
     );
 }
 
