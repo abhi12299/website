@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const logger = require('../logger');
+const elasticSearchHelper = require('../elasticClient/helper');
 
 const Schema = mongoose.Schema;
 const PostSchema = new Schema({
@@ -146,6 +147,39 @@ PostSchema.statics = {
     },
     async setPublished(_id, published) {
         return await this.findOneAndUpdate({ _id }, { $set: {published} }, { new: true });
+    },
+    async getSuggestions({ q, sortBy, sortOrder, published }) {
+        try {
+            published = parseInt(published);
+            if (isNaN(published)) {
+                published = undefined;
+            }
+
+            sortOrder = parseInt(sortOrder) || -1;
+
+            const { ids, error } = await elasticSearchHelper.suggestions({ q, sortBy, sortOrder, published });
+            if (error) {
+                return { data:[], error: true };
+            }
+
+            let aggrQuery = [
+                {$match: {
+                    _id: {
+                        $in: ids
+                    }
+                }},
+                {$sort: {
+                    [sortBy]: sortOrder
+                }},
+                {$project: {
+                    _id: 1, title: 1, metaKeywords: 1,
+                    published: 1, postedDate: 1
+                }}
+            ];
+            return { data: await this.aggregate(aggrQuery), error: false };
+        } catch (error) {
+            return { data: [], error: true };
+        }
     }
 };
 

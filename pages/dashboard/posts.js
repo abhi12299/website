@@ -12,7 +12,7 @@ import AdminFAB from '../../components/adminFAB';
 import Post from '../../components/dashboard/post';
 import Error from '../_error';
 import FullScreenLoader from '../../components/fullScreenLoader';
-import DashboardPostsHeader from '../../components/dashboard/DashboardPostsHeader';
+import DashboardPostsHeader from '../../components/dashboard/dashboardPostsHeader';
 const Pagination = dynamic(() => import('../../components/pagination'), { ssr: false });
 
 const perPage = 10;

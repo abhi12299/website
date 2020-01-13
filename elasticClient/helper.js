@@ -74,8 +74,50 @@ async function deletePost(_id) {
     }
 }
 
+async function suggestions({ q, sortBy, sortOrder, published }) {
+    try {
+        let elasticRequest = {
+            index: 'post',
+            type: '_doc',
+            body: {
+                query: {
+                    bool: {
+                        should: [
+                            { match: { title: { query: q, prefix_length: 3, max_expansions: 10, boost: 1.5 } } },
+                            { match: { body: { query: q, prefix_length: 3, max_expansions: 10, boost: 1.2 } } }
+                        ],
+                        minimum_should_match: 1
+                    }
+                },
+                size: 10
+            },
+        };
+
+        if (sortBy) {
+            elasticRequest.body.sort = [
+                {
+                    [sortBy]: sortOrder === -1 ? 'desc' : 'asc'
+                }
+            ];
+        }
+        if (typeof published !== 'undefined') {
+            elasticRequest.body.query.bool.filter = [
+                { term: { published } }
+            ];
+        }
+        const resp = await client.search(elasticRequest);
+        if (resp.hits) {
+            return { ids: resp.hits.hits.map(r => r._id), error: false };
+        }
+        return { ids: [], error: false };
+    } catch (error) {
+        logger.error('Error while getting search suggestions', error);
+        return { error: true };
+    }
+}
 module.exports = {
     addPost,
     updatePost,
-    deletePost
+    deletePost,
+    suggestions
 };
