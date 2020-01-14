@@ -35,3 +35,6 @@ export const SHOWPOSTSEARCHOVERLAY = 'showpostsearchoverlay';
 export const SEARCHSUGGESTIONSUCCESS = 'searchsuggestionsuccess';
 export const SEARCHSUGGESTIONSLOADING = 'searchsuggestionsloading';
 export const SEARCHSUGGESTIONSERROR = 'searchsuggestionserror';
+export const SEARCHLOADING = 'searchloading';
+export const SEARCHERROR = 'searcherror';
+export const SEARCHSUCCESS = 'searchsuccess';

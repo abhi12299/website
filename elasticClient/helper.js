@@ -78,7 +78,7 @@ function sanitize(q) {
     return q.replace(/[^\w\s]/, '');
 }
 
-async function suggestions({ q, sortBy, sortOrder, published }) {
+async function suggestions({ q, sortBy, sortOrder, published, skip, limit }) {
     try {
         let elasticRequest = {
             index: 'post',
@@ -95,7 +95,8 @@ async function suggestions({ q, sortBy, sortOrder, published }) {
                         minimum_should_match: 1
                     }
                 },
-                size: 10
+                size: limit || 10,
+                from: skip || 0
             },
         };
 
@@ -113,9 +114,13 @@ async function suggestions({ q, sortBy, sortOrder, published }) {
         }
         const resp = await client.search(elasticRequest);
         if (resp.hits) {
-            return { data: resp.hits.hits.map(r => ({ _id: r._id, body: r._source.body } )), error: false };
+            return { 
+                data: resp.hits.hits.map(r => ({ _id: r._id, body: r._source.body } )), 
+                error: false,
+                count: resp.hits.total.value 
+            };
         }
-        return { data: [], error: false };
+        return { data: [], error: false, count: 0 };
     } catch (error) {
         logger.error('Error while getting search suggestions', error);
         return { error: true };

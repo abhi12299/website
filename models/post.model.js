@@ -172,8 +172,7 @@ PostSchema.statics = {
                     [sortBy]: sortOrder
                 }},
                 {$project: {
-                    _id: 1, title: 1, metaKeywords: 1,
-                    published: 1, postedDate: 1
+                    _id: 1, title: 1, published: 1
                 }}
             ];
             const posts = await this.aggregate(aggrQuery);
@@ -190,6 +189,51 @@ PostSchema.statics = {
             };
         } catch (error) {
             return { data: [], error: true };
+        }
+    },
+    async getSearchResults({ q, sortBy, sortOrder, published, skip, limit }) {
+        try {
+            published = parseInt(published);
+            if (isNaN(published)) {
+                published = undefined;
+            }
+
+            sortOrder = parseInt(sortOrder) || -1;
+
+            const { data, error, count } = await elasticSearchHelper.suggestions({ q, sortBy, sortOrder, published });
+            if (error) {
+                return { data: [], error: true, count: 0 };
+            }
+
+            let aggrQuery = [
+                {$match: {
+                    _id: {
+                        $in: data.map(d => d._id)
+                    }
+                }},
+                {$sort: {
+                    [sortBy]: sortOrder
+                }},
+                {$skip: skip},
+                {$limit: limit},
+                {$project: {
+                    _id: 1, title: 1, headerImageURL: 1,
+                    published: 1, postedDate: 1,
+                    metaKeywords: {
+                        // get only first 2 meta keywords
+                        $slice: ['$metaKeywords', 0, 2]
+                    }
+                }}
+            ];
+            const posts = await this.aggregate(aggrQuery);
+
+            return { 
+                data: posts,
+                error: false,
+                count
+            };
+        } catch (error) {
+            return { data: [], error: true, count: 0 };
         }
     }
 };

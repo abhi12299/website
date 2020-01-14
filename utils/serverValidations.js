@@ -86,7 +86,7 @@ const validateEditPost = ({title, headerImageURL, metaKeywords,
     return error;  
 };
 
-const validateSearch = query => {
+const validateSearchSuggestions = query => {
     const schema = Joi.object({
         q: Joi.string().required(),
         sortBy: Joi.string().regex(/^(postedDate)$/i),
@@ -95,7 +95,20 @@ const validateSearch = query => {
     });
     const { error } = Joi.validate(query, schema);
     return error;
-}
+};
+
+const validateSearch = query => {
+    const schema = Joi.object({
+        q: Joi.string().required(),
+        sortBy: Joi.string().regex(/^(postedDate)$/i),
+        sortOrder: Joi.string().regex(/^(1|-1)$/i),
+        published: Joi.string().regex(/^(1|0|all)$/i),
+        skip: Joi.number().min(0),
+        limit: Joi.number().min(1).max(20)
+    });
+    const { error } = Joi.validate(query, schema);
+    return error;
+};
 
 module.exports = {
     validatePost,
@@ -105,5 +118,6 @@ module.exports = {
     validateGetPosts,
     validateGetPost,
     validateEditPost,
+    validateSearchSuggestions,
     validateSearch
 };

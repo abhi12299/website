@@ -2,7 +2,10 @@ import {
     SHOWPOSTSEARCHOVERLAY,
     SEARCHSUGGESTIONSUCCESS,
     SEARCHSUGGESTIONSLOADING,
-    SEARCHSUGGESTIONSERROR
+    SEARCHSUGGESTIONSERROR,
+    SEARCHERROR,
+    SEARCHLOADING,
+    SEARCHSUCCESS
 } from '../types';
 
 const initialState = {
@@ -11,7 +14,7 @@ const initialState = {
     errorMessage: null,
     error: false,
     data: null,
-    count: 0,
+    count: null,
     suggestions: null,
     searchQuery: ''
 };
@@ -25,7 +28,13 @@ export default (state = initialState, action) => {
         case SEARCHSUGGESTIONSUCCESS:
             return Object.assign({}, state, { loading: false, suggestions: action.payload, searchQuery: action.searchQuery });
         case SEARCHSUGGESTIONSERROR:
-            return Object.assign({}, state, { error: true, loading: false, errorMessage: action.payload });
+            return Object.assign({}, state, { error: true, loading: false, errorMessage: action.payload, suggestions: null });
+        case SEARCHLOADING:
+            return Object.assign({}, state, { loading: action.payload });
+        case SEARCHSUCCESS:
+            return Object.assign({}, state, { loading: false, searchResults: action.payload, count: action.count, searchQuery: action.searchQuery });
+        case SEARCHERROR:
+            return Object.assign({}, state, { error: true, loading: false, errorMessage: action.payload, searchResults: null });
         default:
             return state;
     }

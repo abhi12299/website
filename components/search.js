@@ -6,6 +6,7 @@ import Dropdown from './dropdown';
 
 import { SHOWPOSTSEARCHOVERLAY } from '../redux/types';
 import actions from '../redux/actions';
+import { showToast } from '../utils/toasts';
 
 import '../css/search.css';
 import SuggestionResults from './suggestionResults';
@@ -45,10 +46,14 @@ class Search extends Component {
     }
 
     componentDidUpdate() {
-        const { show } = this.props.search;
+        const { show, error } = this.props.search;
         if (show) {
             window.addEventListener('keydown', this.escapeKeyCloseSearch);
             document.documentElement.classList.add('no-scroll');
+
+            if (error) {
+                showToast('Search could not be performed! Please try later', 'error');
+            }
         } else {
             window.removeEventListener('keydown', this.escapeKeyCloseSearch);
             document.documentElement.classList.remove('no-scroll');
@@ -126,7 +131,8 @@ class Search extends Component {
         // const admin = true;
         let { q } = this.state;
         q = q.trim();
-
+        q = encodeURI(q);
+        
         if (q.length < 1) {
             return;
         }
@@ -143,6 +149,7 @@ class Search extends Component {
             pathname: '/search',
             query: searchQuery
         });
+        this.handleCloseSearch();
     }
 
     adminDropdowns() {
@@ -179,7 +186,7 @@ class Search extends Component {
     }
 
     render() {
-        const { show } = this.props.search;
+        const { show, loading } = this.props.search;
         const { q } = this.state;
         const { admin } = this.props.auth;
         // const admin = true;
@@ -204,6 +211,7 @@ class Search extends Component {
                         />
                         <button onClick={this.handleSearch}>Search</button>
                     </div>
+                    {loading && 'Please wait!'}
                     <SuggestionResults 
                         suggestions={suggestions} 
                         adminButtons={admin}
