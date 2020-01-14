@@ -122,8 +122,8 @@ class Search extends Component {
 
     handleSearch() {
         const { router } = this.props;
-        // const { admin } = this.props.auth;
-        const admin = true;
+        const { admin } = this.props.auth;
+        // const admin = true;
         let { q } = this.state;
         q = q.trim();
 
@@ -181,8 +181,8 @@ class Search extends Component {
     render() {
         const { show } = this.props.search;
         const { q } = this.state;
-        // const { admin } = this.props.auth;
-        const admin = true;
+        const { admin } = this.props.auth;
+        // const admin = true;
         const { suggestions } = this.props.search;
         const { searchQuery } = this.props.search;
 
