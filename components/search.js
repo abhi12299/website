@@ -1,16 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'next/router';
 
 import Dropdown from './dropdown';
 
 import { SHOWPOSTSEARCHOVERLAY } from '../redux/types';
+import actions from '../redux/actions';
 
 import '../css/search.css';
+import SuggestionResults from './suggestionResults';
 
 const dropdownSortOptions = [
-    { title: 'Time (Oldest first)', query: { sortBy: 'postedDate', sortOrder: '1' } },
-    { title: 'Time (Latest first)', query: { sortBy: 'postedDate', sortOrder: '-1' } }
+    { title: 'Time (Latest first)', query: { sortBy: 'postedDate', sortOrder: '-1' } },
+    { title: 'Time (Oldest first)', query: { sortBy: 'postedDate', sortOrder: '1' } }
 ];
 const dropdownSearchInOptions = [
     { title: 'All (Pub/unpub)', query: { published: 'all' } },
@@ -39,6 +41,7 @@ class Search extends Component {
         this.handleSearch = this.handleSearch.bind(this);
 
         this.typingTimeout = null;
+        this.searchFieldRef = createRef();
     }
 
     componentDidUpdate() {
@@ -54,10 +57,12 @@ class Search extends Component {
 
     handleSortOptionChange(i) {
         selectedIndexSort = i;
+        this.handleSearchInputChange();
     }
 
     handleSearchInOptionChange(i) {
         selectedIndexSearchIn = i;
+        this.handleSearchInputChange();
     }
 
     getSearchSuggestions() {
@@ -70,20 +75,31 @@ class Search extends Component {
         const admin = true;
 
         if (q.length < 1) {
+            this.props.dispatch(actions.searchActions.clearSearchSuggestions());
             return;
         }
 
         if (admin) {
-            console.log('Hitting api for query:', q);
+            this.props.dispatch(actions.searchActions.searchSuggestions({ 
+                q, 
+                ...dropdownSearchInOptions[selectedIndexSearchIn].query,
+                ...dropdownSortOptions[selectedIndexSort].query
+            }));
         } else {
-            console.log('Not admin query', q);
+            this.props.dispatch(actions.searchActions.searchSuggestions({ q }));
         }
     }
 
     handleSearchInputChange(e) {
+        let value;
+        if (e && e.target) {
+            value = e.target.value;
+        } else {
+            value = this.searchFieldRef.current.value;
+        }
         clearTimeout(this.typingTimeout);
-        this.typingTimeout = setTimeout(this.getSearchSuggestions, 500);
-        this.setState({ q: e.target.value });
+        this.typingTimeout = setTimeout(this.getSearchSuggestions, value.trim().length ? 500 : 0);
+        this.setState({ q: value });
     }
 
     escapeKeyCloseSearch(e) {
@@ -138,6 +154,7 @@ class Search extends Component {
                     </div>
                     <div className='sort-dropdown-wrapper mx-auto'>
                         <Dropdown
+                            className='dd-sort'
                             options={dropdownSortOptions.map(d => d.title)}
                             defaultIndex={0}
                             onSelectionChange={this.handleSortOptionChange}
@@ -150,6 +167,7 @@ class Search extends Component {
                     </div>
                     <div className='search-in-dropdown-wrapper mx-auto'>
                         <Dropdown
+                            className='dd-search-in'
                             options={dropdownSearchInOptions.map(d => d.title)}
                             defaultIndex={0}
                             onSelectionChange={this.handleSearchInOptionChange}
@@ -165,6 +183,8 @@ class Search extends Component {
         const { q } = this.state;
         // const { admin } = this.props.auth;
         const admin = true;
+        const { suggestions } = this.props.search;
+        const { searchQuery } = this.props.search;
 
         return (
             <div className={`section search-section ${show ? 'show' : 'hide'}`}>
@@ -175,6 +195,7 @@ class Search extends Component {
                 <div className='centered'>
                     <div className='search-container'>
                         <input
+                            ref={this.searchFieldRef}
                             type='text'
                             placeholder='Search here..'
                             onChange={this.handleSearchInputChange}
@@ -183,6 +204,11 @@ class Search extends Component {
                         />
                         <button onClick={this.handleSearch}>Search</button>
                     </div>
+                    <SuggestionResults 
+                        suggestions={suggestions} 
+                        adminButtons={admin}
+                        searchQuery={searchQuery}
+                    />
                 </div>
             </div>
         );

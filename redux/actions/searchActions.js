@@ -13,11 +13,6 @@ const searchSuggestions = ({ q, sortBy, sortOrder, published }) => {
         method: 'GET',
         credentials: 'include',
     };
-    if (req && 'token' in req.cookies) {
-        fetchOpts.headers = {
-            'authorization': `Bearer ${req.cookies['token']}`
-        };
-    }
 
     let url = `${baseURL}/api/search/suggestions?q=${q}`;
     if (sortBy) {
@@ -34,13 +29,13 @@ const searchSuggestions = ({ q, sortBy, sortOrder, published }) => {
         dispatch({ type: SEARCHSUGGESTIONSLOADING, payload: true });
 
         return fetch(url, fetchOpts)
+            .then(resp => resp.json())
             .then(resp => {
-                console.log('From api resp is', resp);
                 if (resp.error) {
                     console.error(resp);
                     dispatch({ type: SEARCHSUGGESTIONSERROR, payload: resp.msg || 'Something went wrong!' });
                 } else {
-                    dispatch({ type: SEARCHSUGGESTIONSUCCESS, payload: resp.data });
+                    dispatch({ type: SEARCHSUGGESTIONSUCCESS, payload: resp.data, searchQuery: q });
                 }
             }).catch(err => {
                 console.error(err);
@@ -49,7 +44,11 @@ const searchSuggestions = ({ q, sortBy, sortOrder, published }) => {
     };
 };
 
+const clearSearchSuggestions = () => dispatch => {
+    dispatch({ type: SEARCHSUGGESTIONSUCCESS, payload: null, searchQuery: '' });
+}
 
 export default {
-    searchSuggestions
+    searchSuggestions,
+    clearSearchSuggestions
 };

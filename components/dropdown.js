@@ -63,11 +63,11 @@ class Dropdown extends Component{
   }
 
   render() {
-    const { options } = this.props;
+    const { options, className } = this.props;
     const { listOpen, selectedIndex } = this.state;
 
     return(
-      <div className='dd-wrapper'>
+      <div className={`dd-wrapper ${className ? className : ''}`}>
         <div className='dd-header' onClick={() => this.toggleList()}>
           <div className='dd-header-title'>{options[selectedIndex]}</div>
           {listOpen
@@ -94,7 +94,8 @@ class Dropdown extends Component{
 Dropdown.propTypes = {
     options: PropTypes.arrayOf(PropTypes.string).isRequired,
     defaultIndex: PropTypes.number,
-    onSelectionChange: PropTypes.func
+    onSelectionChange: PropTypes.func,
+    className: PropTypes.string
 };
 
 export default Dropdown;

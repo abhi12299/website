@@ -42,7 +42,12 @@ async function bulkInsertPosts() {
                         _id: post.id
                     }
                 });
-                posts.push({ ...post, body: striptags(post.body) });
+                let body = post.body
+                                .replace(/\s/ig, ' ')
+                                .replace(/<code.*?<\/code>/ig, '');
+
+                body = decodeURI(striptags(body));
+                posts.push({ ...post, body });
             }
         }
         const resp = await client.bulk({

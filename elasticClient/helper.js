@@ -74,6 +74,10 @@ async function deletePost(_id) {
     }
 }
 
+function sanitize(q) {
+    return q.replace(/[^\w\s]/, '');
+}
+
 async function suggestions({ q, sortBy, sortOrder, published }) {
     try {
         let elasticRequest = {
@@ -84,7 +88,9 @@ async function suggestions({ q, sortBy, sortOrder, published }) {
                     bool: {
                         should: [
                             { match: { title: { query: q, prefix_length: 3, max_expansions: 10, boost: 1.5 } } },
-                            { match: { body: { query: q, prefix_length: 3, max_expansions: 10, boost: 1.2 } } }
+                            { wildcard: {title: { value: `*${sanitize(q).toLowerCase()}*`, boost: 1.3 }} },
+                            { match: { body: { query: q, prefix_length: 3, max_expansions: 10, boost: 1.2 } } },
+                            { wildcard: {body: { value: `*${sanitize(q).toLowerCase()}*`, boost: 1.1 }} },
                         ],
                         minimum_should_match: 1
                     }
@@ -107,9 +113,9 @@ async function suggestions({ q, sortBy, sortOrder, published }) {
         }
         const resp = await client.search(elasticRequest);
         if (resp.hits) {
-            return { ids: resp.hits.hits.map(r => r._id), error: false };
+            return { data: resp.hits.hits.map(r => ({ _id: r._id, body: r._source.body } )), error: false };
         }
-        return { ids: [], error: false };
+        return { data: [], error: false };
     } catch (error) {
         logger.error('Error while getting search suggestions', error);
         return { error: true };

@@ -157,15 +157,15 @@ PostSchema.statics = {
 
             sortOrder = parseInt(sortOrder) || -1;
 
-            const { ids, error } = await elasticSearchHelper.suggestions({ q, sortBy, sortOrder, published });
+            const { data, error } = await elasticSearchHelper.suggestions({ q, sortBy, sortOrder, published });
             if (error) {
-                return { data:[], error: true };
+                return { data: [], error: true };
             }
 
             let aggrQuery = [
                 {$match: {
                     _id: {
-                        $in: ids
+                        $in: data.map(d => d._id)
                     }
                 }},
                 {$sort: {
@@ -176,7 +176,18 @@ PostSchema.statics = {
                     published: 1, postedDate: 1
                 }}
             ];
-            return { data: await this.aggregate(aggrQuery), error: false };
+            const posts = await this.aggregate(aggrQuery);
+
+            return { 
+                data: posts.map(p => {
+                        const postData = data.filter(d => d._id === p._id)[0] || {};
+                        return {
+                            ...p,
+                            body: postData.body || ''
+                        };
+                    }), 
+                error: false 
+            };
         } catch (error) {
             return { data: [], error: true };
         }

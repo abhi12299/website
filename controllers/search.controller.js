@@ -19,7 +19,6 @@ searchRouter.get('/suggestions', async (req, res) => {
     let {
         q, sortBy='postedDate', sortOrder='-1', published='all' // by default all posts will be searched
     } = req.query;
-
     if (!req.admin) {
         published = '1'; // ignore published query
     }
