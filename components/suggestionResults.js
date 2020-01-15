@@ -7,13 +7,19 @@ import getMatchedText from '../utils/getMatchedText';
 import '../css/suggestionResults.css';
 
 function SuggestionResults(props) {
-    const { suggestions, adminButtons, searchQuery } = props;
+    const { suggestions, adminButtons, searchQuery, loading } = props;
 
     if (!suggestions) return null;
 
-    return (
-        <div className='search-suggestions-container'>
-            { 
+    const loadingIndicator = (
+        <div className='search-suggestions-result'>
+            <p className='title'>Searching...</p>
+        </div>
+    );
+
+    const results = (
+        <Fragment>
+            {
                 suggestions.length === 0 &&
                 <div className='search-suggestions-result'>
                     <p className='title'>No results found.. Try some different keywords</p>
@@ -34,8 +40,8 @@ function SuggestionResults(props) {
                                             {s.title}
                                             {
                                                 adminButtons &&
-                                                <p className={`search-publish-indicator ${s.published ? 'pub': 'unpub'}`}>
-                                                    {s.published ? 'Published': 'Unpublished'}
+                                                <p className={`search-publish-indicator ${s.published ? 'pub' : 'unpub'}`}>
+                                                    {s.published ? 'Published' : 'Unpublished'}
                                                 </p>
                                             }
                                         </h3>
@@ -51,6 +57,12 @@ function SuggestionResults(props) {
                     );
                 })
             }
+        </Fragment>
+    );
+
+    return (
+        <div className='search-suggestions-container'>
+            { loading ? loadingIndicator : results }
         </div>
     );
 }
@@ -65,7 +77,8 @@ SuggestionResults.propTypes = {
         body: PropTypes.string
     })),
     adminButtons: PropTypes.bool,
-    searchQuery: PropTypes.string
+    searchQuery: PropTypes.string,
+    loading: PropTypes.bool
 };
 
 export default SuggestionResults;

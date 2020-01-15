@@ -211,11 +211,11 @@ class Search extends Component {
                         />
                         <button onClick={this.handleSearch}>Search</button>
                     </div>
-                    {loading && 'Please wait!'}
                     <SuggestionResults 
                         suggestions={suggestions} 
                         adminButtons={admin}
                         searchQuery={searchQuery}
+                        loading={loading}
                     />
                 </div>
             </div>
