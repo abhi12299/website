@@ -1,3 +1,7 @@
+.blog-post a:hover, .blog-post a:focus {
+    color: black !important;
+}
+
 .blog-post {
     margin-bottom: 75px;
     margin-top: 10px;
@@ -98,6 +102,15 @@
     height: 1px;
     display: inline-block;
     margin-right: 10px;
+}
+
+.blog-post .admin-btns ul li {
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+.blog-post .toggle-publish.toggle-wait {
+    cursor: not-allowed !important;
 }
 
 .blog-post .blog-social-share {

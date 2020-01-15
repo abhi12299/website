@@ -13,7 +13,8 @@ import { POSTSAVING,
   DELETEMEDIALOADING,
   FETCHPOSTLOADING,
   FETCHPOSTSUCCESS,
-  FETCHPOSTERROR  
+  FETCHPOSTERROR  ,
+  TOGGLEPOSTSUCCESS_SEARCH
 } from '../types';
 import baseURL from '../../constants/apiURL';
 import { showToast } from '../../utils/toasts';
@@ -167,7 +168,8 @@ const fetchMedia = ({ req, filters, perPage=10, pageNo=1 }) => {
   };
 };
 
-const togglePublish = (postData) => {
+const togglePublish = (postData, pathname='/dashboard/posts') => {
+  console.log('PATHNAME IS', pathname);
   const { _id, published } = postData;
   const fetchOpts = {
     method: 'POST',
@@ -200,7 +202,7 @@ const togglePublish = (postData) => {
             showToast(resp.msg || 'There was some error changing the publish status of the post!', 'error');
           }
         } else {
-          dispatch({ type: TOGGLEPOSTSUCCESS, payload: { _id, published } });
+          dispatch({ type: pathname === '/dashboard/posts' ? TOGGLEPOSTSUCCESS : TOGGLEPOSTSUCCESS_SEARCH, payload: { _id, published } });
           showToast(`The post was successfully ${published ? 'published': 'unpublished'}.`, 'success');
         }
       }).catch(err => {

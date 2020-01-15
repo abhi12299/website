@@ -121,11 +121,9 @@ PostSchema.statics = {
                 },
                 {
                     $project: {
-                        _id: 1,
-                        title: 1,
-                        published: 1,
-                        postedDate: 1,
-                        headerImageURL: 1,
+                        _id: 1, title: 1, headerImageURL: 1,
+                        published: 1, postedDate: 1,
+                        metaKeywords: 1, metaDescription: 1
                     }
                 }
             ];
@@ -219,10 +217,7 @@ PostSchema.statics = {
                 {$project: {
                     _id: 1, title: 1, headerImageURL: 1,
                     published: 1, postedDate: 1,
-                    metaKeywords: {
-                        // get only first 2 meta keywords
-                        $slice: ['$metaKeywords', 0, 2]
-                    }, metaDescription: 1
+                    metaKeywords: 1, metaDescription: 1
                 }}
             ];
             const posts = await this.aggregate(aggrQuery);

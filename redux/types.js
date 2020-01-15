@@ -24,6 +24,7 @@ export const MEDIALOADING = "medialoading";
 export const MEDIAERROR = "mediaerror";
 export const MEDIASUCCESS = "mediasuccess";
 export const DELETEMEDIALOADING = "deletemedialoading";
+export const TOGGLEPOSTSUCCESS_SEARCH = 'togglepostsuccess_search';
 
 // posts
 export const POSTSERROR = 'postserror';

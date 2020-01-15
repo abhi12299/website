@@ -9,7 +9,7 @@ import Preloader from '../../components/preloader';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
 import AdminFAB from '../../components/adminFAB';
-import Post from '../../components/dashboard/post';
+import PostTile from '../../components/postTile';
 import Error from '../_error';
 import FullScreenLoader from '../../components/fullScreenLoader';
 import DashboardPostsHeader from '../../components/dashboard/dashboardPostsHeader';
@@ -51,7 +51,7 @@ const ViewPosts = props => {
         <div className='container'>
           <DashboardPostsHeader />
           <div className='posts-container'>
-            { posts.map(p => <Post key={p._id} post={p} />) }
+            { posts.map(p => <PostTile key={p._id} post={p} adminButtons={true} />) }
           </div>
           <Pagination 
             pageNo={pageNo} 

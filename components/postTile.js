@@ -1,8 +1,12 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
+import { faEye, faEyeSlash, faEdit } from '@fortawesome/free-regular-svg-icons';
 
+import actions from '../redux/actions';
 import months from '../constants/months';
 import baseURL from '../constants/apiURL';
 
@@ -23,11 +27,21 @@ function PostTile(props) {
         metaDescription,
         metaKeywords
     } = props.post;
+    const router = useRouter();
+    let [loading, setLoading] = useState(false);
     const { adminButtons } = props;
 
     const dateObj = getDate(postedDate);
 
-    const url = `${baseURL}/post/${_id}`;
+    const url = `${baseURL}/${published ? 'post' : 'preview'}/${_id}`;
+
+    const handleTogglePublish = () => {
+        const { pathname } = router;
+        setLoading(true);
+        props.dispatch(actions.dashboardActions.togglePublish({
+            _id, published: published === 0 ? 1 : 0
+        }, pathname)).then(() => setLoading(false));
+    };
 
     return (
         <div className='col-md-10 offset-md-1'>
@@ -36,9 +50,13 @@ function PostTile(props) {
                     <div className='entry-date'>
                         {dateObj.date} <span>{dateObj.month} {dateObj.year}</span>
                     </div>
-                    <h2 className='entry-title'>
-                        {title}
-                    </h2>
+                    <Link href={url}>
+                        <a>
+                            <h2 className='entry-title'>
+                                {title}
+                            </h2>
+                        </a>
+                    </Link>
                     <span className='entry-meta'>
                         {metaKeywords.map((mk, i) => (
                             <span className='meta-tags' key={i}>#{mk}</span>
@@ -49,13 +67,45 @@ function PostTile(props) {
                     <img src={headerImageURL} alt='title for post' />
                 </div>
                 <div className='entry-content-bottom'>
-                    <p className='entry-content'>{metaDescription}</p>
-                    <Link href='/post/something'>
-                        <a className='entry-read-more'>
-                            <span></span>
-                            Read More
+                    <Link href={url}>
+                        <a>
+                            <p className='entry-content'>{metaDescription}</p>
                         </a>
                     </Link>
+                    {
+                        published === 1 &&
+                        <Link href={`/post/${_id}`}>
+                            <a className='entry-read-more'>
+                                <span></span>
+                                Read More
+                        </a>
+                        </Link>
+                    }
+                    {
+                        adminButtons &&
+                        <div className='admin-btns'>
+                            <ul className='list-inline'>
+                                <li className='list-inline-item'>
+                                    <FontAwesomeIcon
+                                        className={'toggle-publish' + (loading ? ' toggle-wait' : '')}
+                                        icon={published ? faEyeSlash : faEye}
+                                        title={published ? 'Unpublish' : 'Publish'}
+                                        onClick={loading ? null : handleTogglePublish}
+                                    />
+                                </li>
+                                <li className='list-inline-item'>
+                                    <Link href={`/dashboard/edit?id=${_id}`}>
+                                        <a>
+                                            <FontAwesomeIcon
+                                                icon={faEdit}
+                                                title={'Edit Post'}
+                                            />
+                                        </a>
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
+                    }
                     {
                         published === 1 &&
                         <Fragment>
@@ -80,6 +130,7 @@ function PostTile(props) {
                                         <FontAwesomeIcon
                                             icon={faWhatsapp}
                                             className='blog-ss-icons'
+                                            title='Share to WhatsApp'
                                         />
                                     </a>
                                 </li>
@@ -96,4 +147,4 @@ function PostTile(props) {
     );
 }
 
-export default PostTile;
+export default connect()(PostTile);

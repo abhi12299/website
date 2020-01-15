@@ -5,7 +5,8 @@ import {
     SEARCHSUGGESTIONSERROR,
     SEARCHERROR,
     SEARCHLOADING,
-    SEARCHSUCCESS
+    SEARCHSUCCESS,
+    TOGGLEPOSTSUCCESS_SEARCH
 } from '../types';
 
 const initialState = {
@@ -13,7 +14,6 @@ const initialState = {
     loading: false,
     errorMessage: null,
     error: false,
-    data: null,
     count: null,
     suggestions: null,
     searchQuery: ''
@@ -35,6 +35,18 @@ export default (state = initialState, action) => {
             return Object.assign({}, state, { loading: false, searchResults: action.payload, count: action.count, searchQuery: action.searchQuery });
         case SEARCHERROR:
             return Object.assign({}, state, { error: true, loading: false, errorMessage: action.payload, searchResults: null });
+        case TOGGLEPOSTSUCCESS_SEARCH:
+            const { _id, published } = action.payload;
+            let data = state.searchResults;
+            if (data) {
+                data = data.map(d => {
+                    if (d._id === _id) {
+                        d.published = published;
+                    }
+                    return d;
+                });
+            }
+            return Object.assign({}, state, { searchResults: data });
         default:
             return state;
     }

@@ -5,11 +5,12 @@ import PostTile from './postTile';
 
 function SearchResults(props) {
     const { searchResults } = props.search;
+    const { admin } = props.auth;
 
     return (
         <div className='row'>
             {
-                searchResults.map(s => <PostTile post={s} key={s._id} />)
+                searchResults.map(s => <PostTile post={s} key={s._id} adminButtons={admin} />)
             }
         </div>
     );
