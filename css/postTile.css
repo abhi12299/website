@@ -12,6 +12,7 @@
     font-size: 16px;
     color: #111;
     font-family: PoppinsBold;
+    padding-left: 15px;
 }
 
 .blog-post .entry-meta .meta-tags {
@@ -104,6 +105,10 @@
     margin-right: 10px;
 }
 
+.blog-post .admin-btns {
+    margin-top: 5px;
+}
+
 .blog-post .admin-btns ul li {
     font-size: 1.5em;
     cursor: pointer;
@@ -129,4 +134,73 @@
 
 .blog-post .blog-social-share .blog-ss-icons {
     font-size: 1.6em;
+}
+
+@media (max-width: 1024px) {
+    .blog-post .entry-date {
+        font-size: 60px;
+        left: 15px;
+    }
+}
+
+@media(max-width: 991px) {
+    .blog-post .entry-date {
+        font-size: 45px;
+    }
+    .blog-post .entry-date span {
+        font-size: 11px;
+        bottom: 5px;
+    }
+    .blog-post .entry-title {
+        font-size: 24px;
+        line-height: 32px;
+    }
+    .blog-post .entry-meta-content, 
+    .blog-post .entry-content-bottom {
+        padding-right: 80px;
+        padding-left: 90px;
+    }
+}
+
+@media(max-width: 768px) {
+    .blog-post {
+        margin-bottom: 50px;
+    }
+
+    .blog-post .entry-content-bottom {
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+}
+
+@media(max-width: 580px) {
+    .blog-post .entry-meta-content, .blog-post .entry-meta {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .blog-post .entry-meta, .blog-post .entry-read-more {
+        font-size: 14px;
+        margin-left: 0px;
+    }
+
+    .blog-post .entry-meta-content .entry-date {
+        position: relative;
+        left: 0px;
+        margin-bottom: 5px;
+    }
+
+    .blog-post .entry-meta-content .entry-date span {
+        left: 40px;
+        right: auto;
+    }
+
+    .blog-post .entry-content-bottom {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .blog-post span.entry-meta {
+        display: none;
+    }
 }

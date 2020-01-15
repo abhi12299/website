@@ -57,11 +57,11 @@ function PostTile(props) {
                             </h2>
                         </a>
                     </Link>
-                    <span className='entry-meta'>
+                    <div className='entry-meta row'>
                         {metaKeywords.map((mk, i) => (
-                            <span className='meta-tags' key={i}>#{mk}</span>
+                            <div className='meta-tags' key={i}>#{mk}</div>
                         ))}
-                    </span>
+                    </div>
                 </div>
                 <div className='entry-media'>
                     <img src={headerImageURL} alt='title for post' />

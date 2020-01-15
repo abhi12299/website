@@ -169,7 +169,6 @@ const fetchMedia = ({ req, filters, perPage=10, pageNo=1 }) => {
 };
 
 const togglePublish = (postData, pathname='/dashboard/posts') => {
-  console.log('PATHNAME IS', pathname);
   const { _id, published } = postData;
   const fetchOpts = {
     method: 'POST',
