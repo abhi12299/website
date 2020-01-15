@@ -54,6 +54,7 @@ class Search extends Component {
             if (error) {
                 showToast('Search could not be performed! Please try later', 'error');
             }
+            this.searchFieldRef.current.focus();
         } else {
             window.removeEventListener('keydown', this.escapeKeyCloseSearch);
             document.documentElement.classList.remove('no-scroll');
@@ -149,7 +150,6 @@ class Search extends Component {
             pathname: '/search',
             query: searchQuery
         });
-        this.handleCloseSearch();
     }
 
     adminDropdowns() {

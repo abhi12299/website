@@ -1,0 +1,119 @@
+.blog-post {
+    margin-bottom: 75px;
+    margin-top: 10px;
+    position: relative;
+}
+
+.blog-post .entry-meta {
+    font-size: 16px;
+    color: #111;
+    font-family: PoppinsBold;
+}
+
+.blog-post .entry-meta .meta-tags {
+    text-decoration: underline;
+}
+
+.blog-post .entry-meta .meta-tags:not(:last-child) {
+    margin-right: 10px;
+}
+
+.blog-post .entry-meta-content, 
+.blog-post .entry-content-bottom {
+    padding-left: 180px;
+    padding-right: 100px;
+    position: relative;
+}
+
+.blog-post .entry-title {
+    font-family: PoppinsBold !important;
+}
+
+.blog-post .entry-date {
+    position: absolute;
+    font-size: 70px;
+    color: #ccc;
+    font-weight: bold;
+    top: 0;
+    left: 55px;
+    line-height: 1;
+}
+
+.blog-post .entry-date span {
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #111;
+    position: absolute;
+    bottom: 14px;
+    right: -0%;
+    font-family: PoppinsBold;
+}
+
+.blog-post .entry-media {
+    margin-top: 35px;
+    margin-bottom: 35px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.blog-post .entry-media img {
+    display: inline-block;
+    -webkit-transition: all .5s;
+    -moz-transition: all .5s;
+    -o-transition: all .5s;
+    transition: all .5s;
+}
+
+.blog-post:hover .entry-media img {
+    -ms-transform: scale(1.2);
+    -moz-transform: scale(1.05);
+    -webkit-transform: scale(1.05);
+    -o-transform: scale(1.05);
+    transform: scale(1.05);
+}
+
+.blog-post .entry-content {
+    margin-bottom: 26px;
+    line-height: 30px;
+    font-size: 16px;
+    color: #111;
+    font-weight: 400;
+}
+
+.blog-post .entry-read-more {
+    font-family: PoppinsBold;
+    font-size: 16px;
+    font-weight: bold;
+    position: relative;
+}
+
+.blog-post .entry-read-more span {
+    content: '';
+    position: relative;
+    width: 40px;
+    background-color: #000;
+    top: -5px;
+    left: 0;
+    height: 1px;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.blog-post .blog-social-share {
+    float: right;
+    padding-left: 20px;
+}
+
+.blog-post .blog-social-share li {
+    line-height: 21px;
+
+}
+
+.blog-post .blog-social-share li a {
+    display: inline-block;
+}
+
+.blog-post .blog-social-share .blog-ss-icons {
+    font-size: 1.6em;
+}

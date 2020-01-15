@@ -222,7 +222,7 @@ PostSchema.statics = {
                     metaKeywords: {
                         // get only first 2 meta keywords
                         $slice: ['$metaKeywords', 0, 2]
-                    }
+                    }, metaDescription: 1
                 }}
             ];
             const posts = await this.aggregate(aggrQuery);

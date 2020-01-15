@@ -12,18 +12,6 @@
     src: url('/static/fonts/Poppins-Regular.ttf');
 }
 
-@font-face {
-    font-display: swap;
-    font-family: ArefRuqaa;
-    src: url('/static/fonts/ArefRuqaa-Regular.ttf');
-}
-
-@font-face {
-    font-display: swap;
-    font-family: ArefRuqaaBold;
-    src: url('/static/fonts/ArefRuqaa-Bold.ttf');
-}
-
 html, body {
     overflow-x: hidden !important;
 }

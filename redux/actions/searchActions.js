@@ -120,7 +120,7 @@ const searchSuggestions = ({ q, sortBy, sortOrder, published }) => {
                 }
             }).catch(err => {
                 console.error(err);
-                dispatch({ type: SEARCHSUGGESTIONSERROR, payload: resp.msg || 'Something went wrong!' });
+                dispatch({ type: SEARCHSUGGESTIONSERROR, payload: 'Something went wrong!' });
             });
     };
 };
