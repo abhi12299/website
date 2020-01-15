@@ -24,29 +24,41 @@ async function addPost(doc) {
 
 async function updatePost(_id, updates) {
     try {
-        const script = {
-            inline: ''
-        };
-        for (const key of Object.keys(updates)) {
-            script.inline += `ctx._source.${key} = `;
-            if (typeof updates[key] === 'string') {
-                script.inline += `'${updates[key]}';`;
-            } else {
-                script.inline += `${updates[key]}; `;
+        const postObj = {
+        id: _id,
+        index: 'post',
+        type: '_doc',
+        body: {
+            doc: {
+                ...updates
             }
         }
-        const resp = await client.updateByQuery({
-            index: 'post',
-            type: '_doc',
-            body: {
-                query: {
-                    match: {
-                        id: _id
-                    }
-                },
-                script
-            }
-        });
+        };
+        const resp = await client.update(postObj);
+        
+        // const script = {
+        //     inline: ''
+        // };
+        // for (const key of Object.keys(updates)) {
+        //     script.inline += `ctx._source.${key} = `;
+        //     if (typeof updates[key] === 'string') {
+        //         script.inline += `'${updates[key]}';`;
+        //     } else {
+        //         script.inline += `${updates[key]}; `;
+        //     }
+        // }
+        // const resp = await client.updateByQuery({
+        //     index: 'post',
+        //     type: '_doc',
+        //     body: {
+        //         query: {
+        //             match: {
+        //                 id: _id
+        //             }
+        //         },
+        //         script
+        //     }
+        // });
         logger.info('update post, elastic resp is', resp);
         return { error: false };
     } catch (error) {
