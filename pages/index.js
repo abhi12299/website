@@ -1,13 +1,9 @@
-import React, { useEffect } from 'react';
-import Head from 'next/head';
+import React, { useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
 
-import Preloader from '../components/preloader';
-import IntroHeader from '../components/introHeader';
-import Header from '../components/header';
+import PageLayout from '../components/pageLayout';
 import AboutMe from '../components/aboutMe';
 import TechStack from '../components/techStack';
-import Footer from '../components/footer';
 import Projects from '../components/projects';
 import FullScreenLoader from '../components/fullScreenLoader';
 import AdminFAB from '../components/adminFAB';
@@ -30,28 +26,23 @@ const Home = props => {
   }, []);
 
   const { loading } = props.auth;
-  // if (props.auth.loading) {
-  //   return <FullScreenLoader />;
-  // }
+
+  const metaTags = (
+    <Fragment>
+        <title>Abhishek Mehandiratta | Web Developer</title>
+    </Fragment>
+  );
 
   return (
-    <div>
-      <Head>
-        <title>Abhishek Mehandiratta | Web Developer</title>
-      </Head>
-      <Preloader />
-      <IntroHeader />
-      <Header />
+    <PageLayout
+      headContent={metaTags}
+    >
       <FullScreenLoader loading={loading} />
-      {/* position relative needed for jquery scroll */}
-      <div className='main-body-content' style={{maxWidth: '100%', position: 'relative'}}>
-        <AboutMe />
-        { props.auth.admin && <AdminFAB /> }
-        <TechStack />
-        <Projects />
-        <Footer />
-      </div>
-    </div>
+      <AboutMe />
+      { props.auth.admin && <AdminFAB /> }
+      <TechStack />
+      <Projects />
+    </PageLayout>
   );
 };
 

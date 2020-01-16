@@ -1,15 +1,13 @@
-import React from 'react';
-import Head from 'next/head';
+import React, { Fragment } from 'react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 
-import Header from '../components/header';
-import Footer from '../components/footer';
+import PageLayout from '../components/pageLayout';
 
 import '../css/error.css';
 
 function Error(props) {
-    let { statusCode = 404, title='Something went wrong!' } = props;
+    let { statusCode = 404, title = 'Something went wrong!' } = props;
     let errorText = '';
 
     switch (statusCode) {
@@ -23,12 +21,16 @@ function Error(props) {
     }
     errorText = props.errorText || errorText;
 
+    const metaTags = (
+        <Fragment>
+            <title>{title}</title>
+        </Fragment>
+    );
+
     return (
-        <div>
-            <Head>
-                <title>{title}</title>
-            </Head>
-            <Header />
+        <PageLayout
+            headContent={metaTags}
+        >
             <div className='main-body-content'>
                 <section className='pad-75'>
                     <div className='container'>
@@ -52,8 +54,7 @@ function Error(props) {
                     </div>
                 </section>
             </div>
-            <Footer />
-        </div>
+        </PageLayout>
     );
 }
 
