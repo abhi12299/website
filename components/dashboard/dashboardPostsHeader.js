@@ -51,18 +51,16 @@ function DashboardPostsHeader() {
 
     return (
         <div className='row dashboard-posts-header'>
-            <div className='col-6'>
-            </div>
-            <div className='col-6'>
+            <div className='offset-lg-6 col-lg-6 col-md-12 col-12'>
                 <div className='row'>
                     <div 
-                        className='col-5' 
+                        className='col-5 col-md-7 col-lg-5' 
                         style={{textAlign: 'right', fontSize: '18px'}}
                     >
                         Sort By:
                     </div>
                     <div 
-                        className='col-7'
+                        className='col-7 col-md-5 col-lg-7'
                         style={{textAlign: 'left'}}
                     >
                         <Dropdown
