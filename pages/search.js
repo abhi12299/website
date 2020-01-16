@@ -1,13 +1,10 @@
 // common search page for dashboard and users
-import React, { useEffect, useState } from 'react';
-import Head from 'next/head';
+import React, { useEffect, useState, Fragment } from 'react';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { connect } from 'react-redux';
 
-import Preloader from '../components/preloader';
-import Header from '../components/header';
-import Footer from '../components/footer';
+import PageLayout from '../components/pageLayout';
 import AdminFAB from '../components/adminFAB';
 import SearchResults from '../components/searchResults';
 const Pagination = dynamic(() => import('../components/pagination'), { ssr: false });
@@ -42,33 +39,32 @@ const SearchPage = props => {
     const { q } = router.query;
     const { count } = props.search;
 
+    const metaTags = (
+        <Fragment>
+            <title>{decodeURI(q)} - Search Results | AM Web Developer</title>
+        </Fragment>
+    );
+
     return (
-        <div>
-            <Head>
-                <title>{decodeURI(q)} - Search Results | AM Web Developer</title>
-            </Head>
-            <Preloader />
-            <Header />
-            {/* position relative needed for jquery scroll */}
-            <div className='main-body-content' style={{ maxWidth: '100%', position: 'relative' }}>
-                {props.auth.admin && <AdminFAB />}
-                <div className='container'>
-                    <SearchResults 
-                        page={pageNo} 
-                        perPage={perPage} 
+        <PageLayout
+            headContent={metaTags}
+        >
+            {props.auth.admin && <AdminFAB />}
+            <div className='container'>
+                <SearchResults
+                    page={pageNo}
+                    perPage={perPage}
+                />
+                {
+                    count > 0 &&
+                    <Pagination
+                        pageNo={pageNo}
+                        perPage={perPage}
+                        totalItems={count}
                     />
-                    {
-                        count > 0 &&
-                        <Pagination
-                            pageNo={pageNo}
-                            perPage={perPage}
-                            totalItems={count}
-                        />
-                    }
-                </div>
-                <Footer />
+                }
             </div>
-        </div>
+        </PageLayout>
     );
 };
 
