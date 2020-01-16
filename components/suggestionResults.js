@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 
@@ -7,9 +8,15 @@ import getMatchedText from '../utils/getMatchedText';
 import '../css/suggestionResults.css';
 
 function SuggestionResults(props) {
-    const { suggestions, adminButtons, searchQuery, loading } = props;
+    const { suggestions, adminButtons, searchQuery, loading, closeSearch } = props;
+    const router = useRouter();
 
     if (!suggestions) return null;
+
+    const handleSuggestionClick = url => {
+        closeSearch();
+        router.push(url);
+    };
 
     const loadingIndicator = (
         <div className='search-suggestions-result'>
@@ -37,8 +44,8 @@ function SuggestionResults(props) {
                     return (
                         <Fragment key={s._id}>
                             <div className='search-suggestions-result'>
-                                <Link as={postLinkAs} href={postLinkHref}>
-                                    <a>
+                                {/* <Link as={postLinkAs} href={postLinkHref}> */}
+                                    <a onClick={() => handleSuggestionClick(postLinkAs)}>
                                         <div className='title'>
                                             {s.title}
                                             {
@@ -53,7 +60,7 @@ function SuggestionResults(props) {
                                             dangerouslySetInnerHTML={{ __html: postBodyMatchedText }}>
                                         </p>
                                     </a>
-                                </Link>
+                                {/* </Link> */}
                             </div>
                             <div className='sep' />
                         </Fragment>

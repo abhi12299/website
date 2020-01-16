@@ -222,6 +222,7 @@ class Search extends Component {
                         </div>
                     </div>
                     <SuggestionResults
+                        closeSearch={this.handleCloseSearch}
                         suggestions={suggestions}
                         adminButtons={admin}
                         searchQuery={searchQuery}

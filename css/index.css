@@ -27,6 +27,10 @@ body {
     touch-action: manipulation;
 }
 
+h1 {
+    font-family: PoppinsBold;
+}
+
 .pt-75 {
     padding-top: 75px !important;
 }
