@@ -36,7 +36,7 @@ function SuggestionResults(props) {
                             <div className='search-suggestions-result'>
                                 <Link href={postLink}>
                                     <a>
-                                        <h3 className='title'>
+                                        <div className='title'>
                                             {s.title}
                                             {
                                                 adminButtons &&
@@ -44,7 +44,7 @@ function SuggestionResults(props) {
                                                     {s.published ? 'Published' : 'Unpublished'}
                                                 </p>
                                             }
-                                        </h3>
+                                        </div>
                                         <p
                                             className='post-body-text'
                                             dangerouslySetInnerHTML={{ __html: postBodyMatchedText }}>
@@ -61,7 +61,7 @@ function SuggestionResults(props) {
     );
 
     return (
-        <div className='search-suggestions-container'>
+        <div className='search-suggestions-container container'>
             { loading ? loadingIndicator : results }
         </div>
     );

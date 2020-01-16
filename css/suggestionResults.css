@@ -3,12 +3,14 @@
     border-radius: 5px;
     margin-top: 5px;
     overflow-y: auto;
-    margin-bottom: 25px;
+    /* margin-bottom: 25px; */
+    width: 90%;
 }
 
 .search-suggestions-container .search-suggestions-result {
     padding: 7px 0px;
     margin-left: 10px;
+    font-size: 1.2rem;
 }
 
 .search-suggestions-container .sep:not(:last-child) {
@@ -19,6 +21,10 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.search-suggestions-result .post-body-text {
+    font-size: 1rem;
 }
 
 .search-suggestions-result .title .search-publish-indicator {
@@ -45,4 +51,10 @@
 
 .search-suggestions-result .post-body-text::before {
     content: '> ';
+}
+
+@media(max-width: 768px) {
+    .search-suggestions-container .search-suggestions-result {
+        font-size: 1rem;
+    }
 }

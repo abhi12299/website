@@ -30,6 +30,9 @@
     font-weight: 600;
     margin: 2px 20px;
     margin-right: 23px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .dd-list {
@@ -77,3 +80,9 @@
 .angle-up, .angle-down {
     margin-right: 20px;
 }
+
+/* @media(max-width: 991px) {
+    .dd-header-title, .dd-list-item {
+        font-size: 0.6rem;
+    }
+} */

@@ -6,6 +6,8 @@
     margin-top: 25px;
     text-align: center;
     width: 80%;
+    position: absolute;
+    top: 20px;
 }
 
 .sort-dropdown-wrapper, .search-in-dropdown-wrapper {
@@ -49,48 +51,50 @@
 }
 
 .search-section .centered {
-    position: absolute;
-    width: 900px;
-    top: 50%;
-    left: 50%;
-    margin-top: -35px;
-    margin-left: -450px;
-}
-
-.search-section .centered .search-container {
     width: 100%;
 }
 
+.search-section .centered .search-container {
+    display: flex;
+    width: 90%;
+    border-bottom: 1px solid #aaa;
+    font-size: 1.2rem;
+}
+
 .search-section .centered .search-container input {
+    flex: 2;
     color: #333;
     font-weight: 300;
-    font-size: 30px;
-    width: 85%;
-    float: left;
     border: 0;
-    border-bottom: 1px #aaa solid;
-    height: 70px;
     background-color: transparent;
-    line-height: 70px;
 }
 
 .search-section .centered .search-container button {
-    line-height: 70px;
-    font-size: 30px;
+    display: inline;
     font-weight: 300;
     cursor: pointer;
-    width: 15%;
-    font: 30px;
-    text-align: right;
-    display: inline-block;
-    height: 70px;
     border: 0;
-    border-bottom: 1px #aaa solid;
     background-color: transparent;
+}
+
+.search-section .search-overall-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 20px;
 }
 
 @media(max-width: 1100px) {
     .dd-sort, .dd-search-in {
         font-size: 11px !important;
+    }
+}
+
+@media(max-width: 360px) {
+    .search-section .search-container {
+        font-size: 1rem;
     }
 }

@@ -86,8 +86,8 @@ class Search extends Component {
         }
 
         if (admin) {
-            this.props.dispatch(actions.searchActions.searchSuggestions({ 
-                q, 
+            this.props.dispatch(actions.searchActions.searchSuggestions({
+                q,
                 ...dropdownSearchInOptions[selectedIndexSearchIn].query,
                 ...dropdownSortOptions[selectedIndexSort].query
             }));
@@ -133,7 +133,7 @@ class Search extends Component {
         let { q } = this.state;
         q = q.trim();
         q = encodeURI(q);
-        
+
         if (q.length < 1) {
             return;
         }
@@ -195,24 +195,26 @@ class Search extends Component {
 
         return (
             <div className={`section search-section ${show ? 'show' : 'hide'}`}>
-                {admin && this.adminDropdowns()}
-                <a className='close-search' onClick={this.handleCloseSearch}>
-                    <img src='../static/png/close.png' alt='close' />
-                </a>
-                <div className='centered'>
-                    <div className='search-container'>
-                        <input
-                            ref={this.searchFieldRef}
-                            type='text'
-                            placeholder='Search here..'
-                            onChange={this.handleSearchInputChange}
-                            value={q}
-                            onKeyDown={this.handleSearchInputKeydown}
-                        />
-                        <button onClick={this.handleSearch}>Search</button>
+                <div className='container search-overall-container'>
+                    {admin && this.adminDropdowns()}
+                    <a className='close-search' onClick={this.handleCloseSearch}>
+                        <img src='../static/png/close.png' alt='close' />
+                    </a>
+                    <div className='centered'>
+                        <div className='search-container mx-auto'>
+                            <input
+                                ref={this.searchFieldRef}
+                                type='text'
+                                placeholder='Search here..'
+                                onChange={this.handleSearchInputChange}
+                                value={q}
+                                onKeyDown={this.handleSearchInputKeydown}
+                            />
+                            <button onClick={this.handleSearch}>Search</button>
+                        </div>
                     </div>
-                    <SuggestionResults 
-                        suggestions={suggestions} 
+                    <SuggestionResults
+                        suggestions={suggestions}
                         adminButtons={admin}
                         searchQuery={searchQuery}
                         loading={loading}
