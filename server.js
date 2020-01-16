@@ -70,15 +70,6 @@ function childProcess() {
         server.use('/api', apiRouter);
         server.use('/auth', authRouter);
 
-        // post and preview routes
-        server.get('/post/:id', (req, res) => {
-            app.render(req, res, '/post', { id: req.params.id });
-        });
-
-        server.get('/preview/:id', () => {
-            app.render(req, res, '/preview', { id: req.params.id });
-        });
-
         // static assets
         server.get('/static/blogs/:assetPath', (req, res) => {
             const filePath = path.join(__dirname, './public', req.path);

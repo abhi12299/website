@@ -31,8 +31,8 @@ function SuggestionResults(props) {
                         `/preview/${s._id}` :
                         `/post/${s._id}`;
                     let postLinkHref = (adminButtons && !s.published) ?
-                        `/preview?id=${s._id}` :
-                        `/post?id=${s._id}`;
+                        '/preview/[id]' :
+                        '/post/[id]';
                     const postBodyMatchedText = getMatchedText(searchQuery, s.body);
                     return (
                         <Fragment key={s._id}>
