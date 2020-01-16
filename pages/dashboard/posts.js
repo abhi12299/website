@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, Fragment } from 'react'
 import { withRouter } from 'next/router';
 import dynamic from 'next/dynamic';
-import Head from 'next/head';
 import { connect } from 'react-redux';
 
+import PageLayout from '../../components/pageLayout';
 import withAuth from '../../components/withAuth';
-import Preloader from '../../components/preloader';
-import Header from '../../components/header';
-import Footer from '../../components/footer';
 import AdminFAB from '../../components/adminFAB';
 import PostTile from '../../components/postTile';
 import Error from '../_error';
@@ -20,7 +17,7 @@ const ViewPosts = props => {
   const { router } = props;
   let [pageNo, setPageNo] = useState(1);
   useEffect(() => {
-    let { page = 1} = router.query;
+    let { page = 1 } = router.query;
     page = parseInt(page) || 1;
     page = page > 0 ? page : 1;
     setPageNo(page);
@@ -31,46 +28,45 @@ const ViewPosts = props => {
 
   if (!posts) {
     return (
-      <Error 
-        statusCode={500} 
-        errorText='Posts not available! Please check server logs!' 
+      <Error
+        statusCode={500}
+        errorText='Posts not available! Please check server logs!'
       />
     );
   }
 
+  const metaTags = (
+    <Fragment>
+      <title>View All Posts</title>
+    </Fragment>
+  );
+
   return (
-    <div>
-      <Head>
-        <title>View All Posts</title>
-      </Head>
-      <Preloader />
-      <Header />
+    <PageLayout
+      headContent={metaTags}
+    >
       <FullScreenLoader loading={loading} />
-      {/* position relative needed for jquery scroll */}
-      <div className='main-body-content' style={{maxWidth: '100%', position: 'relative'}}>
-        <div className='container'>
-          <DashboardPostsHeader />
-          <div className='posts-container'>
-            { posts.map(p => <PostTile key={p._id} post={p} adminButtons={true} />) }
-          </div>
-          <Pagination 
-            pageNo={pageNo} 
-            perPage={perPage} 
-            totalItems={count}
-          />
+      {props.auth.admin && <AdminFAB />}
+      <div className='container'>
+        <DashboardPostsHeader />
+        <div className='posts-container'>
+          {posts.map(p => <PostTile key={p._id} post={p} adminButtons={true} />)}
         </div>
-          <Footer />
-          { props.auth.admin && <AdminFAB /> }
+        <Pagination
+          pageNo={pageNo}
+          perPage={perPage}
+          totalItems={count}
+        />
       </div>
-    </div>
+    </PageLayout>
   );
 };
 
 ViewPosts.getInitialProps = () => {
   return {
-      fetchPosts: true,
-      perPage
+    fetchPosts: true,
+    perPage
   };
 }
-  
+
 export default withAuth(connect(state => state, null)(withRouter(ViewPosts)));
