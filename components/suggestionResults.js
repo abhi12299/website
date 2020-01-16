@@ -27,14 +27,17 @@ function SuggestionResults(props) {
             }
             {
                 suggestions.map(s => {
-                    let postLink = (adminButtons && !s.published) ?
-                        `/post/preview/${s._id}` :
+                    let postLinkAs = (adminButtons && !s.published) ?
+                        `/preview/${s._id}` :
                         `/post/${s._id}`;
+                    let postLinkHref = (adminButtons && !s.published) ?
+                        `/preview?id=${s._id}` :
+                        `/post?id=${s._id}`;
                     const postBodyMatchedText = getMatchedText(searchQuery, s.body);
                     return (
                         <Fragment key={s._id}>
                             <div className='search-suggestions-result'>
-                                <Link href={postLink}>
+                                <Link as={postLinkAs} href={postLinkHref}>
                                     <a>
                                         <div className='title'>
                                             {s.title}

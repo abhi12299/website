@@ -65,10 +65,21 @@ function childProcess() {
 
         auth(passport);
 
+        // api routes
         server.use(passport.initialize());
         server.use('/api', apiRouter);
         server.use('/auth', authRouter);
 
+        // post and preview routes
+        server.get('/post/:id', (req, res) => {
+            app.render(req, res, '/post', { id: req.params.id });
+        });
+
+        server.get('/preview/:id', () => {
+            app.render(req, res, '/preview', { id: req.params.id });
+        });
+
+        // static assets
         server.get('/static/blogs/:assetPath', (req, res) => {
             const filePath = path.join(__dirname, './public', req.path);
             if (fs.existsSync(filePath)) {
@@ -78,6 +89,7 @@ function childProcess() {
             }
         });
 
+        // service worker
         server.get('/service-worker.js', (req, res) => {
             res.sendFile(path.join(__dirname, '.next', 'service-worker.js'));
         });

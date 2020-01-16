@@ -33,7 +33,8 @@ function PostTile(props) {
 
     const dateObj = getDate(postedDate);
 
-    const url = `${baseURL}/${published ? 'post' : 'preview'}/${_id}`;
+    const urlAs = `${baseURL}/${published ? 'post' : 'preview'}/${_id}`;
+    const urlHref = `${baseURL}/${published ? 'post' : 'preview'}?id=${_id}`;
 
     const handleTogglePublish = () => {
         const { pathname } = router;
@@ -50,7 +51,7 @@ function PostTile(props) {
                     <div className='entry-date'>
                         {dateObj.date} <span>{dateObj.month} {dateObj.year}</span>
                     </div>
-                    <Link href={url}>
+                    <Link href={urlHref} as={urlAs}>
                         <a>
                             <h2 className='entry-title'>
                                 {title}
@@ -67,14 +68,14 @@ function PostTile(props) {
                     <img src={headerImageURL} alt='title for post' />
                 </div>
                 <div className='entry-content-bottom'>
-                    <Link href={url}>
+                    <Link href={urlHref} as={urlAs}>
                         <a>
                             <p className='entry-content'>{metaDescription}</p>
                         </a>
                     </Link>
                     {
                         published === 1 &&
-                        <Link href={`/post/${_id}`}>
+                        <Link href={urlHref} as={urlAs}>
                             <a className='entry-read-more'>
                                 <span></span>
                                 Read More
@@ -112,7 +113,7 @@ function PostTile(props) {
                             <ul className='blog-social-share list-inline'>
                                 <li className='list-inline-item'>
                                     <a
-                                        href={`https://www.facebook.com/sharer/sharer.php?u=${url}`}
+                                        href={`https://www.facebook.com/sharer/sharer.php?u=${urlAs}`}
                                         target='_blank'
                                     >
                                         <FontAwesomeIcon
@@ -124,7 +125,7 @@ function PostTile(props) {
                                 </li>
                                 <li className='list-inline-item'>
                                     <a
-                                        href={`whatsapp://send?text=${url}`}
+                                        href={`whatsapp://send?text=${urlAs}`}
                                         target='_blank'
                                     >
                                         <FontAwesomeIcon
