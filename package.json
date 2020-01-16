@@ -35,7 +35,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.7.5",
     "multer": "^1.4.2",
-    "next": "^9.1.4",
+    "next": "^9.2.0",
     "next-compose-plugins": "^2.2.0",
     "next-offline": "^4.0.5",
     "next-redux-wrapper": "^3.0.0",
