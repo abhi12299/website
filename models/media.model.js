@@ -62,7 +62,7 @@ MediaSchema.statics = {
                         type: {
                             $cond: {
                                 if: {
-                                    $regexMatch: { input: '$_id' , regex: /\.(png|jpe?g|gif)$/i }
+                                    $regexMatch: { input: '$_id' , regex: /\.(png|jpe?g|gif|svg)$/i }
                                 },
                                 then: 'image',
                                 else: 'video'

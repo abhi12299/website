@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, Fragment } from 'react'
 import { withRouter } from 'next/router';
 import dynamic from 'next/dynamic';
-import Head from 'next/head';
 import { connect } from 'react-redux';
 
+import PageLayout from '../../components/pageLayout';
 import withAuth from '../../components/withAuth';
-import Preloader from '../../components/preloader';
 import Media from '../../components/dashboard/media';
-import Header from '../../components/header';
-import Footer from '../../components/footer';
 import AdminFAB from '../../components/adminFAB';
 import Modal from '../../components/modal';
 import DashboardMediaHeader from '../../components/dashboard/mediaHeader';
@@ -63,17 +60,20 @@ const DashboardMedia = props => {
     );
   }
 
-  return (
-    <div>
-      <Head>
+  const metaTags = (
+    <Fragment>
         <title>View All Media</title>
-      </Head>
-      <Preloader />
-      <Header />
+    </Fragment>
+  );
+
+  return (
+    <PageLayout
+      headContent={metaTags}
+    >
       <FullScreenLoader loading={loading} />
-      {/* position relative needed for jquery scroll */}
-      <div className='main-body-content' style={{maxWidth: '100%', position: 'relative'}}>
-        <Modal 
+      { props.auth.admin && <AdminFAB /> }
+
+      <Modal 
           maxWidth='50%'
           promptBeforeClose={false}
           onClose={handleDeleteClose}
@@ -116,10 +116,7 @@ const DashboardMedia = props => {
             totalItems={count}
           />
         </div>
-          <Footer />
-          { props.auth.admin && <AdminFAB /> }
-      </div>
-    </div>
+    </PageLayout>
   );
 };
 

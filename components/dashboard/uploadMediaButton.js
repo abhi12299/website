@@ -32,6 +32,7 @@ function UploadMediaButton(props) {
             const type = checkfileType(file);
             filename = file.name;
             switch(type) {
+                case 'image-svg':
                 case'image-gif':
                     upload(file, filename);
                     break;
