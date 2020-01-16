@@ -121,6 +121,8 @@ class Search extends Component {
     handleCloseSearch() {
         document.documentElement.classList.remove('no-scroll');
         clearTimeout(this.typingTimeout);
+        this.setState({ q: '' }); // clear input
+        this.props.dispatch(actions.searchActions.clearSearchSuggestions()); // clear suggestions
         this.props.dispatch({ type: SHOWPOSTSEARCHOVERLAY, payload: false });
     }
 
@@ -151,6 +153,7 @@ class Search extends Component {
                 ...dropdownSortOptions[selectedIndexSort].query
             };
         }
+        this.handleCloseSearch();
         router.push({
             pathname: '/search',
             query: searchQuery

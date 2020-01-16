@@ -53,7 +53,10 @@ const SearchPage = props => {
             <div className='main-body-content' style={{ maxWidth: '100%', position: 'relative' }}>
                 {props.auth.admin && <AdminFAB />}
                 <div className='container'>
-                    <SearchResults />
+                    <SearchResults 
+                        page={pageNo} 
+                        perPage={perPage} 
+                    />
                     {
                         count > 0 &&
                         <Pagination

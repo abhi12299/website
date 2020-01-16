@@ -1,7 +1,3 @@
-.blog-post a:hover, .blog-post a:focus {
-    color: black !important;
-}
-
 .blog-post {
     margin-bottom: 75px;
     margin-top: 10px;

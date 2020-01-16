@@ -14,11 +14,23 @@
 }
 
 .no-data-img-container {
+    text-align: center;
     width: 350px;
+}
+
+.search-results-count-info {
+    margin-top: 10px;
+    padding-left: 15px;
 }
 
 @media(max-width: 768px) {
     .no-data-img-container {
         width: 270px;
+    }
+}
+
+@media(max-width: 580px) {
+    .search-results-count-info {
+        padding-left: 0px;
     }
 }
