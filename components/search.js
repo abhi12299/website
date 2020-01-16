@@ -47,13 +47,17 @@ class Search extends Component {
 
     componentDidUpdate() {
         const { show, error } = this.props.search;
+        if (error) {
+            showToast('Search could not be performed! Please try later', 'error', {
+                preventDuplicates: 1
+            });
+            return;
+        }
+
         if (show) {
             window.addEventListener('keydown', this.escapeKeyCloseSearch);
             document.documentElement.classList.add('no-scroll');
 
-            if (error) {
-                showToast('Search could not be performed! Please try later', 'error');
-            }
             this.searchFieldRef.current.focus();
         } else {
             window.removeEventListener('keydown', this.escapeKeyCloseSearch);
@@ -115,6 +119,7 @@ class Search extends Component {
     }
 
     handleCloseSearch() {
+        document.documentElement.classList.remove('no-scroll');
         clearTimeout(this.typingTimeout);
         this.props.dispatch({ type: SHOWPOSTSEARCHOVERLAY, payload: false });
     }
