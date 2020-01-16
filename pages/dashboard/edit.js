@@ -1,11 +1,7 @@
 import React, { useEffect, useState, Fragment } from 'react'
-import Head from 'next/head';
 import { connect } from 'react-redux';
 
 import withAuth from '../../components/withAuth';
-import Preloader from '../../components/preloader';
-import Header from '../../components/header';
-import Footer from '../../components/footer';
 import AdminFAB from '../../components/adminFAB';
 import PostEditor from '../../components/dashboard/postEditor';
 import PostSidebar from '../../components/dashboard/postSidebar';
