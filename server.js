@@ -92,7 +92,11 @@ function childProcess() {
             });
 
             if (req.path.startsWith('/workbox')) {
-                return res.sendFile(path.join(__dirname, '.next', req.path));
+                const filePath = path.join(__dirname, '.next', req.path)
+                if (fs.existsSync(filePath)) {
+                    return res.sendFile(path.join(__dirname, '.next', req.path));
+                }
+                return res.status(404).end();
             }
 
             return handle(req, res);
