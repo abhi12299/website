@@ -54,11 +54,14 @@ const SearchPage = props => {
                 {props.auth.admin && <AdminFAB />}
                 <div className='container'>
                     <SearchResults />
-                    <Pagination
-                        pageNo={pageNo}
-                        perPage={perPage}
-                        totalItems={count}
-                    />
+                    {
+                        count > 0 &&
+                        <Pagination
+                            pageNo={pageNo}
+                            perPage={perPage}
+                            totalItems={count}
+                        />
+                    }
                 </div>
                 <Footer />
             </div>
