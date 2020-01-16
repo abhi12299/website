@@ -1,16 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import Head from 'next/head';
+import React, { useEffect, useState, Fragment } from 'react'
 import { connect } from 'react-redux';
 
+import PageLayout from '../../components/pageLayout';
+import FullScreenLoader from '../../components/fullScreenLoader';
 import withAuth from '../../components/withAuth';
-import Preloader from '../../components/preloader';
-import Header from '../../components/header';
-import Footer from '../../components/footer';
 import AdminFAB from '../../components/adminFAB';
 import PostEditor from '../../components/dashboard/postEditor';
 import PostSidebar from '../../components/dashboard/postSidebar';
 import SaveButton from '../../components/dashboard/saveButton.js';
-import FullScreenLoader from '../../components/fullScreenLoader';
 import restoreFromLS from '../../utils/restoreFromLS';
 import { RESTOREPOST } from '../../redux/types';
 
@@ -26,31 +23,30 @@ const CreatePost = props => {
     }
   }, []);
 
+  const metaTags = (
+    <Fragment>
+      <title>{title.trim().length > 0 ? `${title} | New Post` : 'Create Post'}</title>
+    </Fragment>
+  );
+
   return (
-    <div>
-      <Head>
-        <title>{title.trim().length > 0 ? `${title} | New Post` : 'Create Post'}</title>
-      </Head>
-      <Preloader />
-      <Header />
+    <PageLayout
+      headContent={metaTags}
+    >
       <FullScreenLoader loading={loading} />
-      {/* position relative needed for jquery scroll */}
-      <div className='main-body-content' style={{maxWidth: '100%', position: 'relative'}}>
-        <div className='container'>
-          <div className='row'>
-            <PostEditor 
-              postRestored={isPostRestored}
-            />
-            <PostSidebar 
-              postRestored={isPostRestored}
-            />
-            <SaveButton />
-          </div>
+      <div className='container'>
+        {props.auth.admin && <AdminFAB />}
+        <div className='row'>
+          <PostEditor
+            postRestored={isPostRestored}
+          />
+          <PostSidebar
+            postRestored={isPostRestored}
+          />
+          <SaveButton />
         </div>
-          <Footer />
-          { props.auth.admin && <AdminFAB /> }
       </div>
-    </div>
+    </PageLayout>
   );
 };
 
