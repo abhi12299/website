@@ -34,8 +34,9 @@ const CreatePost = props => {
       headContent={metaTags}
     >
       <FullScreenLoader loading={loading} />
+      {props.auth.admin && <AdminFAB />}
+      
       <div className='container'>
-        {props.auth.admin && <AdminFAB />}
         <div className='row'>
           <PostEditor
             postRestored={isPostRestored}

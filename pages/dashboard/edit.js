@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, Fragment } from 'react'
 import Head from 'next/head';
 import { connect } from 'react-redux';
 
@@ -15,6 +15,7 @@ import { RESTOREPOST } from '../../redux/types';
 import restoreFromLS from '../../utils/restoreFromLS';
 import { useRouter } from 'next/router';
 import Error from '../_error';
+import PageLayout from '../../components/pageLayout';
 
 const EditPost = props => {
   const router = useRouter();
@@ -36,43 +37,43 @@ const EditPost = props => {
     return <Error errorText={errorMessage} />;
   }
 
+  const metaTags = (
+    <Fragment>
+      <title>{title.trim().length > 0 ? `${title} | Edit Post` : 'Edit Post'}</title>
+    </Fragment>
+  );
+
   return (
-    <div>
-      <Head>
-        <title>{title.trim().length > 0 ? `${title} | Edit Post` : 'Edit Post'}</title>
-      </Head>
-      <Preloader />
-      <Header />
+    <PageLayout
+      headContent={metaTags}
+    >
       <FullScreenLoader loading={loading} />
-      {/* position relative needed for jquery scroll */}
-      <div className='main-body-content' style={{maxWidth: '100%', position: 'relative'}}>
-        <div className='container'>
-          <div className='row'>
-            <PostEditor 
-              lsKeyName={keyName}
-              postRestored={isPostRestored}
-            />
-            <PostSidebar 
-              lsKeyName={keyName}
-              postRestored={isPostRestored}
-            />
-            <SaveButton 
-              type='edit' 
-              lsKeyName={keyName}
-            />
-          </div>
+      {props.auth.admin && <AdminFAB />}
+
+      <div className='container'>
+        <div className='row'>
+          <PostEditor
+            lsKeyName={keyName}
+            postRestored={isPostRestored}
+          />
+          <PostSidebar
+            lsKeyName={keyName}
+            postRestored={isPostRestored}
+          />
+          <SaveButton
+            type='edit'
+            lsKeyName={keyName}
+          />
         </div>
-          <Footer />
-          { props.auth.admin && <AdminFAB /> }
       </div>
-    </div>
+    </PageLayout>
   );
 };
 
 EditPost.getInitialProps = () => {
-    return {
-        editPost: true
-    };
+  return {
+    editPost: true
+  };
 };
 
 export default withAuth(connect(state => state, null)(EditPost));
