@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebook, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
+import { faFacebook, faWhatsapp, faTwitter, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { faEye, faEyeSlash, faEdit } from '@fortawesome/free-regular-svg-icons';
 
 import actions from '../redux/actions';
@@ -37,6 +37,11 @@ function PostTile(props) {
     // for Link routing
     const relativeURLHref = `/${published ? 'post' : 'preview'}/[id]`;
     const relativeURLAs = `/${published ? 'post' : 'preview'}/${_id}`;
+    
+    const fbShareURL = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+    const whatsappShareURL = `whatsapp://send?text=${url}`;
+    const twitterShareURL = `https://twitter.com/share?url=${url}`;
+    const linkedInShareURL = `http://www.linkedin.com/shareArticle?mini=true&url=${url}`;
 
     const handleTogglePublish = () => {
         const { pathname } = router;
@@ -115,7 +120,7 @@ function PostTile(props) {
                             <ul className='blog-social-share list-inline'>
                                 <li className='list-inline-item'>
                                     <a
-                                        href={`https://www.facebook.com/sharer/sharer.php?u=${url}`}
+                                        href={fbShareURL}
                                         target='_blank'
                                     >
                                         <FontAwesomeIcon
@@ -127,13 +132,37 @@ function PostTile(props) {
                                 </li>
                                 <li className='list-inline-item'>
                                     <a
-                                        href={`whatsapp://send?text=${url}`}
+                                        href={whatsappShareURL}
                                         target='_blank'
                                     >
                                         <FontAwesomeIcon
                                             icon={faWhatsapp}
                                             className='blog-ss-icons'
                                             title='Share to WhatsApp'
+                                        />
+                                    </a>
+                                </li>
+                                <li className='list-inline-item'>
+                                    <a
+                                        href={twitterShareURL}
+                                        target='_blank'
+                                    >
+                                        <FontAwesomeIcon
+                                            icon={faTwitter}
+                                            className='blog-ss-icons'
+                                            title='Tweet'
+                                        />
+                                    </a>
+                                </li>
+                                <li className='list-inline-item'>
+                                    <a
+                                        href={linkedInShareURL}
+                                        target='_blank'
+                                    >
+                                        <FontAwesomeIcon
+                                            icon={faLinkedin}
+                                            className='blog-ss-icons'
+                                            title='Post to LinkedIn'
                                         />
                                     </a>
                                 </li>

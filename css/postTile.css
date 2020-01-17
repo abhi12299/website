@@ -121,7 +121,10 @@
 
 .blog-post .blog-social-share li {
     line-height: 21px;
+}
 
+.blog-post .blog-social-share li:not(:last-child) {
+    margin-right: 15px;
 }
 
 .blog-post .blog-social-share li a {
