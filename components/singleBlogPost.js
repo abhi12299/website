@@ -34,7 +34,7 @@ function SingleBlogPost(props) {
                     <div className='col-lg-8 offset-lg-2'>
                         <div className='entry-header text-left'>
                             <h4 className='entry-meta style2'>
-                                Abhishek Mehandiratta <span></span>
+                                Abhishek Mehandiratta<span></span>
                                 {getFormattedDate(postedDate)}
                             </h4>
                             <h1 className='entry-title'>{title}</h1>
