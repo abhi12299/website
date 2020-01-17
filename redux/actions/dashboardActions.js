@@ -283,7 +283,6 @@ const fetchPost = ({ req, _id }) => {
         }
         return res.json();
       }).then(resp => {
-        console.log('RESP EDIT POST:', resp);
         if (resp.error) {
           console.error(resp);
           if (resp.forceLogout) {
@@ -304,15 +303,16 @@ const fetchPost = ({ req, _id }) => {
   }
 };
 
-const editPost = (postData, keyName) => {
+const editPost = (postData, keyName, keepOldId=true) => {
   const fetchOpts = {
     method: 'PATCH',
     credentials: 'include',
     headers: {
         'Content-Type': 'application/json'
     },
-    body: JSON.stringify(postData)
+    body: JSON.stringify({ ...postData, keepOldId })
   };
+  console.log('REQ going for body:', JSON.stringify({ keepOldId, ...postData }, null, 2));
   return dispatch => {
     dispatch({ type: POSTSAVING, payload: true });
     
@@ -364,6 +364,13 @@ const editPost = (postData, keyName) => {
   };
 };
 
+// changes the dashboardPost.loading value
+const changePostSaveLoading = newLoading => {
+  return dispatch => {
+    dispatch({ type: POSTSAVING, payload: newLoading });
+  }
+};
+
 export default {
     savePost,
     fetchPosts,
@@ -371,5 +378,6 @@ export default {
     fetchMedia,
     deleteMedia,
     fetchPost,
-    editPost
+    editPost,
+    changePostSaveLoading
 };

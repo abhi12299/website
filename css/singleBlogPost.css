@@ -164,6 +164,10 @@
     color: #fb3958;
 }
 
+.single-post .social-text li a.text-whatsapp {
+    color: #4FCE5D;
+}
+
 .single-post .comments-section {
     padding-top: 30px;
 }

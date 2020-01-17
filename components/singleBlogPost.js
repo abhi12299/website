@@ -21,10 +21,10 @@ function SingleBlogPost(props) {
 
     const { url, enableComments } = props;
 
-    const fbShareURL = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
-    const whatsappShareURL = `whatsapp://send?text=${url}`;
-    const twitterShareURL = `https://twitter.com/share?url=${url}`;
-    const linkedInShareURL = `http://www.linkedin.com/shareArticle?mini=true&url=${url}`;
+    const fbShareURL = published ? `https://www.facebook.com/sharer/sharer.php?u=${url}` : '';
+    const whatsappShareURL = published ? `whatsapp://send?text=${url}` : '';
+    const twitterShareURL = published ? `https://twitter.com/share?url=${url}` : '';
+    const linkedInShareURL = published ? `http://www.linkedin.com/shareArticle?mini=true&url=${url}` : '';
 
     return (
         <section className='single-post pad-50'>
@@ -93,7 +93,7 @@ function SingleBlogPost(props) {
                     {/* Part 4 Comments */}
                     {
                         enableComments &&
-                        <div className='col-lg-8 offset-lg-2 comments-section bottom-border'>
+                        <div className='col-lg-8 offset-lg-2 comments-section'>
                             <div
                                 data-mobile={true}
                                 className='fb-comments'

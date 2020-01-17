@@ -26,7 +26,7 @@ const Post = props => {
     metaDescription,
     headerImageURL,
     _id
-  } = props.blogPost.data;
+  } = data;
 
   const postURL = `${baseURL}/post/${_id}`;
 

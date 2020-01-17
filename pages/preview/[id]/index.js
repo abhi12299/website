@@ -1,13 +1,59 @@
-import React from 'react';
-import { useRouter } from 'next/router';
+import React, { Fragment } from 'react';
 
-const Post = () => {
-  const router = useRouter();
-  const { id } = router.query;
+import FullScreenLoader from '../../../components/fullScreenLoader';
+import withAuth from '../../../components/withAuth';
+import AdminFAB from '../../../components/adminFAB';
+import PageLayout from '../../../components/pageLayout';
+import Error from '../../../pages/_error';
+import SingleBlogPost from '../../../components/singleBlogPost';
+import baseURL from '../../../constants/apiURL';
+
+const Preview = props => {
+  const { data, loading } = props.blogPost;
+
+  if (!data) {
+    return (
+      <Error 
+        statusCode={404}
+      />
+    );
+  }
+
+  const {
+    title, _id
+  } = data;
+
+  const metaTags = (
+    <Fragment>
+      <title>{title} | Preview Post</title>
+    </Fragment>
+  );
+
+  const postURL = `${baseURL}/post/${_id}`;
 
   return (
-      <h1>Preview: {id}</h1>
+    <PageLayout
+      headContent={metaTags}
+    >
+      <FullScreenLoader loading={loading} />
+      { props.auth.admin && <AdminFAB /> }
+      
+      <SingleBlogPost
+        enableComments={false}
+        blogPost={data}
+        url={postURL}
+      />
+
+      <script src='../static/prism/prism.js' async defer></script>
+      <link rel='stylesheet' href='../static/prism/prism.css' />
+    </PageLayout>
   );
 };
 
-export default Post
+Preview.getInitialProps = () => {
+  return {
+    fetchPostPreview: true
+  };
+};
+
+export default withAuth(Preview);

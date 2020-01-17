@@ -9,7 +9,7 @@ import {
 
 import baseURL from '../../constants/apiURL';
 
-const getPost = (ctx) => {
+const getPost = ctx => {
     const path = ctx.req ? ctx.req.path : ctx.path;
 
     const id = path.split('/')[2];
