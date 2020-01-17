@@ -39,3 +39,9 @@ export const SEARCHSUGGESTIONSERROR = 'searchsuggestionserror';
 export const SEARCHLOADING = 'searchloading';
 export const SEARCHERROR = 'searcherror';
 export const SEARCHSUCCESS = 'searchsuccess';
+
+// single post frontend
+export const POSTLOADING = 'postloading';
+export const POSTSUCCESS = 'postsuccess';
+export const POSTERROR = 'posterror';
+export const TOGGLEPOSTSUCCESS_SINGLEPOST = 'togglepostsuccess_singlepost';
