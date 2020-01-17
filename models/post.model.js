@@ -135,9 +135,20 @@ PostSchema.statics = {
             return null;
         }
     },
-    async getPost(_id) {
+    async getPost({ id, admin }) {
         try {
-            return await this.findOne({ _id }, '_id title headerImageURL metaDescription metaKeywords postedDate body');
+            let projectQuery = `_id title headerImageURL metaDescription metaKeywords postedDate body published`;
+
+            const findQuery = {
+                published: 1,
+                _id: id
+            };
+
+            if (admin) {
+                delete findQuery['published'];
+            }
+
+            return await this.findOne(findQuery, projectQuery);
         } catch (error) {
             logger.error('Cannot get post', error);
             return null;
