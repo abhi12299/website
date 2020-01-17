@@ -136,7 +136,7 @@ dashboardRouter.get('/getPost', async (req, res) => {
         return res.status(400).json({ error: true, msg: 'Incorrect info submitted!' });
     }
     const { id } = req.query;
-    const post = await Post.getPost(id);
+    const post = await Post.getPost({ id, admin: !!req.admin });
     if (!post) {
         return res.status(404).json({ error: true, msg: 'No post found' });
     }
