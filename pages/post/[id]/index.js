@@ -13,7 +13,7 @@ const Post = props => {
 
   if (!data) {
     return (
-      <Error 
+      <Error
         statusCode={404}
         title='The post could not be found!'
       />
@@ -27,7 +27,7 @@ const Post = props => {
     headerImageURL,
     _id
   } = props.blogPost.data;
-  
+
   const postURL = `${baseURL}/post/${_id}`;
 
   const metaTags = (
@@ -42,7 +42,7 @@ const Post = props => {
       <meta name='description' content={metaDescription} />
       <meta name='keywords' content={metaKeywords.join(', ')} />
       <meta name='author' content='Abhishek Mehandiratta' />
-      
+
       <meta property='og:title' content={title} />
       <meta property='og:type' content='website' />
       <meta property='og:description' content={metaDescription} />
@@ -58,16 +58,26 @@ const Post = props => {
   );
 
   return (
-      <PageLayout
-        headContent={metaTags}
+    <PageLayout
+      headContent={metaTags}
+    >
+      <SingleBlogPost
+        enableComments={true}
+        blogPost={data}
+        url={postURL}
+      />
+      <script src='../static/prism/prism.js' async defer></script>
+      <link rel='stylesheet' href='../static/prism/prism.css' />
+
+      <div id='fb-root' />
+      <script
+        async
+        defer
+        crossOrigin='anonymous'
+        src='https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v5.0'
       >
-        <SingleBlogPost 
-          blogPost={data}
-          url={postURL}
-        />
-        <script src='../static/prism/prism.js' async defer></script>
-        <link rel='stylesheet' href='../static/prism/prism.css'/>
-      </PageLayout>
+      </script>
+    </PageLayout>
   );
 };
 

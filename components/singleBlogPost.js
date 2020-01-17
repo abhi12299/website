@@ -6,12 +6,12 @@ import '../css/singleBlogPost.css';
 const getFormattedDate = timestamp => {
     const d = new Date(timestamp);
     return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
-}
+};
 
 // NOTE TO SELF: always wrap images in a div with class img-wrapper
 function SingleBlogPost(props) {
-    const { _id, 
-        postedDate, 
+    const { _id,
+        postedDate,
         published,
         title,
         headerImageURL,
@@ -19,7 +19,7 @@ function SingleBlogPost(props) {
         metaKeywords
     } = props.blogPost;
 
-    const { url } = props;
+    const { url, enableComments } = props;
 
     const fbShareURL = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
     const whatsappShareURL = `whatsapp://send?text=${url}`;
@@ -47,8 +47,8 @@ function SingleBlogPost(props) {
                         </div>
                     </div>
                     {/* Part 3 content */}
-                    <div className='col-lg-8 offset-lg-2 '>
-                        <div className='entry-content' dangerouslySetInnerHTML={{ __html: body}}>
+                    <div className='col-lg-8 offset-lg-2 bottom-border'>
+                        <div className='entry-content' dangerouslySetInnerHTML={{ __html: body }}>
                         </div>
                         <div className='entry-share-div'>
                             <h5>Share :</h5>
@@ -65,12 +65,12 @@ function SingleBlogPost(props) {
                                 </li>
                                 <li className='list-inline-item'>
                                     <a target='_blank' className='text-linkedin' href={linkedInShareURL}>
-                                        Linkedin        
+                                        Linkedin
                                     </a>
                                 </li>
                                 <li className='list-inline-item'>
                                     <a target='_blank' className='text-whatsapp' href={whatsappShareURL}>
-                                        Whatsapp        
+                                        Whatsapp
                                     </a>
                                 </li>
                             </ul>
@@ -90,6 +90,18 @@ function SingleBlogPost(props) {
                             </ul>
                         </div>
                     </div>
+                    {/* Part 4 Comments */}
+                    {
+                        enableComments &&
+                        <div className='col-lg-8 offset-lg-2 comments-section bottom-border'>
+                            <div
+                                data-mobile={true}
+                                className='fb-comments'
+                                data-width='100%'
+                                data-numposts='5'>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
         </section>

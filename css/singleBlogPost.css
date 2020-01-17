@@ -164,6 +164,10 @@
     color: #fb3958;
 }
 
+.single-post .comments-section {
+    padding-top: 30px;
+}
+
 @media(max-width: 991px) {
     .single-post h2, .contact-wrapper h2 {
         font-size: 22px;
