@@ -11,7 +11,7 @@ import 'toastr/build/toastr.min.js';
 
 import '../css/index.css';
 
-export default withRedux(initStore, { debug: process.env.NODE_ENV !== 'production' })(
+export default withRedux(initStore, { debug: false })(
   class MyApp extends App {
     render() {
       const { Component, pageProps, store } = this.props;

@@ -17,6 +17,7 @@ const {
     validateGetPosts, validateGetPost,
     validateEditPost
 } = require('../utils/serverValidations');
+const generateIdFromPostTitle = require('../utils/generateIdFromPostTitle');
 const findAttachedMedia = require('../utils/findAttachedMedia');
 
 const dashboardRouter = Router();
@@ -39,12 +40,7 @@ dashboardRouter.post('/savePost', async (req, res) => {
     } = req.body;
 
     // trim the title, replace all spaces with hyphen
-    const _id = title
-                .trim()
-                .toLowerCase()
-                .replace(/\s/g, '-')
-                .replace(/[^\w\-]/g, '')
-                .substr(0, 200);
+    const _id = generateIdFromPostTitle(title);
 
     const attachedMedia = findAttachedMedia(headerImageURL, body);
 
@@ -58,7 +54,6 @@ dashboardRouter.post('/savePost', async (req, res) => {
                     .replace(/<code.*?<\/code>/ig, '');
 
         body = decodeURI(striptags(body));
-        console.log('Body is', body);
         const elasticPostBody = {
             id: savedPost._id,
             title: savedPost.title,
@@ -182,7 +177,8 @@ dashboardRouter.patch('/editPost', async (req, res) => {
         metaDescription,
         metaKeywords,
         body,
-        _id
+        _id,
+        keepOldId=true
     } = req.body;
 
     let oldPost = await Post.findOne({ _id });
@@ -192,9 +188,11 @@ dashboardRouter.patch('/editPost', async (req, res) => {
 
     let newPost = oldPost;
     let newAttachedMedia = findAttachedMedia(headerImageURL, body);
+    let newPostId = generateIdFromPostTitle(title);
 
-    // create a new post, deleting old one
-    if (title !== oldPost.title) {
+    console.log({ newPostId, oldPostId: oldPost._id, keepOldId });
+    // create a new post, deleting old one, only if forced to do so
+    if (newPostId !== oldPost._id && !keepOldId) {
         // delete old post
         await Post.deleteOne({ _id: oldPost._id });
         try {
@@ -202,12 +200,7 @@ dashboardRouter.patch('/editPost', async (req, res) => {
         } catch (error) {} // not a fatal error
         
         // index in elastic search
-        let newId = title
-                        .trim()
-                        .toLowerCase()
-                        .replace(/\s/g, '-')
-                        .replace(/[^\w\-]/g, '')
-                        .substr(0, 200);
+        let newId = generateIdFromPostTitle(title);
 
         try {
             newPost = await Post.savePost({

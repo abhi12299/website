@@ -77,7 +77,8 @@ const validateEditPost = ({title, headerImageURL, metaKeywords,
         headerImageURL: Joi.string(),
         metaDescription: Joi.string(),
         body: Joi.string(),
-        metaKeywords: Joi.array().items(Joi.string())
+        metaKeywords: Joi.array().items(Joi.string()),
+        keepOldId: Joi.bool()
     });
     const { error } = Joi.validate({
         title, headerImageURL, metaDescription, 

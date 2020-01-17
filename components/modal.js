@@ -38,18 +38,20 @@ class Modal extends Component {
 
     outsideClickCloseModal = e => {
         if (e.target === this.customModal.current) {
-            this.beforeClose(false);
+            const { triggerActionOnDismiss=true } = this.props;
+            this.beforeClose(false, triggerActionOnDismiss);
         }
     };
 
     escapeKeyCloseModal = e => {
         // escape key close
         if (e.keyCode === 27) {
-            this.beforeClose(false);
+            const { triggerActionOnDismiss=true } = this.props;
+            this.beforeClose(false, false, triggerActionOnDismiss);
         }
     };
 
-    beforeClose = (isPositiveActionPerformed, forceClose=false) => {
+    beforeClose = (isPositiveActionPerformed, forceClose=false, triggerActionOnDismiss=true) => {
         const {
             onNegativeAction,
             onPositiveAction,
@@ -60,10 +62,13 @@ class Modal extends Component {
         if (!forceClose && promptBeforeClose && !confirm('Are you sure you want to quit?')) {
             return;
         }
-        isPositiveActionPerformed ?
-        (onPositiveAction && onPositiveAction())
-        :
-        (onNegativeAction && onNegativeAction());
+
+        if (triggerActionOnDismiss) {
+            isPositiveActionPerformed ?
+            (onPositiveAction && onPositiveAction())
+            :
+            (onNegativeAction && onNegativeAction());
+        }
         onClose();
     };
     
@@ -145,7 +150,8 @@ Modal.propTypes = {
     negativeActionButtonName: PropTypes.string,
     title: PropTypes.string.isRequired,
     show: PropTypes.bool.isRequired,
-    maxWidth: PropTypes.string
+    maxWidth: PropTypes.string,
+    triggerActionOnDismiss: PropTypes.bool // controls if on dismissal of modal, negative action is performed
 };
 
 export default Modal;
