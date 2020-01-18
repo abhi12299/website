@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import PageLayout from '../../../components/pageLayout';
@@ -57,6 +57,25 @@ const Post = props => {
     </Fragment>
   );
 
+  useEffect(() => {
+    const prismScript = document.createElement('script');
+    prismScript.src = '../static/prism/prism.js';
+    prismScript.async = true;
+    prismScript.defer = true;
+
+    const prismCss = document.createElement('link');
+    prismCss.rel = 'stylesheet';
+    prismCss.href = '../static/prism/prism.css';
+
+    document.body.appendChild(prismScript);
+    document.body.appendChild(prismCss);
+
+    return () => {
+      document.body.removeChild(prismCss);
+      document.body.removeChild(prismScript);
+    };
+  }, []);
+
   return (
     <PageLayout
       headContent={metaTags}
@@ -66,13 +85,8 @@ const Post = props => {
         blogPost={data}
         url={postURL}
       />
-      <script src='../static/prism/prism.js' async defer></script>
-      <link rel='stylesheet' href='../static/prism/prism.css' />
-
       <div id='fb-root' />
       <script
-        async
-        defer
         crossOrigin='anonymous'
         src='https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v5.0'
       >

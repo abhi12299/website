@@ -6,16 +6,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faWhatsapp, faTwitter, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { faEye, faEyeSlash, faEdit } from '@fortawesome/free-regular-svg-icons';
 
+import getDateParts from '../utils/getDateParts';
+import socialShare from '../utils/socialShareLinks';
+
 import actions from '../redux/actions';
-import months from '../constants/months';
 import baseURL from '../constants/apiURL';
 
 import '../css/postTile.css';
-
-const getDate = timestamp => {
-    const d = new Date(timestamp);
-    return { date: d.getDate(), month: months[d.getMonth()], year: d.getFullYear() };
-};
 
 function PostTile(props) {
     const {
@@ -31,17 +28,12 @@ function PostTile(props) {
     let [loading, setLoading] = useState(false);
     const { adminButtons } = props;
 
-    const dateObj = getDate(postedDate);
+    const dateObj = getDateParts(postedDate);
 
-    const url = `${baseURL}/${published ? 'post' : 'preview'}/${_id}`;
+    const { facebook, whatsApp, twitter, linkedIn } = socialShare(_id);
     // for Link routing
     const relativeURLHref = `/${published ? 'post' : 'preview'}/[id]`;
     const relativeURLAs = `/${published ? 'post' : 'preview'}/${_id}`;
-    
-    const fbShareURL = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
-    const whatsappShareURL = `whatsapp://send?text=${url}`;
-    const twitterShareURL = `https://twitter.com/share?url=${url}`;
-    const linkedInShareURL = `http://www.linkedin.com/shareArticle?mini=true&url=${url}`;
 
     const handleTogglePublish = () => {
         const { pathname } = router;
@@ -120,7 +112,7 @@ function PostTile(props) {
                             <ul className='blog-social-share list-inline'>
                                 <li className='list-inline-item'>
                                     <a
-                                        href={fbShareURL}
+                                        href={facebook}
                                         target='_blank'
                                     >
                                         <FontAwesomeIcon
@@ -132,7 +124,7 @@ function PostTile(props) {
                                 </li>
                                 <li className='list-inline-item'>
                                     <a
-                                        href={whatsappShareURL}
+                                        href={whatsApp}
                                         target='_blank'
                                     >
                                         <FontAwesomeIcon
@@ -144,7 +136,7 @@ function PostTile(props) {
                                 </li>
                                 <li className='list-inline-item'>
                                     <a
-                                        href={twitterShareURL}
+                                        href={twitter}
                                         target='_blank'
                                     >
                                         <FontAwesomeIcon
@@ -156,7 +148,7 @@ function PostTile(props) {
                                 </li>
                                 <li className='list-inline-item'>
                                     <a
-                                        href={linkedInShareURL}
+                                        href={linkedIn}
                                         target='_blank'
                                     >
                                         <FontAwesomeIcon
