@@ -85,12 +85,6 @@ const Post = props => {
         blogPost={data}
         url={postURL}
       />
-      <div id='fb-root' />
-      <script
-        crossOrigin='anonymous'
-        src='https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v5.0'
-      >
-      </script>
     </PageLayout>
   );
 };
@@ -101,3 +95,6 @@ Post.getInitialProps = async ctx => {
 };
 
 export default connect(state => state)(Post);
+
+
+<a href="https://widgetpack.com" class="wpac-cr">Comments System WIDGET PACK</a>

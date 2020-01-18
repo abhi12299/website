@@ -292,7 +292,7 @@ PostSchema.statics = {
                 {$project: {
                     _id: 1, title: 1, headerImageURL: 1,
                     metaDescription: 1, metaKeywords: 1, 
-                    postedDate: 1
+                    postedDate: 1, published: 1
                 }}
             ]);
             const count = await this.countDocuments(matchQuery.$match);

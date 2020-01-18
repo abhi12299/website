@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-import months from '../constants/months';
+import getDateParts from '../utils/getDateParts';
+import keys from '../constants/apiKeys';
+
 import '../css/singleBlogPost.css';
 
 const getFormattedDate = timestamp => {
-    const d = new Date(timestamp);
-    return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+    const d = getDateParts(timestamp);
+    return `${d.date} ${d.month} ${d.year}`;
 };
 
 // NOTE TO SELF: always wrap images in a div with class img-wrapper
@@ -18,6 +20,28 @@ function SingleBlogPost(props) {
         body,
         metaKeywords
     } = props.blogPost;
+
+    useEffect(() => {
+        const widgetpackScript = document.createElement('script');
+        widgetpackScript.innerHTML = `
+          wpac_init = window.wpac_init || [];
+          wpac_init.push({widget: 'Comment', id: ${keys.WIDGETPACK_PLUGIN_ID}});
+          (function() {
+            //   if ('WIDGETPACK_LOADED' in window) return;
+              WIDGETPACK_LOADED = true;
+              var mc = document.createElement('script');
+              mc.type = 'text/javascript';
+              mc.async = true;
+              mc.src = 'https://embed.widgetpack.com/widget.js';
+              var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+          })();
+        `;
+        document.body.appendChild(widgetpackScript);
+
+        return () => {
+            document.body.removeChild(widgetpackScript);
+        };
+    }, []);
 
     const { url, enableComments } = props;
 
@@ -94,12 +118,7 @@ function SingleBlogPost(props) {
                     {
                         enableComments &&
                         <div className='col-lg-8 offset-lg-2 comments-section'>
-                            <div
-                                data-mobile={true}
-                                className='fb-comments'
-                                data-width='100%'
-                                data-numposts='5'>
-                            </div>
+                            <div id="wpac-comment"></div>
                         </div>
                     }
                 </div>
