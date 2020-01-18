@@ -56,8 +56,8 @@ postRouter.get('/getAllPosts', async (req, res) => {
     skip = parseInt(skip) || 0;
     limit = parseInt(limit) || 10;
 
-    const posts = await Post.getAllPosts({ skip, limit, keywords });
-    return res.json({ error: false, data: posts });
+    const { posts, count } = await Post.getAllPosts({ skip, limit, keywords });
+    return res.json({ error: false, data: posts, count });
 });
 
 module.exports = postRouter;

@@ -6,13 +6,13 @@ import { connect } from 'react-redux';
 
 import PageLayout from '../components/pageLayout';
 import AdminFAB from '../components/adminFAB';
-import SearchResults from '../components/searchResults';
+import AllBlogs from '../components/allBlogs';
 const Pagination = dynamic(() => import('../components/pagination'), { ssr: false });
 
 import actions from '../redux/actions';
 
 const perPage = 10;
-const SearchPage = props => {
+const Blog = props => {
     const router = useRouter();
     let [pageNo, setPageNo] = useState(1);
 
@@ -30,12 +30,11 @@ const SearchPage = props => {
         setPageNo(page);
     }, [router.query]);
 
-    const { q } = router.query;
-    const { count } = props.search;
+    const { loading, data, count } = props.posts;
 
     const metaTags = (
         <Fragment>
-            <title>{decodeURI(q)} - Search Results | AM Web Developer</title>
+            <title>Page {pageNo} - All Blogs | AM Web Developer</title>
         </Fragment>
     );
 
@@ -45,10 +44,12 @@ const SearchPage = props => {
         >
             {props.auth.admin && <AdminFAB />}
             <div className='container'>
-                <SearchResults
-                    page={pageNo}
-                    perPage={perPage}
+                <AllBlogs
+                    loading={loading}
+                    data={data}
+                    adminButtons={props.auth.admin}
                 />
+                <div style={{marginTop: '20px'}} />
                 {
                     count > 0 &&
                     <Pagination
@@ -62,11 +63,11 @@ const SearchPage = props => {
     );
 };
 
-SearchPage.getInitialProps = async ctx => {
+Blog.getInitialProps = async ctx => {
     await ctx.store.dispatch(actions.authActions.authenticate(ctx.req));
-    await ctx.store.dispatch(actions.searchActions.search(ctx, perPage));
+    await ctx.store.dispatch(actions.blogPostActions.getAllPosts(ctx, perPage));
 
     return {};
 }
 
-export default connect(state => state)(SearchPage);
+export default connect(state => state)(Blog);

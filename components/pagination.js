@@ -28,7 +28,7 @@ function Pagination(props) {
                     ...router.query,
                     page: p
                 }
-            });
+            }).then(() => window.scrollTo(0, 0));
         }
     };
 

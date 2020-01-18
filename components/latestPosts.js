@@ -3,16 +3,17 @@ import { connect } from 'react-redux';
 
 import PostTileV2 from './postTileV2';
 import LoadingSVG from './loadingSVG';
+import Link from 'next/link';
 
 function LatestPosts(props) {
     const { data, loading } = props;
 
     const loader = (
-        <div style={{textAlign: 'center'}}>
-            <LoadingSVG 
+        <div style={{ textAlign: 'center' }}>
+            <LoadingSVG
                 width='50px'
                 height='50px'
-                text='Please wait...' 
+                text='Please wait...'
             />
         </div>
     );
@@ -28,12 +29,25 @@ function LatestPosts(props) {
                 <div className='col-sm-12'>
                     {
                         loading ? loader :
-                        data.map(post => (
-                            <PostTileV2 post={post} key={post._id} />
-                        ))
+                            data.map(post => (
+                                <PostTileV2 post={post} key={post._id} />
+                            ))
                     }
                 </div>
             </div>
+            {
+                !loading &&
+                <div className='row'>
+                    <div className='d-flex justify-content-center col-sm-12 pad-top-50'>
+                        <div className='button-4'>
+                            <div className='eff-4'></div>
+                            <Link href='/blog'>
+                                <a>All Blogs</a>
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     );
 }

@@ -282,7 +282,7 @@ PostSchema.statics = {
                     }
                 };
             }
-            return await this.aggregate([
+            const posts = await this.aggregate([
                 matchQuery,
                 {$sort: {
                     postedDate: -1
@@ -295,9 +295,11 @@ PostSchema.statics = {
                     postedDate: 1
                 }}
             ]);
+            const count = await this.countDocuments(matchQuery.$match);
+            return { posts, count };
         } catch (error) {
             logger.error('Error in fetching latest posts!', error);
-            return []
+            return { posts: [], count: 0 };
         }
     }
 };

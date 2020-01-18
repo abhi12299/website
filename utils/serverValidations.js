@@ -125,7 +125,7 @@ const validateGetAllPosts = query => {
         limit: Joi.number().integer().min(1).max(10),
         skip: Joi.number().integer().min(0),
         keywords: Joi.alternatives().try(
-            Joi.string(), Joi.array().items(Joi.string().trim().required())
+            Joi.string(), Joi.array().items(Joi.string())
         )
     });
 
