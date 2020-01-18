@@ -2,28 +2,23 @@ import React, { useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
 
 import PageLayout from '../components/pageLayout';
+import AboutMe from '../components/aboutMe';
+import TechStack from '../components/techStack';
 import AdminFAB from '../components/adminFAB';
 
 import actions from '../redux/actions';
-import { getCookie, removeCookie } from '../utils/cookies';
-import { showToast } from '../utils/toasts';
 
-const Home = props => {
+const About = props => {
   useEffect(() => {
     if (props.auth.initiateForceLogout) {
       props.dispatch(actions.authActions.logout());
       return;
     }
-
-    if (props.notAdminError) {
-      removeCookie('notAdmin');
-      setTimeout(() => showToast('You are not an administrator!', 'error'), 500);
-    }
   }, []);
 
   const metaTags = (
     <Fragment>
-        <title>Abhishek Mehandiratta | Web Developer</title>
+        <title>About Me | AM - Web Developer</title>
     </Fragment>
   );
 
@@ -31,18 +26,17 @@ const Home = props => {
     <PageLayout
       headContent={metaTags}
     >
+      <AboutMe />
       { props.auth.admin && <AdminFAB /> }
-      Latest 5 blogs will go here
-      All Blogs button goes here
+      <TechStack />
     </PageLayout>
   );
 };
 
-Home.getInitialProps = async ctx => {
-  const notAdminError = getCookie('notAdmin', ctx.req);
+About.getInitialProps = async ctx => {
   await ctx.store.dispatch(actions.authActions.authenticate(ctx.req));
 
-  return { notAdminError: !!notAdminError };
+  return {};
 }
 
-export default connect(state => state)(Home);
+export default connect(state => state)(About);

@@ -103,14 +103,14 @@ const Header = props => {
             <li onClick={() => handleLinksClick('/', '.top-header')}>
                 <a>Home</a>
             </li>
-            <li onClick={() => handleLinksClick('/', '.about-me')}>
+            <li onClick={() => handleLinksClick('/about', 'TOP')}>
                 <a>About Me</a>
             </li>
-            <li onClick={() => handleLinksClick('/', '.contact')}>
+            <li onClick={() => handleLinksClick('/about', '.contact')}>
                 <a>Contact</a>
             </li>
-            <li onClick={() => handleLinksClick('/', '.projects')}>
-                <a>Projects</a>
+            <li onClick={() => handleLinksClick('/blog')}>
+                <a>Blog</a>
             </li>
             {/* <li onClick={() => handleSearch()} id='search-nav'>
                 <a>Search</a>
@@ -131,9 +131,6 @@ const Header = props => {
             </li>
             <li onClick={() => handleLinksClick('/dashboard/create')}>
                 <a>Write a Post</a>
-            </li>
-            <li onClick={() => handleSearch()} id='search-nav'>
-                <a>Search</a>
             </li>
             <li onClick={() => handleLinksClick('/dashboard/media')}>
                 <a>Media</a>
