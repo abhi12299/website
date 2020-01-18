@@ -4,7 +4,9 @@ const Post = require('../models/post.model');
 const logger = require('../logger');
 
 const {
-    validateGetPost
+    validateGetPost,
+    validateGetLatestPosts,
+    validateGetAllPosts
 } = require('../utils/serverValidations');
 
 const postRouter = Router();
@@ -24,6 +26,38 @@ postRouter.get('/getPost', async (req, res) => {
     }
     
     return res.json({ error: false, data: post });
+});
+
+postRouter.get('/getLatestPosts', async (req, res) => {
+    const error = validateGetLatestPosts(req.query);
+    if (error) {
+        logger.error('Query params validation fail on /getLatestPosts', { error, query: req.query })
+        return res.status(400).json({ error: true, msg: 'Incorrect info submitted!' });
+    }
+
+    let { limit } = req.query;
+    limit = parseInt(limit) || 5;
+
+    const posts = await Post.getLatestPosts({ limit });
+    return res.json({ error: false, data: posts });
+});
+
+// get all published posts w/ pagination
+postRouter.get('/getAllPosts', async (req, res) => {
+    const error = validateGetAllPosts(req.query);
+    if (error) {
+        logger.error('Query params validation fail on /getAllPosts', { error, query: req.query });
+        return res.status(400).json({ error: true, msg: 'Incorrect info submitted!' });
+    }
+
+    let {
+        skip, limit, keywords // match metaKeywords
+    } = req.query;
+    skip = parseInt(skip) || 0;
+    limit = parseInt(limit) || 10;
+
+    const posts = await Post.getAllPosts({ skip, limit, keywords });
+    return res.json({ error: false, data: posts });
 });
 
 module.exports = postRouter;

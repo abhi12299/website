@@ -241,6 +241,64 @@ PostSchema.statics = {
         } catch (error) {
             return { data: [], error: true, count: 0 };
         }
+    },
+    async getLatestPosts({ limit }) {
+        try {
+            return await this.aggregate([
+                {$match: {
+                    published: 1
+                }},
+                {$sort: {
+                    postedDate: -1
+                }},
+                {$limit: limit},
+                {$project: {
+                    _id: 1, title: 1, headerImageURL: 1,
+                    metaDescription: 1, metaKeywords: 1, 
+                    postedDate: 1
+                }}
+            ]);
+        } catch (error) {
+            logger.error('Error in fetching latest posts!', error);
+            return [];
+        }
+    },
+    async getAllPosts({ skip, limit, keywords }) {
+        try {
+            let matchQuery = {$match: {
+                published: 1
+            }};
+
+            if (Array.isArray(keywords)) {
+                // TODO: make this case insensitive
+                matchQuery.$match['metaKeywords'] = {
+                    $all: keywords
+                };
+            } else if (typeof keywords === 'string' && keywords.length) {
+                matchQuery.$match['metaKeywords'] = {
+                    $elemMatch: {
+                        $regex: keywords,
+                        $options: 'i'
+                    }
+                };
+            }
+            return await this.aggregate([
+                matchQuery,
+                {$sort: {
+                    postedDate: -1
+                }},
+                {$skip: skip},
+                {$limit: limit},
+                {$project: {
+                    _id: 1, title: 1, headerImageURL: 1,
+                    metaDescription: 1, metaKeywords: 1, 
+                    postedDate: 1
+                }}
+            ]);
+        } catch (error) {
+            logger.error('Error in fetching latest posts!', error);
+            return []
+        }
     }
 };
 

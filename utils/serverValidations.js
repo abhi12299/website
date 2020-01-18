@@ -111,6 +111,28 @@ const validateSearch = query => {
     return error;
 };
 
+const validateGetLatestPosts = query => {
+    const schema = Joi.object({
+        limit: Joi.number().integer().min(1).max(5)
+    });
+
+    const { error } = Joi.validate(query, schema);
+    return error;
+};
+
+const validateGetAllPosts = query => {
+    const schema = Joi.object({
+        limit: Joi.number().integer().min(1).max(10),
+        skip: Joi.number().integer().min(0),
+        keywords: Joi.alternatives().try(
+            Joi.string(), Joi.array().items(Joi.string().trim().required())
+        )
+    });
+
+    const { error } = Joi.validate(query, schema);
+    return error;
+};
+
 module.exports = {
     validatePost,
     validateSetPublished,
@@ -120,5 +142,7 @@ module.exports = {
     validateGetPost,
     validateEditPost,
     validateSearchSuggestions,
-    validateSearch
+    validateSearch,
+    validateGetLatestPosts,
+    validateGetAllPosts
 };
