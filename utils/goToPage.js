@@ -35,7 +35,7 @@ export default (nextPage, { cbAfterAnimate = noOp, scrollToElement = null } = {}
                 // just go to top
                 window.scrollTo(0, 0);
             }
-            else if (scrollToElement) animateToElem(scrollToElement, 0);
+            else if (scrollToElement) animateToElem(scrollToElement, 500);
         });
     }
 }
