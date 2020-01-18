@@ -4,14 +4,16 @@ import {
     POSTLOADING,
     POSTSUCCESS,
     POSTERROR,
-    TOGGLEPOSTSUCCESS_SINGLEPOST
+    TOGGLEPOSTSUCCESS_SINGLEPOST,
+    POSTSLOADING,
+    POSTSERROR,
+    POSTSSUCCESS
 } from '../types';
 
 import baseURL from '../../constants/apiURL';
 
 const getPost = ctx => {
-    const path = ctx.req ? ctx.req.path : ctx.path;
-
+    const path = ctx.req ? ctx.req.path : ctx.asPath;
     const id = path.split('/')[2];
 
     const fetchOpts = {
@@ -46,6 +48,33 @@ const getPost = ctx => {
     };
 };
 
+const getLatestPosts = () => {
+    const fetchOpts = {
+        method: 'GET',
+        credentials: 'include',
+    };
+    let url = `${baseURL}/api/post/getLatestPosts`;
+
+    return dispatch => {
+        dispatch({ type: POSTSLOADING, payload: true });
+
+        return fetch(url, fetchOpts)
+            .then(resp => resp.json())
+            .then(resp => {
+                if (resp.error) {
+                    console.error(resp);
+                    dispatch({ type: POSTSERROR, payload: resp.msg || 'Something went wrong!' });
+                } else {
+                    dispatch({ type: POSTSSUCCESS, payload: { data: resp.data } });
+                }
+            }).catch(err => {
+                console.error(err);
+                dispatch({ type: POSTSERROR, payload: err.msg || 'Something went wrong!' });
+            });
+    };
+};
+
 export default {
-    getPost
+    getPost,
+    getLatestPosts
 };

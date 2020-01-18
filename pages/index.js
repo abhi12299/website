@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import PageLayout from '../components/pageLayout';
 import AdminFAB from '../components/adminFAB';
+import LatestPosts from '../components/latestPosts';
 
 import actions from '../redux/actions';
 import { getCookie, removeCookie } from '../utils/cookies';
@@ -32,8 +33,7 @@ const Home = props => {
       headContent={metaTags}
     >
       { props.auth.admin && <AdminFAB /> }
-      Latest 5 blogs will go here
-      All Blogs button goes here
+      <LatestPosts />
     </PageLayout>
   );
 };
@@ -41,6 +41,7 @@ const Home = props => {
 Home.getInitialProps = async ctx => {
   const notAdminError = getCookie('notAdmin', ctx.req);
   await ctx.store.dispatch(actions.authActions.authenticate(ctx.req));
+  await ctx.store.dispatch(actions.blogPostActions.getLatestPosts());
 
   return { notAdminError: !!notAdminError };
 }
