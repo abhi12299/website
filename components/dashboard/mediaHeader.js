@@ -9,8 +9,8 @@ import '../../css/dashboard/mediaHeader.css';
 const dropdownOptions = [
     { title: 'Time (Latest first)', query: {sortBy: 'createdAt', sortOrder: '-1', page: 1} },
     { title: 'Time (Oldest first)', query: {sortBy: 'createdAt', sortOrder: '1', page: 1} },
-    { title: 'Usage Freq (Desc)', query: {sortBy: 'usedInPosts', sortOrder: '-1', page: 1} },
-    { title: 'Usage Freq (Asc)', query: {sortBy: 'usedInPosts', sortOrder: '1', page: 1} }
+    { title: 'Usage Freq (Desc)', query: {sortBy: 'usedInPublishedPosts', sortOrder: '-1', page: 1} },
+    { title: 'Usage Freq (Asc)', query: {sortBy: 'usedInPublishedPosts', sortOrder: '1', page: 1} }
 ];
 
 function MediaHeader() {

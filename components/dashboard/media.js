@@ -10,7 +10,12 @@ import { showToast } from '../../utils/toasts';
 import '../../css/dashboard/media.css';
 
 const Media = props => {
-    const { _id, usedInPosts, url } = props.media;
+    const { 
+        _id, 
+        usedInPublishedPosts, 
+        url, 
+        usedInUnpublishedPosts
+    } = props.media;
 
     const { 
         deleteMediaLoading,
@@ -27,17 +32,21 @@ const Media = props => {
     };
 
     return (            
-        <div className='col-lg-3 col-md-3 col-6 media-card'>
+        <div className='col-lg-3 col-6 media-card'>
             <div className='card'>
                 <img className='card-img-top media-card-img' src={url} alt='Card image cap' onClick={handlePreview} />
                 <div className='card-body row c2a-btns mx-auto'>
-                    <div className='col-4' title='Used In Posts'>
-                        <div style={{width: '50px'}}>
-                            <FontAwesomeIcon icon={faThumbtack} />
-                            &nbsp;{usedInPosts}
-                        </div>
+                    <div className='col-6' title='Used In Published Posts'>
+                        <FontAwesomeIcon icon={faThumbtack} />
+                        <sup>(P)</sup>
+                        &nbsp;{usedInPublishedPosts}
                     </div>
-                    <div className='col-4'>
+                    <div className='col-6' title='Used In Unpublished Posts'>
+                        <FontAwesomeIcon icon={faThumbtack} />
+                        <sup>(Up)</sup>
+                        &nbsp;{usedInUnpublishedPosts}
+                    </div>
+                    <div className='col-6'>
                         <FontAwesomeIcon 
                             icon={faCopy} 
                             className={`media-copy-btn ${deleteMediaLoading ? 'disabled': ''}`} 
@@ -45,7 +54,7 @@ const Media = props => {
                             onClick={handleCopyLink}
                         />
                     </div>
-                    <div className='col-4'>
+                    <div className='col-6'>
                         <FontAwesomeIcon 
                             icon={faTrashAlt} 
                             className={`media-delete-btn ${deleteMediaLoading ? 'disabled': ''}`} 

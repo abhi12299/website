@@ -8,7 +8,11 @@ const MediaSchema = new Schema({
         type: String
     },
     // how many posts use this media
-    usedInPosts: {
+    usedInPublishedPosts: {
+        type: Number,
+        default: 0
+    },
+    usedInUnpublishedPosts: {
         type: Number,
         default: 0
     }

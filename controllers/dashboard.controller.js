@@ -71,6 +71,9 @@ dashboardRouter.post('/savePost', async (req, res) => {
                 msg: 'The post could not be indexed by elastic client! The post was removed. Please try again!'
             });
         }
+        await Media.updateMedias(attachedMedia, {
+            $inc: { usedInUnpublishedPosts : 1 }
+        });
         return res.json({ 
             error: false, 
             post: savedPost 
@@ -146,13 +149,21 @@ dashboardRouter.post('/setPublished', async (req, res) => {
     }
     const { _id, published } = req.body;
     try {
+        const existingPost = await Post.findOne({ _id }, 'published');
+        if (existingPost && existingPost.published === published) {
+            return res.json({ error: false });
+        }
+
         const post = await Post.setPublished(_id, published);
         /*const { error } = */ await elasticSearchHelper.updatePost(_id, { published });
 
         const { media } = post ? post : { media: [] };
 
         await Media.updateMedias(media, {
-            $inc: { usedInPosts: published ? 1 : -1 }
+            $inc: { 
+                usedInUnpublishedPosts: published ? -1 : 1,
+                usedInPublishedPosts: published ? 1 : -1
+            }
         });
 
         return res.json({
@@ -190,7 +201,6 @@ dashboardRouter.patch('/editPost', async (req, res) => {
     let newAttachedMedia = findAttachedMedia(headerImageURL, body);
     let newPostId = generateIdFromPostTitle(title);
 
-    console.log({ newPostId, oldPostId: oldPost._id, keepOldId });
     // create a new post, deleting old one, only if forced to do so
     if (newPostId !== oldPost._id && !keepOldId) {
         // delete old post
@@ -198,13 +208,10 @@ dashboardRouter.patch('/editPost', async (req, res) => {
         try {
             await elasticSearchHelper.deletePost(oldPost._id);  
         } catch (error) {} // not a fatal error
-        
-        // index in elastic search
-        let newId = generateIdFromPostTitle(title);
 
         try {
             newPost = await Post.savePost({
-                _id: newId, title, headerImageURL, metaKeywords,
+                _id: newPostId, title, headerImageURL, metaKeywords,
                 metaDescription, postedDate: oldPost.postedDate,
                 body, published: oldPost.published, media: newAttachedMedia
             });
@@ -229,7 +236,8 @@ dashboardRouter.patch('/editPost', async (req, res) => {
     } else {
         // update the old post
         newPost = await Post.updatePost(oldPost._id, {
-            title, headerImageURL, metaDescription, metaKeywords, body
+            title, headerImageURL, metaDescription, metaKeywords, body,
+            media: newAttachedMedia
         });
         try {
             let newBody = newPost.body
@@ -250,12 +258,23 @@ dashboardRouter.patch('/editPost', async (req, res) => {
     // find current attached media
     const newMedia = findAttachedMedia(newPost.headerImageURL, newPost.body);
     const oldMedia = oldPost.media;
-    if (newPost.published) {
-        // decrement usedInPosts for oldMedia
-        await Media.updateMedias(oldMedia, { $inc: {usedInPosts: -1} });
-        // increment usedInPosts for newMedia
-        await Media.updateMedias(newMedia, { $inc: {usedInPosts: 1} });
-    }
+
+    await Media.updateMedias(oldMedia, {$inc: {
+        usedInPublishedPosts: oldPost.published ? -1 : 0,
+        usedInUnpublishedPosts: oldPost.published ? 0 : -1
+    }});
+
+    await Media.updateMedias(newMedia, {$inc: {
+        usedInPublishedPosts: newPost.published ? 1 : 0,
+        usedInUnpublishedPosts: newPost.published ? 0 : 1
+    }});
+
+    // if (newPost.published) {
+    //     // decrement usedInPosts for oldMedia
+    //     await Media.updateMedias(oldMedia, { $inc: {usedInPosts: -1} });
+    //     // increment usedInPosts for newMedia
+    //     await Media.updateMedias(newMedia, { $inc: {usedInPosts: 1} });
+    // }
 
     return res.json({ error: false, msg: 'Post updated successfully!' });
 });
@@ -265,12 +284,14 @@ dashboardRouter.patch('/editPost', async (req, res) => {
 const storage = multer.diskStorage({
     destination: path.join(__dirname, '../public/static/blogs'),
     filename: (req, file, cb) => {
-        let filePath = path.join(__dirname, '../public/static/blogs', file.originalname.toLowerCase());
+        let filePath = path.join(__dirname, '../public/static/blogs', file.originalname.toLowerCase().replace(/ /g, ''));
         if (fs.existsSync(filePath)) {
-            const newFilename = `${file.originalname.toLowerCase().split('.')[0]}-${Date.now()}.${file.originalname.split('.')[1]}`.replace(/ /g, '');
+            const splitArr = file.originalname.toLowerCase().split('.');
+
+            const newFilename = `${splitArr.slice(0, splitArr.length - 1).join('-')}-${Date.now()}.${splitArr[splitArr.length - 1]}`.replace(/ /g, '');
             cb(null, newFilename);
         } else {
-            cb(null, file.originalname.replace(/ /g, ''));
+            cb(null, file.originalname.toLowerCase().replace(/ /g, ''));
         }
     }
 });
