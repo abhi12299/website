@@ -20,7 +20,8 @@ To run this locally, clone this repo and `cd` in the project directory
         Make a file <pre>constants/apiKeys.js</pre> with the following contents:
         <pre>export default {
     TINY_MCE_API_KEY: 'your-api-key',
-    WIDGETPACK_PLUGIN_ID: 'your-plugin-id'
+    WIDGETPACK_PLUGIN_ID: 'your-plugin-id',
+    GTAG_ID: 'your-google-tag-id'
 };</pre>
     </li>
     <li>For the first time execution, run <pre>node elasticClient/createIndex.js</pre></li>
