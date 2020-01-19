@@ -22,6 +22,9 @@ function SingleBlogPost(props) {
     } = props.blogPost;
 
     useEffect(() => {
+        if (!enableComments) {
+            return;
+        }
         const widgetpackScript = document.createElement('script');
         widgetpackScript.innerHTML = `
           wpac_init = window.wpac_init || [];
