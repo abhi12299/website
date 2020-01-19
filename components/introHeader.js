@@ -7,17 +7,14 @@ import '../css/introHeader.css';
 
 function IntroHeader() {
 	return (
-		<section className="top-header style-one pad-125 bg-pattern-2">
+		<section className="top-header style-four bg-pattern">
 			<div className="container">
 				<div className="row">
-					<div className="col-xl-5 col-md-6 offset-xl-1 text-left">
-						<div className='img-placeholder'>
-							<img src="../static/png/400.png" alt="avatar" className="avatar-img" />
-						</div>
+					<div className="col-md-12 col-sm-12 text-center">
+						<h1 className="title-stroke">Hi</h1>
 					</div>
-					<div className="col-xl-5 col-md-6 text-left">
-						<h1> Hi. I'm Abhishek Mehandiratta.</h1>
-						<p> I'm a <b>Web Developer</b></p>
+					<div className="col-lg-6 col-md-10 offset-md-1 offset-lg-3 text-center">
+						<p> I'm Abhishek Mehandiratta. I am a <b>Web Developer</b></p>
 
 						<ul className="social-icons light list-inline">
 							<li className="list-inline-item">
