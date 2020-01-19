@@ -80,6 +80,10 @@ function childProcess() {
             }
         });
 
+        server.get('/robots.txt', (req, res) => {
+            return res.sendFile(path.join(__dirname, './public/static/robots.txt'));
+        });
+
         // service worker
         server.get('/service-worker.js', (req, res) => {
             res.sendFile(path.join(__dirname, '.next', 'service-worker.js'));
