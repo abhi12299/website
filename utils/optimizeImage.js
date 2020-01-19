@@ -20,7 +20,7 @@ module.exports = async assetName => {
             destination: path.join(__dirname, '../public/static/blogs'),
             plugins: [
                 imageminMozjpeg({
-                    quality: 75,
+                    quality: 90,
                     progressive: true
                 }),
                 imageminPngquant({
