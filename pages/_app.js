@@ -15,14 +15,14 @@ import '../css/index.css';
 export default withRedux(initStore, { debug: false })(
   class MyApp extends App {
     render() {
-      const { Component, pageProps, store } = this.props;
+      const { Component, pageProps, store, router } = this.props;
       return (
         <Provider store={store}>
           <PageTransition 
             timeout={50} 
             classNames="page-transition"
           >
-            <Component {...pageProps} />
+            <Component {...pageProps} key={router.route} />
           </PageTransition>
           <style jsx global>{`
             .page-transition-enter {

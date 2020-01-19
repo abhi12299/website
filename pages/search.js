@@ -35,7 +35,25 @@ const SearchPage = props => {
 
     const metaTags = (
         <Fragment>
-            <title>{decodeURI(q)} - Search Results | AM Web Developer</title>
+            <title>{decodeURI(q)} - Search Results - Abhishek Mehandiratta | Web Developer</title>
+            <link href='URL' rel='canonical' />
+            <link rel='canonical' href='https://iabhishek.dev/search' />
+
+            <meta name='description' content={`${count} Results For ${decodeURI(q)} - Abhishek Mehandiratta | Web Developer`} />
+            <meta name='keywords' content={`Abhishek, Mehandiratta, Web, Development, Developer, Search, ${decodeURI(q)}`} />
+            <meta name='author' content='Abhishek Mehandiratta' />
+
+            <meta property='og:title' content={`${decodeURI(q)} - Search Results | Abhishek Mehandiratta Web Developer`} />
+            <meta property='og:type' content='website' />
+            <meta property='og:description' content={`${count} Results For ${decodeURI(q)} - Abhishek Mehandiratta | Web Developer`} />
+            <meta property='og:image' content='https://iabhishek.dev/static/logo.png' />
+            <meta property='og:url' content='https://iabhishek.dev/search' />
+
+            <meta name='twitter:card' content='summary_large_image' />
+            <meta name='twitter:site' content='@abhishek_m' />
+            <meta name='twitter:creator' content='@abhishek_m' />
+            <meta name='twitter:title' content={`${decodeURI(q)} - Search Results | Abhishek Mehandiratta Web Developer`} />
+            <meta name='twitter:description' content={`${count} Results For ${decodeURI(q)} - Abhishek Mehandiratta | Web Developer`} />
         </Fragment>
     );
 

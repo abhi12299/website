@@ -34,7 +34,25 @@ const Blog = props => {
 
     const metaTags = (
         <Fragment>
-            <title>Page {pageNo} - All Blogs | AM Web Developer</title>
+            <title>Page {pageNo} - All Blogs - Abhishek Mehandiratta | Web Developer</title>
+            <link href='URL' rel='canonical' />
+            <link rel='canonical' href='https://iabhishek.dev' />
+
+            <meta name='description' content='All Blogs - Abhishek Mehandiratta | Web Developer' />
+            <meta name='keywords' content='Abhishek, Mehandiratta, Blog, Developer, Web' />
+            <meta name='author' content='Abhishek Mehandiratta' />
+
+            <meta property='og:title' content='All Blogs - Abhishek Mehandiratta | Web Developer' />
+            <meta property='og:type' content='website' />
+            <meta property='og:description' content='Check out these interesting blogs written by me, ranging from basics of javascript and other languages to advanced concepts.' />
+            <meta property='og:image' content='https://iabhishek.dev/static/logo.png' />
+            <meta property='og:url' content='https://iabhishek.dev/blog' />
+
+            <meta name='twitter:card' content='summary_large_image' />
+            <meta name='twitter:site' content='@abhishek_m' />
+            <meta name='twitter:creator' content='@abhishek_m' />
+            <meta name='twitter:title' content='All Blogs - Abhishek Mehandiratta | Web Developer' />
+            <meta name='twitter:description' content='Check out these interesting blogs written by me, ranging from basics of javascript and other languages to advanced concepts.' />
         </Fragment>
     );
 

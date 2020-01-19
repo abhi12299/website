@@ -33,14 +33,14 @@ const Post = props => {
   const metaTags = (
     <Fragment>
       <title>
-        {title} | AM Web Developer
+        {title} - Abhishek Mehandiratta | Web Developer
       </title>
 
       <link href='URL' rel='canonical' />
       <link rel='canonical' href={postURL} />
 
       <meta name='description' content={metaDescription} />
-      <meta name='keywords' content={metaKeywords.join(', ')} />
+      <meta name='keywords' content={`${metaKeywords.join(', ')}, Blog, Abhishek, Mehandiratta, Web, Develpoment`} />
       <meta name='author' content='Abhishek Mehandiratta' />
 
       <meta property='og:title' content={title} />
