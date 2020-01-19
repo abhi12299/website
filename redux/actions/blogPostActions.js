@@ -121,7 +121,6 @@ const getAllPosts = (ctx, perPage=10) => {
         return fetch(url, fetchOpts)
             .then(res => res.json())
             .then(resp => {
-                console.log('Resp from api:', resp);
                 if (resp.error) {
                     console.error(resp);
                     dispatch({ type: POSTSERROR, payload: resp.msg || 'Something went wrong!' });
