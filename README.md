@@ -53,5 +53,5 @@ To run this locally, clone this repo and `cd` in the project directory
 ## To analyse bundle sizes,
 For server,
 <pre>yarn run analyse-server</pre>
-For clien,
+For client,
 <pre>yarn run analyse-client</pre>
