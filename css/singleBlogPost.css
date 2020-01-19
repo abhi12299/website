@@ -4,6 +4,18 @@
     margin-bottom: 15px;
 }
 
+.single-post a {
+    color: #00bfffc4;
+}
+
+.single-post a:hover {
+    color: #004085;
+}
+
+.single-post ol, .single-post ul {
+    margin-left: 30px;
+}
+
 .single-post .wp-caption-text {
     color: #111;
     font-size: 14px;
@@ -76,6 +88,7 @@
     font-weight: bold;
     color: #111;
     margin-bottom: 25px;
+    margin-top: 25px;
 }
 
 .single-post h4 {
@@ -103,16 +116,24 @@
     margin-bottom: 10px;
 }
 
-.single-post p {
-    line-height: 32px;
-    font-size: 16px;
-    color: #111;
-    font-weight: 400;
-    margin-bottom: 30px;
+.single-post p, .single-post ol, .single-post ul {
+    line-height: 32px !important;
+    font-size: 16px !important;
+    color: #111 !important;
+    font-weight: 400 !important;
+    margin-bottom: 15px !important;
+    margin-top: 20px !important;
+}
+
+.single-post li {
+    line-height: 32px !important;
+    font-size: 16px !important;
+    color: #111 !important;
+    font-weight: 400 !important;
 }
 
 .single-post p a {
-    font-weight: 600;
+    font-weight: bold;
 }
 
 .single-post img {
@@ -120,6 +141,7 @@
 }
 
 .single-post .img-wrapper {
+    margin: 30px 0;
     text-align: center;
 }
 
@@ -151,27 +173,35 @@
 }
 
 .single-post .social-text li a.text-facebook {
-    color: #3b5998;
+    color: #3b5998 !important;
 }
 
 .single-post .social-text li a.text-twiiter {
-    color: #1da1f2;
+    color: #1da1f2 !important;
 }
 
 .single-post .social-text li a.text-linkedin {
-    color: #0077b5;
+    color: #0077b5 !important;
 }
 
 .single-post .social-text li a.text-instagram {
-    color: #fb3958;
+    color: #fb3958 !important;
 }
 
 .single-post .social-text li a.text-whatsapp {
-    color: #4FCE5D;
+    color: #4FCE5D !important;
 }
 
 .single-post .comments-section {
     padding-top: 30px;
+}
+
+.single-post .entry-share-div h5 {
+    font-family: PoppinsBold;
+}
+
+.single-post .social-text .list-inline-item:not(:last-child) {
+    margin-right: 25px;
 }
 
 @media(max-width: 991px) {
@@ -195,12 +225,18 @@
         font-size: 26px;
         line-height: 38px;
     }
-    .about-wrapper p, .single-post p {
+    .about-wrapper p, .single-post p, .single-post ol .single-post ul {
         line-height: 29px;
         font-size: 15px;
     }
     .fullpage-wrapper .single-post {
         padding: 50px 15px;
+    }
+    .single-post .social-text .list-inline-item:not(:last-child) {
+        margin-right: 15px;
+    }
+    .single-post ol, .single-post ul {
+        margin-left: 10px;
     }
 }
 
