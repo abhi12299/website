@@ -44,6 +44,10 @@ To run this locally, clone this repo and `cd` in the project directory
     Cluster with PM2
     <pre>pm2 start process.json</pre>
     </li>
+    <li>
+    Reload PM2 (zero downtime updates)
+    <pre>pm2 reload process.json</pre>
+    </li>
 </ol>
 
 ## To analyse bundle sizes,

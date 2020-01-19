@@ -2,7 +2,7 @@
     "apps" : [{
         "script": "npm",
         "args": "start",
-        "instances": "max",
+        "instances": "2",
         "exec_mode": "cluster"
     }]
 }
