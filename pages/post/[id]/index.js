@@ -61,7 +61,6 @@ const Post = props => {
     const prismScript = document.createElement('script');
     prismScript.src = '../static/prism/prism.js';
     prismScript.async = true;
-    prismScript.defer = true;
 
     const prismCss = document.createElement('link');
     prismCss.rel = 'stylesheet';

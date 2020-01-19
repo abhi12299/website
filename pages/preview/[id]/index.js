@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 
 import FullScreenLoader from '../../../components/fullScreenLoader';
 import withAuth from '../../../components/withAuth';
@@ -30,6 +30,24 @@ const Preview = props => {
   );
 
   const postURL = `${baseURL}/post/${_id}`;
+
+  useEffect(() => {
+    const prismScript = document.createElement('script');
+    prismScript.src = '../static/prism/prism.js';
+    prismScript.async = true;
+
+    const prismCss = document.createElement('link');
+    prismCss.rel = 'stylesheet';
+    prismCss.href = '../static/prism/prism.css';
+
+    document.body.appendChild(prismScript);
+    document.body.appendChild(prismCss);
+
+    return () => {
+      document.body.removeChild(prismCss);
+      document.body.removeChild(prismScript);
+    };
+  }, []);
 
   return (
     <PageLayout
