@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const logger = require('../logger');
 const baseURL = require('../constants/apiURL');
+const optimizeImage = require('../utils/optimizeImage');
 
 const Schema = mongoose.Schema;
 const MediaSchema = new Schema({
@@ -97,6 +98,11 @@ MediaSchema.statics = {
         }, updateObj);
     }
 };
+
+MediaSchema.post('save', (doc, next) => {
+    optimizeImage(doc._id);
+    next();
+});
 
 const Media = mongoose.model('media', MediaSchema);
 
