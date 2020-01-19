@@ -85,11 +85,12 @@ function PostEditor(props) {
                 </div>
             </div>
             <Editor
+                className='mceNoEditor'
                 apiKey={apiKeys ? apiKeys.TINY_MCE_API_KEY : ''}
                 init={{
                     height: 570,
                     plugins: [
-                        'advlist autolink lists link codesample image charmap print preview anchor',
+                        'advlist autolink lists link codesample image charmap print anchor',
                         'searchreplace visualblocks code fullscreen',
                         'insertdatetime media table paste code help wordcount'
                     ],
@@ -97,7 +98,25 @@ function PostEditor(props) {
                             alignleft aligncenter alignright alignjustify | \
                             bullist numlist outdent indent | removeformat | help',
                     menubar: 'file edit view insert format tools table tc help',
-                    autosave_ask_before_unload: true
+                    autosave_ask_before_unload: true,
+                    codesample_languages: [
+                        {text: 'HTML/XML', value: 'markup'},
+                        {text: 'JavaScript', value: 'javascript'},
+                        {text: 'CSS', value: 'css'},
+                        {text: 'PHP', value: 'php'},
+                        {text: 'Ruby', value: 'ruby'},
+                        {text: 'Python', value: 'python'},
+                        {text: 'Java', value: 'java'},
+                        {text: 'C', value: 'c'},
+                        {text: 'C#', value: 'csharp'},
+                        {text: 'C++', value: 'cpp'},
+                        {text: 'Go', value: 'go'},
+                        {text: 'Bash', value: 'bash'},
+                        {text: 'Docker', value: 'docker'},
+                        {text: 'HTTP', value: 'http'},
+                        {text: 'Markdown', value: 'markdown'},
+                        {text: 'React', value: 'jsx'}
+                    ]
                 }}
                 onChange={handleEditorChange}
                 onKeyUp={handleEditorChange}
