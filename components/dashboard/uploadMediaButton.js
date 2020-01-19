@@ -98,7 +98,7 @@ function UploadMediaButton(props) {
             const blobSizeInMB = blob.size * 1e-6;
             // imageCropper onComplete calls it directly
             // hence the check
-            if (isBlobImage(blob) && blobSizeInMB >= 5) {
+            if (isBlobImage(blob) && blobSizeInMB >= 2) {
                 showToast('File size too large!', 'error');
                 mediaUploadInput.current.value = '';
                 return;
