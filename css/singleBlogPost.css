@@ -145,6 +145,10 @@
     text-align: center;
 }
 
+.single-post .img-wrapper.border-img img {
+    border: 1px solid #80808038;
+}
+
 .single-post.style-two .entry-meta, .single-post.style-two .entry-meta a {
     color: #999;
     text-decoration: none;
