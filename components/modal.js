@@ -39,7 +39,7 @@ class Modal extends Component {
     outsideClickCloseModal = e => {
         if (e.target === this.customModal.current) {
             const { triggerActionOnDismiss=true } = this.props;
-            this.beforeClose(false, triggerActionOnDismiss);
+            this.beforeClose(false, false, triggerActionOnDismiss);
         }
     };
 
