@@ -19,7 +19,7 @@
 }
 
 .post-tile-v2 .entry-media img {
-    object-fit: contain;
+    object-fit: cover;
     width: 100%;
     height: 100%;
     display: inline-block;
@@ -41,21 +41,21 @@
     width: 70%;
     position: relative;
     padding: 20px 120px 20px 25px;
-    background-color: #f4f8fb;
+    background-color: #f4f4f7;
     height: 180px;
 }
 
 .post-tile-v2 .entry-title {
-    font-size: 20px;
+    font-size: 21px;
     line-height: 26px;
     margin-bottom: 10px;
-    font-family: PoppinsBold;
+    font-weight: 900;
+    font-family: Poppins;
 }
 
 .post-tile-v2 .entry-meta {
-    font-style: italic;
     font-size: 14px;
-    margin-top: 17px;
+    margin-top: 0px;
 }
 
 .post-tile-v2 .entry-content-bottom {
@@ -76,12 +76,6 @@
 .post-tile-v2 .social-share {
     float: right;
     padding-left: 20px;
-}
-
-.post-tile-v2 .entry-meta {
-    font-style: italic;
-    font-size: 14px;
-    margin-top: 0px;
 }
 
 .post-tile-v2 .blog-ss-icons {
@@ -133,6 +127,7 @@
 
     .post-tile-v2 .entry-meta-content {
         width: 100%;
+        height: 220px;
     }
 
     .post-tile-v2 .entry-meta {

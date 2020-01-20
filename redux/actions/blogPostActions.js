@@ -7,7 +7,10 @@ import {
     TOGGLEPOSTSUCCESS_SINGLEPOST,
     POSTSLOADING,
     POSTSERROR,
-    POSTSSUCCESS
+    POSTSSUCCESS,
+    LATESTPOSTSUCCESS,
+    LATESTPOSTSLOADING,
+    LATESTPOSTERROR
 } from '../types';
 
 import baseURL from '../../constants/apiURL';
@@ -56,20 +59,20 @@ const getLatestPosts = () => {
     let url = `${baseURL}/api/post/getLatestPosts`;
 
     return dispatch => {
-        dispatch({ type: POSTSLOADING, payload: true });
+        dispatch({ type: LATESTPOSTSLOADING, payload: true });
 
         return fetch(url, fetchOpts)
             .then(resp => resp.json())
             .then(resp => {
                 if (resp.error) {
                     console.error(resp);
-                    dispatch({ type: POSTSERROR, payload: resp.msg || 'Something went wrong!' });
+                    dispatch({ type: LATESTPOSTERROR, payload: resp.msg || 'Something went wrong!' });
                 } else {
-                    dispatch({ type: POSTSSUCCESS, payload: { data: resp.data } });
+                    dispatch({ type: LATESTPOSTSUCCESS, payload: { latestPosts: resp.data } });
                 }
             }).catch(err => {
                 console.error(err);
-                dispatch({ type: POSTSERROR, payload: err.msg || 'Something went wrong!' });
+                dispatch({ type: LATESTPOSTERROR, payload: err.msg || 'Something went wrong!' });
             });
     };
 };

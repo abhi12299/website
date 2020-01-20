@@ -45,3 +45,6 @@ export const POSTLOADING = 'postloading';
 export const POSTSUCCESS = 'postsuccess';
 export const POSTERROR = 'posterror';
 export const TOGGLEPOSTSUCCESS_SINGLEPOST = 'togglepostsuccess_singlepost';
+export const LATESTPOSTSUCCESS = 'latestpostsuccess';
+export const LATESTPOSTSLOADING = 'latestpostsloading';
+export const LATESTPOSTERROR = 'latestposterror';

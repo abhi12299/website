@@ -6,7 +6,7 @@ import LoadingSVG from './loadingSVG';
 import Link from 'next/link';
 
 function LatestPosts(props) {
-    const { data, loading } = props;
+    const { latestPosts:data, latestPostLoading:loading } = props;
 
     const loader = (
         <div style={{ textAlign: 'center' }}>
