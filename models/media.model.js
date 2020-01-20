@@ -16,12 +16,23 @@ const MediaSchema = new Schema({
     usedInUnpublishedPosts: {
         type: Number,
         default: 0
+    },
+    deleted: {
+        type: Boolean,
+        default: false
     }
 }, { timestamps: true });
 
 MediaSchema.statics = {
     async saveMedia(mediaObj) {
         try {
+            const mediaExist = await this.findOne({_id: mediaObj._id});
+            if (mediaExist) {
+                return await this.findOneAndUpdate({_id: mediaObj._id}, {
+                    $set: {deleted: false}
+                });
+            }
+            
             const m =  new this(mediaObj);
             return await m.save();
         } catch (err) {
@@ -31,9 +42,13 @@ MediaSchema.statics = {
     },
     async deleteMedia(mediaName) {
         try {
-            const media = await this.findOne({ _id: mediaName });
-            await this.deleteOne({ _id: mediaName });
-            return media;
+            return await this.findOneAndUpdate({ _id: mediaName }, {
+                $set: {
+                    deleted: true
+                }
+            }, { new: true });
+            // await this.deleteOne({ _id: mediaName });
+            // return media;
         } catch (err) {
             logger.error('Cannot delete media', err);
             return null;
@@ -41,8 +56,12 @@ MediaSchema.statics = {
     },
     async getMedia({ sortBy='createdAt', sortOrder=-1, skip=0, limit=20 }) {
         try {
-            let aggrQuery = [];
-            let countQuery = {};
+            let aggrQuery = [
+                {$match: {deleted: false}}
+            ];
+            let countQuery = {
+                deleted: false
+            };
             if (typeof sortBy !== 'undefined') {
                 aggrQuery.push({
                     $sort: {
