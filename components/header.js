@@ -100,10 +100,10 @@ const Header = props => {
 
     const navLinks = (
         <ul>
-            <li onClick={() => handleLinksClick('/', '.top-header')}>
+            <li onClick={() => handleLinksClick('/')}>
                 <a>Home</a>
             </li>
-            <li onClick={() => handleLinksClick('/about', 'TOP')}>
+            <li onClick={() => handleLinksClick('/about')}>
                 <a>About Me</a>
             </li>
             <li onClick={() => handleLinksClick('/about', '.contact')}>
