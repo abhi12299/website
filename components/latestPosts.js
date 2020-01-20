@@ -6,7 +6,7 @@ import LoadingSVG from './loadingSVG';
 import Link from 'next/link';
 
 function LatestPosts(props) {
-    const { latestPosts:data, latestPostLoading:loading } = props;
+    const { latestPosts: data, latestPostLoading: loading } = props;
 
     const loader = (
         <div style={{ textAlign: 'center' }}>
@@ -39,12 +39,12 @@ function LatestPosts(props) {
                 !loading &&
                 <div className='row'>
                     <div className='d-flex justify-content-center col-sm-12 pad-top-50'>
-                        <div className='button-4'>
-                            <div className='eff-4'></div>
-                            <Link href='/blog'>
+                        <Link href='/blog'>
+                            <div className='button-4'>
+                                <div className='eff-4'></div>
                                 <a>All Blogs</a>
-                            </Link>
-                        </div>
+                            </div>
+                        </Link>
                     </div>
                 </div>
             }

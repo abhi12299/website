@@ -20,7 +20,7 @@ function PostTileV2(props) {
     return (
         <article className='post-tile-v2'>
             <div className='entry-media float-right'>
-                <Link href='/post/[id]' as={`/post/${_id}`}>
+                <Link href='/post/[id]' as={`/post/${_id}`} prefetch={true}>
                     <a>
                         <img src={headerImageURL} alt='post-image' />
                     </a>
@@ -39,7 +39,7 @@ function PostTileV2(props) {
                     {dateObj.month} {dateObj.date}, {dateObj.year}
                 </span>
                 <div className='entry-content-bottom'>
-                    <Link href='/post/[id]' as={`/post/${_id}`}>
+                    <Link href='/post/[id]' as={`/post/${_id}`} prefetch={true}>
                         <a className='entry-read-more'>Read More</a>
                     </Link>
                     <ul className='social-share list-inline'>
