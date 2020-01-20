@@ -102,7 +102,6 @@ const Post = props => {
       <SingleBlogPost
         enableComments={true}
         blogPost={data}
-        url={postURL}
       />
     </PageLayout>
   );

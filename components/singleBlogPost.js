@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 
+import socialShare from '../utils/socialShareLinks';
 import getDateParts from '../utils/getDateParts';
 import keys from '../constants/apiKeys';
 
@@ -46,12 +47,9 @@ function SingleBlogPost(props) {
         };
     }, []);
 
-    const { url, enableComments } = props;
+    const { enableComments } = props;
 
-    const fbShareURL = published ? `https://www.facebook.com/sharer/sharer.php?u=${url}` : '';
-    const whatsappShareURL = published ? `whatsapp://send?text=${url}` : '';
-    const twitterShareURL = published ? `https://twitter.com/share?url=${url}` : '';
-    const linkedInShareURL = published ? `http://www.linkedin.com/shareArticle?mini=true&url=${url}` : '';
+    const { facebook, whatsApp, linkedIn, twitter } = socialShare(_id);
 
     return (
         <section className='single-post pad-50'>
@@ -81,29 +79,29 @@ function SingleBlogPost(props) {
                             <h5>Share :</h5>
                             <ul className='social-text light list-inline'>
                                 <li className='list-inline-item'>
-                                    <a target='_blank' className='text-facebook' href={fbShareURL}>
+                                    <a target='_blank' className='text-facebook' href={facebook}>
                                         Facebook
                                     </a>
                                 </li>
                                 <li className='list-inline-item'>
-                                    <a target='_blank' className='text-twiiter' href={twitterShareURL}>
+                                    <a target='_blank' className='text-twiiter' href={twitter}>
                                         Twitter
                                     </a>
                                 </li>
                                 <li className='list-inline-item'>
-                                    <a target='_blank' className='text-linkedin' href={linkedInShareURL}>
+                                    <a target='_blank' className='text-linkedin' href={linkedIn}>
                                         Linkedin
                                     </a>
                                 </li>
                                 <li className='list-inline-item'>
-                                    <a target='_blank' className='text-whatsapp' href={whatsappShareURL}>
+                                    <a target='_blank' className='text-whatsapp' href={whatsApp}>
                                         Whatsapp
                                     </a>
                                 </li>
                             </ul>
                         </div>
                         <div className='entry-share-div'>
-                            <h5>Tag :</h5>
+                            <h5>Tags :</h5>
                             <ul className='taglist list-inline'>
                                 {
                                     metaKeywords.map(mk => (
