@@ -22,7 +22,8 @@ function ImageCropper(props) {
         // if show is true, make a cropper
         if (show) {
             cropper = new Cropper(contentImage.current, {
-                autoCropArea: 0.8
+                autoCropArea: 0.8,
+                viewMode: 1
             });
         }
     }, [show]);

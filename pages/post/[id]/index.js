@@ -58,6 +58,7 @@ const Post = props => {
   );
 
   useEffect(() => {
+    if (!data) return;
     const prismScript = document.createElement('script');
     prismScript.src = '../static/prism/prism.js';
     prismScript.async = true;
