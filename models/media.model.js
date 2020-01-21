@@ -23,6 +23,8 @@ const MediaSchema = new Schema({
     }
 }, { timestamps: true });
 
+MediaSchema.index({createdAt: -1});
+
 MediaSchema.statics = {
     async saveMedia(mediaObj) {
         try {
@@ -32,7 +34,7 @@ MediaSchema.statics = {
                     $set: {deleted: false}
                 });
             }
-            
+
             const m =  new this(mediaObj);
             return await m.save();
         } catch (err) {

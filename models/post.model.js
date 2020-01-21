@@ -46,6 +46,8 @@ const PostSchema = new Schema({
     }
 }, { timestamps: true });
 
+PostSchema.index({postedDate: -1});
+
 PostSchema.statics = {
     async savePost(postObj) {
         try {
