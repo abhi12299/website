@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "npx rimraf .next/ && npx cross-env NODE_ENV=development node server.js",
     "build": "next build",
-    "start": "npx cross-env NODE_ENV=production node server.js",
+    "start:stag": "npx cross-env NODE_ENV=staging node server.js",
+    "start:prod": "npx cross-env NODE_ENV=production node server.js",
     "analyse-server": "BUNDLE_ANALYZE=server yarn build",
     "analyse-client": "BUNDLE_ANALYZE=browser yarn build"
   },

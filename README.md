@@ -39,8 +39,12 @@ To run this locally, clone this repo and `cd` in the project directory
     <pre>yarn build</pre>
     </li>
     <li>
+    Staging server
+    <pre>yarn start:stag</pre>
+    </li>
+    <li>
     Production server
-    <pre>yarn start</pre>
+    <pre>yarn start:prod</pre>
     </li>
     <li>
     Cluster with PM2
