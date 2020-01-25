@@ -8,6 +8,7 @@ To run this locally, clone this repo and `cd` in the project directory
     PORT=3001
     REDIS_HOST='127.0.0.1'
     REDIS_PORT=6379
+    REDIS_PASSWORD=''
     OAUTH_CLIENT_ID='your-google-oauth-client-id'
     CLIENT_SECRET='your-google-ouath-client-secret'
     JWT_SECRET='your-jwt-secret'
