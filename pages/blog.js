@@ -34,7 +34,7 @@ const Blog = props => {
 
     const metaTags = (
         <Fragment>
-            <title>Page {pageNo} - All Blogs - Abhishek Mehandiratta | Web Developer</title>
+            <title>All Blogs - Page {pageNo} - Abhishek Mehandiratta | Web Developer</title>
             <link href='URL' rel='canonical' />
             <link rel='canonical' href='https://iabhishek.dev' />
 
@@ -53,6 +53,35 @@ const Blog = props => {
             <meta name='twitter:creator' content='@abhishek_m' />
             <meta name='twitter:title' content='All Blogs - Abhishek Mehandiratta | Web Developer' />
             <meta name='twitter:description' content='Check out these interesting blogs written by me, ranging from basics of javascript and other languages to advanced concepts.' />
+            <script type='application/ld+json' dangerouslySetInnerHTML={{__html: `
+                {
+                    "@context": "https://schema.org",
+                    "@type": "WebSite",
+                    "publisher": {
+                        "@type": "Organization",
+                        "name": "Abhishek Mehandiratta",
+                        "logo": {
+                            "@type": "ImageObject",
+                            "url": "https://iabhishek.dev/static/png/logo.png",
+                            "width": 80,
+                            "height": 80
+                        }
+                    },
+                    "url": "https://iabhishek.dev/",
+                    "image": {
+                        "@type": "ImageObject",
+                        "url": "https://iabhishek.dev/static/png/logo.png",
+                        "width": 80,
+                        "height": 80
+                    },
+                    "mainEntityOfPage": {
+                        "@type": "WebPage",
+                        "@id": "https://iabhishek.dev/"
+                    },
+                    "description": "Check out these interesting blogs written by me, ranging from basics of javascript and other languages to advanced concepts."
+                }
+            `}}>
+            </script>
         </Fragment>
     );
 

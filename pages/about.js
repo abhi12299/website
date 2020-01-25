@@ -37,6 +37,35 @@ const About = props => {
             <meta name='twitter:creator' content='@abhishek_m' />
             <meta name='twitter:title' content='About Me - Abhishek Mehandiratta | Web Developer' />
             <meta name='twitter:description' content='A passionate web developer and hardcore gamer.' />
+            <script type='application/ld+json' dangerouslySetInnerHTML={{__html: `
+                {
+                    "@context": "https://schema.org",
+                    "@type": "WebSite",
+                    "publisher": {
+                        "@type": "Organization",
+                        "name": "Abhishek Mehandiratta",
+                        "logo": {
+                            "@type": "ImageObject",
+                            "url": "https://iabhishek.dev/static/png/logo.png",
+                            "width": 80,
+                            "height": 80
+                        }
+                    },
+                    "url": "https://iabhishek.dev/",
+                    "image": {
+                        "@type": "ImageObject",
+                        "url": "https://iabhishek.dev/static/png/logo.png",
+                        "width": 80,
+                        "height": 80
+                    },
+                    "mainEntityOfPage": {
+                        "@type": "WebPage",
+                        "@id": "https://iabhishek.dev/"
+                    },
+                    "description": "A passionate web developer and hardcore gamer."
+                }
+            `}}>
+            </script>
     </Fragment>
   );
 

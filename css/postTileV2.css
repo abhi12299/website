@@ -19,7 +19,7 @@
 }
 
 .post-tile-v2 .entry-media img {
-    object-fit: cover;
+    object-fit: fill;
     width: 100%;
     height: 100%;
     display: inline-block;

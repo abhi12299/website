@@ -25,7 +25,8 @@ const Post = props => {
     metaKeywords,
     metaDescription,
     headerImageURL,
-    _id
+    _id,
+    postedDate
   } = data;
 
   const postURL = `${baseURL}/post/${_id}`;
@@ -43,8 +44,11 @@ const Post = props => {
       <meta name='keywords' content={`${metaKeywords.join(', ')}, Blog, Abhishek, Mehandiratta, Web, Develpoment`} />
       <meta name='author' content='Abhishek Mehandiratta' />
 
+      <meta property='og:site_name' content='Abhishek Mehandiratta | Web Developer' />
+      <meta property='article:published_time' content={new Date(postedDate).toJSON()} />
+      {metaKeywords.map(mk => (<meta property='article:tag' content={mk} key={mk} />))}
       <meta property='og:title' content={title} />
-      <meta property='og:type' content='website' />
+      <meta property='og:type' content='article' />
       <meta property='og:description' content={metaDescription} />
       <meta property='og:image' content={headerImageURL} />
       <meta property='og:url' content={postURL} />
@@ -54,6 +58,50 @@ const Post = props => {
       <meta name='twitter:creator' content='@abhishek_m' />
       <meta name='twitter:title' content={title} />
       <meta name='twitter:description' content={metaDescription} />
+      <meta name='twitter:url' content={postURL} />
+      <meta name='twitter:label1' content='Written By' />
+      <meta name='twitter:data1' content='Abhishek Mehandiratta' />
+      <meta name='twitter:label1' content='Filed under' />
+      <meta name='twitter:label1' content={metaKeywords.join(', ')} />
+
+      <script type='application/ld+json' dangerouslySetInnerHTML={{
+        __html: `
+          {
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "publisher": {
+              "@type": "Organization",
+              "name": "Abhishek Mehandiratta | Web Developer",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://iabhishek.dev/static/png/logo.png",
+                "width": 80,
+                "height": 80
+              }
+            },
+            "author": {
+              "@type": "Person",
+              "name": "Abhishek Mehandiratta",
+              "image": {
+                "@type": "ImageObject",
+                "url": "https://iabhishek.dev/static/png/logo.png",
+                "width": 100,
+                "height": 100
+              },
+              "url": "https://iabhishek.dev/about/"
+            },
+            "headline": "${title}",
+            "url": "${postURL}",
+            "datePublished": "${new Date(postedDate).toJSON()}",
+            "keywords": "${metaKeywords.join(', ')}",
+            "description": "${metaDescription}",
+            "mainEntityOfPage": {
+              "@type": "WebPage",
+              "@id": "https://iabhishek.dev/"
+            }
+          }
+      `}}>
+      </script>
     </Fragment>
   );
 
@@ -115,4 +163,4 @@ Post.getInitialProps = async ctx => {
 export default connect(state => state)(Post);
 
 
-<a href="https://widgetpack.com" class="wpac-cr">Comments System WIDGET PACK</a>
+<a href='https://widgetpack.com' class='wpac-cr'>Comments System WIDGET PACK</a>
