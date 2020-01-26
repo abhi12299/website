@@ -3,11 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import { faStackOverflow, faGithub } from '@fortawesome/free-brands-svg-icons';
-import toastr from 'toastr';
 import fetch from 'isomorphic-unfetch';
 
 import LoadingSVG from './loadingSVG';
-import comingSoonToast from '../utils/comingSoonToast';
+import { showToast } from '../utils/toasts';
 import goToPage from '../utils/goToPage';
 import '../css/footer.css';
 
@@ -19,9 +18,8 @@ function Footer() {
         e.preventDefault();
         const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-        toastr.options = { positionClass: 'toast-bottom-right', };
         if (!emailRegex.test(email)) {
-            toastr.error('Please enter a valid email address!');
+            showToast('Please enter a valid email address!', 'error');
         } else {
             setLoading(true);
             try {
@@ -38,10 +36,10 @@ function Footer() {
                 if (result.error) {
                     throw new Error(result.msg);
                 }
-                toastr.success('Get ready to receive awesome content!');
+                showToast('Get ready to receive awesome content!', 'success');
                 setEmail('');
             } catch (err) {
-                toastr.error(err.message || 'Something went wrong! Please try again later.');
+                showToast(err.message || 'Something went wrong! Please try again later.', 'error');
             }
         }
     };
@@ -58,21 +56,21 @@ function Footer() {
                     <div className='col-lg-3 col-md-4 col-sm-5 col-5 widget footer-link-list-1'>
                         <ul className='widget-link'>
                             <li>
-                                <a onClick={() => goToPage('/')}>Home</a>
+                                <a onClick={() => goToPage('/', { scrollToElement: 'TOP' })}>Home</a>
                             </li>
 
                             <li>
-                                <a onClick={comingSoonToast}>Blog</a>
+                                <a onClick={() => goToPage('/blog', { scrollToElement: 'TOP' })}>Blog</a>
                             </li>
                         </ul>
                     </div>
                     <div className='col-lg-3 col-md-4 col-5 widget'>
                         <ul className='widget-link'>
                             <li>
-                                <a onClick={() => goToPage('/', { scrollToElement: '.about-me' })}>About</a>
+                                <a onClick={() => goToPage('/about', { scrollToElement: 'TOP' })}>About</a>
                             </li>
                             <li>
-                                <a onClick={() => goToPage('/', { scrollToElement: '.contact' })}>Contact</a>
+                                <a onClick={() => goToPage('/about', { scrollToElement: '.contact' })}>Contact</a>
                             </li>
                         </ul>
                     </div>

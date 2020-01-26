@@ -1,5 +1,6 @@
 const logger = require('../logger');
 const redisClient = require('../config/redisDb');
+const errorCodes = require('../constants/errorCodes');
 
 module.exports = async (req, res, next) => {
     try {
@@ -21,7 +22,7 @@ module.exports = async (req, res, next) => {
         } else {
             logger.info(`throttling on IP: ${IP}`);
             const err = new Error();
-            err.code = 'THROTTLE';
+            err.code = errorCodes[3];
             throw err;
         }
 

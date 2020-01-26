@@ -1,0 +1,83 @@
+.editor-container {
+    margin-top: 20px;
+}
+
+.post-title-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.post-title-container .post-title {
+    width: 100%;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid black;
+    padding: 5px 15px;
+    outline: none;
+    margin: 0 auto;
+    /* width: 75%; */
+}
+
+.post-title-container .post-title.error {
+    border-bottom: 1px solid red;
+    position: relative;
+    animation: shake .1s linear;
+    animation-iteration-count: 3;
+}
+
+@keyframes shake {
+    0% { left: -3px; }
+    100% { right: -3px; }
+}
+
+.post-title-container .errorText, 
+.editor-container .errorText {
+    display: none;
+}
+
+.post-title-container .errorText.show,
+.editor-container .errorText.show {
+    padding-top: 5px;
+    display: block;
+    color: red;
+}
+
+.post-title-container .errorText.show::before,
+.editor-container .errorText.show::before {
+    content: '* ';
+}
+
+.post-title-container .post-title::placeholder { /* Firefox, Chrome, Opera */ 
+    color: gray;
+} 
+  
+.post-title-container .post-title:-ms-input-placeholder { /* Internet Explorer 10-11 */ 
+    color: gray; 
+} 
+  
+.post-title-container .post-title::-ms-input-placeholder { /* Microsoft Edge */ 
+    color: gray; 
+} 
+
+.post-title-container .post-title[placeholder]:focus::-webkit-input-placeholder {
+    transition: text-indent 1.5s 0.4s ease; 
+    text-indent: -100%;
+    opacity: 1;
+}
+
+@media(max-width: 991px) {
+    .post-title-container .post-title {
+        width: 90%;
+    }
+}
+
+@media(max-width: 768px) {
+    .post-title-container .post-title {
+        width: 100%;
+    }
+    .post-title-container {
+        flex-direction: column;
+    }
+}

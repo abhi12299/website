@@ -1,0 +1,169 @@
+.sidebar-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.sidebar-container .post-header-image-container {
+    padding-top: 5px;
+}
+
+.sidebar-container .errorText {
+    display: none;
+}
+
+.sidebar-container .errorText.show {
+    display: block;
+    padding-top: 5px;
+    color: red;
+}
+
+.sidebar-container .errorText.show::before {
+    content: '* ';
+}
+
+.sidebar-container .post-header-image-url, 
+.sidebar-container .post-meta-desc,
+.sidebar-container .post-meta-keywords-input {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid black;
+    padding: 5px 15px;
+    outline: none;
+    margin: 0 auto;
+    width: 93%;
+}
+
+.sidebar-container .post-meta-desc-container .counter {
+    text-align: right !important;
+    font-size: 12px;
+    padding-right: 13px;
+    color: gray;
+}
+
+.sidebar-container .post-meta-desc::-webkit-scrollbar,
+.sidebar-container .post-meta-keywords-input::-webkit-scrollbar {
+    cursor: pointer;
+    width: 10px;
+    /* height: 12px;  */
+}
+
+.sidebar-container .post-meta-desc::-webkit-scrollbar-track,
+.sidebar-container .post-meta-keywords-input::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-container .post-meta-desc::-webkit-scrollbar-thumb,
+.sidebar-container .post-meta-keywords-input::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.sidebar-container .post-meta-desc {
+    height: 200px;
+}
+
+.sidebar-container .post-meta-keywords-input {
+    height: 100px;
+}
+
+.sidebar-container .post-header-image-url.error, 
+.sidebar-container .post-meta-desc.error,
+.sidebar-container .post-meta-keywords-input.error {
+    border-bottom: 1px solid red;
+    position: relative;
+    animation: shake .1s linear;
+    animation-iteration-count: 3;
+}
+
+@keyframes shake {
+    0% { left: -3px; }
+    100% { right: -3px; }
+}
+
+.sidebar-container .post-header-image-url[placeholder]:focus::-webkit-input-placeholder, 
+.sidebar-container .post-meta-desc[placeholder]:focus::-webkit-input-placeholder,
+.sidebar-container .post-meta-keywords-input[placeholder]:focus::-webkit-input-placeholder {
+    transition: text-indent 0.5s 0.4s ease;
+    text-indent: -300%;
+    opacity: 1;
+}
+
+.post-header-image-container .post-header-image-url::placeholder, 
+.post-meta-desc-container .post-meta-desc::placeholder,
+.post-meta-keywords-container .post-meta-keywords-input::placeholder {
+    /* Firefox, Chrome, Opera */
+    color: gray;
+}
+
+.post-header-image-container .post-header-image-url:-ms-input-placeholder, 
+.post-meta-desc-container .post-meta-desc:-ms-input-placeholder,
+.post-meta-keywords-container .post-meta-keywords-input::placeholder {
+    /* Internet Explorer 10-11 */
+    color: gray;
+}
+
+.post-header-image-container .post-header-image-url::-ms-input-placeholder, 
+.post-meta-desc-container .post-meta-desc::-ms-input-placeholder,
+.post-meta-keywords-container .post-meta-keywords-input::placeholder {
+    /* Microsoft Edge */
+    color: gray;
+}
+
+.sidebar-container .loader-wait {
+    float: right;
+    width: 7%;
+    background-color: transparent;
+    text-align: right;
+    outline: none;
+    border: 0;
+    padding: 0;
+    margin-top: 5px;
+}
+
+.sidebar-container .header-image-preview {
+    margin: 10px auto;
+}
+
+.sidebar-container img.header-img {
+    object-fit: contain;
+    border: 1px solid gray;
+    width: 200px;
+    height: 170px;
+}
+
+.sidebar-container .post-meta-keywords-container {
+    margin-top: 10px;
+}
+
+.sidebar-container .post-meta-keywords-container .post-meta-keywords-view {
+    margin-top: 10px;
+    text-align: center;
+    justify-content: center;
+}
+
+.sidebar-container .post-meta-keywords-container .post-meta-keyword {
+    display: inline-flex;
+    border: 1px solid gray;
+    border-radius: 10px;
+    padding: 5px;
+    background-color: #34495e;
+    color: white;
+    justify-content: space-evenly;
+    cursor: pointer;
+}
+
+.sidebar-container .post-meta-keywords-container .post-meta-keyword .span-text {
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media(max-width: 768px) {
+    .sidebar-container {
+        text-align: left;
+    }
+    .sidebar-container .post-header-image-container {
+        width: 70%;
+    }
+}

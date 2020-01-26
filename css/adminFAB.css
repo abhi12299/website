@@ -1,0 +1,67 @@
+@media (min-width: 767px) {
+    #adminFAB .links {
+        transition: 0.3s;
+    }
+    #adminFAB .links:hover {
+        right: -35px;
+        color: white;
+    }
+}
+
+#adminFAB .links a:hover {
+    color: white !important;
+}
+
+
+#adminFAB .links:hover, #adminFAB .links:active {
+    color: black !important;
+}
+
+#adminFAB .links {
+    position: fixed;
+    z-index: 1000;
+    right: -132px;
+    text-align: left;
+    padding-left: 15px;
+    border-radius: 20px;
+    background-color: white;
+}
+
+
+#adminFAB .opened {
+    animation: slideLeft 0.3s forwards;
+}
+
+#adminFAB .opened .eff-4 {
+    left: 0;
+}
+
+#adminFAB .closed .eff-4{
+    left: -180px;
+}
+
+#adminFAB .closed {
+    animation: slideRight 0.3s ease-in-out;
+}
+
+@keyframes slideLeft {
+    100% {
+        right: -35px;
+        color: white;
+    }
+}
+
+@keyframes slideRight {
+    100% {
+        right: -132px;
+        background-color: white;
+    }
+}
+
+#adminFAB .adminLogout {
+    bottom: 20px;
+}
+
+#adminFAB .adminDashboard {
+    bottom: 80px;
+}

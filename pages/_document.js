@@ -1,4 +1,5 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document';
+import keys from '../constants/apiKeys';
 
 class MyDocument extends Document {
     static async getInitialProps(ctx) {
@@ -32,8 +33,17 @@ class MyDocument extends Document {
                     <meta name='msapplication-TileColor' content='#ffffff' />
                     <meta name='msapplication-TileImage' content='../static/favicon/ms-icon-144x144.png' />
                     <meta name='theme-color' content='#ffffff' />
-                    <meta name='Description' content='Abhishek Mehandiratta Portfolio' />
-                    <link type='stylesheet' href='../node_modules/font-awesome/css/font-awesome.css'/>
+                    <link type='stylesheet' href='../node_modules/font-awesome/css/font-awesome.css'/>  
+                    {/* Google Analytics section */}
+                    <script async src={`https://www.googletagmanager.com/gtag/js?id=${keys.GTAG_ID}`}></script>
+                    <script dangerouslySetInnerHTML={{__html: `
+                        window.dataLayer = window.dataLayer || [];
+                        function gtag(){dataLayer.push(arguments);}
+                        gtag('js', new Date());
+
+                        gtag('config', '${keys.GTAG_ID}');
+                    `}}>
+                    </script>
                 </Head>
                 <body>
                     <Main />

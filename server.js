@@ -6,11 +6,15 @@ const express = require('express');
 const next = require('next');
 const path = require('path');
 const mongoose = require('mongoose');
+const passport = require('passport');
+const fs = require('fs');
 
 const logger = require('./logger');
 const serverMiddleware = require('./server-middleware');
-const subscriberController = require('./controllers/subscribe.controller');
-const rateLimiter = require('./utils/rateLimiter');
+const auth = require('./auth');
+const apiRouter = require('./routes/apiRouter');
+const authRouter = require('./routes/authRouter');
+const errorCodes = require('./constants/errorCodes');
 
 if (cluster.isMaster) {
     masterProcess();
@@ -37,7 +41,8 @@ function childProcess() {
     mongoose.connect(process.env.MONGO_URI, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        autoIndex: false
+        autoIndex: false,
+        useFindAndModify: false
     });
     const db = mongoose.connection;
     db.once('error', err => {
@@ -58,8 +63,28 @@ function childProcess() {
         const server = express();
         serverMiddleware(server);
 
-        server.post('/api/subscribe', rateLimiter, subscriberController);
+        auth(passport);
 
+        // api routes
+        server.use(passport.initialize());
+        server.use('/api', apiRouter);
+        server.use('/auth', authRouter);
+
+        // static assets
+        server.get('/static/blogs/:assetPath', (req, res) => {
+            const filePath = path.join(__dirname, './public', req.path);
+            if (fs.existsSync(filePath)) {
+                return res.sendFile(path.join(__dirname, './public', req.path));
+            } else {
+                res.status(404).send('File not found!');
+            }
+        });
+
+        server.get('/robots.txt', (req, res) => {
+            return res.sendFile(path.join(__dirname, './public/static/robots.txt'));
+        });
+
+        // service worker
         server.get('/service-worker.js', (req, res) => {
             res.sendFile(path.join(__dirname, '.next', 'service-worker.js'));
         });
@@ -71,18 +96,27 @@ function childProcess() {
             });
 
             if (req.path.startsWith('/workbox')) {
-                return res.sendFile(path.join(__dirname, '.next', req.path));
+                const filePath = path.join(__dirname, '.next', req.path)
+                if (fs.existsSync(filePath)) {
+                    return res.sendFile(path.join(__dirname, '.next', req.path));
+                }
+                return res.status(404).end();
             }
 
             return handle(req, res);
         });
 
         server.use((err, req, res, next) => {
-            if (err.code === 'EBADCSRFTOKEN') {
+            if (err.code === errorCodes[4]) {
                 logger.error('CSRF token mismatch', err);
                 return res.status(403).json({ error: true, msg: 'Something went wrong. Please refresh the page and try again.'});
-            } else if (err.code === 'THROTTLE') {
+            } else if (err.code === errorCodes[3]) {
                 return res.status(429).json({ error: true, msg: 'We\'ve been receiving a lot of requests from you. Please try after sometime.' });
+            } else if (err.code === errorCodes[0]) {
+                req.logout && req.logout();
+                res.cookie('notAdmin', 'notAdmin');
+                return res.redirect('/');
+                // return res.redirect('https://accounts.google.com/logout');
             }
             return next(err);
         });

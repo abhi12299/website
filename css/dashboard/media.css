@@ -1,0 +1,27 @@
+.media-card {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    height: fit-content;
+}
+
+.media-card .media-card-img {
+    border-bottom: 1px solid black;
+    cursor: pointer;
+}
+
+.media-card .c2a-btns {
+    font-size: 18px;
+}
+
+.media-card .media-copy-btn, .media-card .media-delete-btn {
+    cursor: pointer;
+}
+
+.delete-media-container {
+    max-height: 250px;
+    text-align: center;
+}
+
+.delete-media-container img {
+    height: -webkit-fill-available;
+}

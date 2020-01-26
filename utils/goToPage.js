@@ -28,10 +28,15 @@ export default (nextPage, { cbAfterAnimate = noOp, scrollToElement = null } = {}
     if (Router.pathname === nextPage) {
         // if we're on the next page, animate to element
         cbAfterAnimate();
-        animateToElem(scrollToElement);
+        if (scrollToElement === 'TOP') animateToElem()
+        else animateToElem(scrollToElement);
     } else {
         Router.push(nextPage).then(() => {
-            if (scrollToElement) animateToElem(scrollToElement, 0);
+            if (scrollToElement === 'TOP') {
+                // just go to top
+                window.scrollTo(0, 0);
+            }
+            else if (scrollToElement) animateToElem(scrollToElement, 500);
         });
     }
 }

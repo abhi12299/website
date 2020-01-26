@@ -1,0 +1,45 @@
+.pagination ul.page-nav a {
+    font-size: 14px;
+    text-decoration: none;
+    display: inline-block;
+    text-transform: uppercase;
+    margin: 0 3px 6px;
+    height: 38px;
+    min-width: 38px;
+    border: 2px solid black;
+    line-height: 36px;
+    padding: 0;
+    font-weight: 700;
+    letter-spacing: .03em;
+    border-radius: 50%;
+    transition: all 500ms;
+    -webkit-transition: all 500ms;
+    -moz-transition: all 500ms;
+    -o-transition: all 500ms;
+}
+
+.pagination .left-button {
+    cursor: pointer;
+}
+
+.pagination .left-button.disabled {
+    cursor: default !important;
+}
+
+.pagination ul.page-nav a:not(.active) {
+    cursor: pointer;
+}
+
+.pagination ul.page-nav a.active {
+    color: white;
+    background: black;
+}
+
+.pagination ul.page-nav a:not(.active):hover {
+    background-color: #F5F5F5;
+    color: black;
+}
+
+.pagination {
+    padding: 15px 0px;
+}

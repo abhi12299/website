@@ -1,0 +1,12 @@
+.save-container {
+    margin-bottom: 50px;
+    text-align: center;
+    justify-content: center;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.save-container .no-cursor {
+    cursor: default !important;
+}

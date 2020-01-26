@@ -15,6 +15,10 @@ class RedisDB {
             port: REDIS_PORT
         });
 
+        if (process.env.NODE_ENV === 'production') {
+            client.auth(process.env.REDIS_PASSWORD);
+        }
+
         client.once('error', err => {
             logger.error('Redis connect error', err);
             process.exit(1);
