@@ -44,7 +44,7 @@ To run this locally, clone this repo and `cd` in the project directory
     </li>
     <li>
     Production server
-    <pre>yarn start:prod</pre>
+    <pre>yarn start</pre>
     </li>
     <li>
     Cluster with PM2
