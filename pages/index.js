@@ -91,7 +91,7 @@ const Home = props => {
 
 Home.getInitialProps = async ctx => {
   const notAdminError = getCookie('notAdmin', ctx.req);
-  await ctx.store.dispatch(actions.authActions.authenticate(ctx.req));
+  await ctx.store.dispatch(actions.authActions.authenticate(ctx ? ctx.req : null));
   await ctx.store.dispatch(actions.blogPostActions.getLatestPosts());
 
   return { notAdminError: !!notAdminError };

@@ -10,7 +10,7 @@ import FullScreenLoader from './fullScreenLoader';
 export default function(WrappedComponent) {
     class WithAuth extends Component {
         static async getInitialProps(ctx) {
-            await ctx.store.dispatch(actions.authActions.authenticate(ctx.req));
+            await ctx.store.dispatch(actions.authActions.authenticate(ctx ? ctx.req : null));
             const store = ctx.store.getState();
             if (store.auth.admin) {
                 if (WrappedComponent.getInitialProps) {

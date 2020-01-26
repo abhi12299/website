@@ -81,7 +81,7 @@ const About = props => {
 };
 
 About.getInitialProps = async ctx => {
-  await ctx.store.dispatch(actions.authActions.authenticate(ctx.req));
+  await ctx.store.dispatch(actions.authActions.authenticate(ctx ? ctx.req : null));
 
   return {};
 }

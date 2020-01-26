@@ -81,7 +81,7 @@ const SearchPage = props => {
 };
 
 SearchPage.getInitialProps = async ctx => {
-    await ctx.store.dispatch(actions.authActions.authenticate(ctx.req));
+    await ctx.store.dispatch(actions.authActions.authenticate(ctx ? ctx.req : null));
     await ctx.store.dispatch(actions.searchActions.search(ctx, perPage));
 
     return {};

@@ -111,7 +111,7 @@ const Blog = props => {
 };
 
 Blog.getInitialProps = async ctx => {
-    await ctx.store.dispatch(actions.authActions.authenticate(ctx.req));
+    await ctx.store.dispatch(actions.authActions.authenticate(ctx ? ctx.req : null));
     await ctx.store.dispatch(actions.blogPostActions.getAllPosts(ctx, perPage));
 
     return {};
