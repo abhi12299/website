@@ -3,6 +3,7 @@ const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const Admin = require('./models/admin.model');
 const logger = require('./logger');
 const errorCodes = require('./constants/errorCodes');
+const baseURL = require('./constants/apiURL');
 
 module.exports = (passport) => {
     const { OAUTH_CLIENT_ID, CLIENT_SECRET } = process.env;
@@ -18,7 +19,7 @@ module.exports = (passport) => {
     passport.use(new GoogleStrategy({
             clientID: OAUTH_CLIENT_ID,
             clientSecret: CLIENT_SECRET,
-            callbackURL: '/auth/redirect'
+            callbackURL: `${baseURL}/auth/redirect`
         },
         async (token, refreshToken, profile, done) => {
             let email;
