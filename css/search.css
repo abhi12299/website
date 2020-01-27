@@ -67,6 +67,7 @@
     font-weight: 300;
     border: 0;
     background-color: transparent;
+    width: 100%;
 }
 
 .search-section .centered .search-container button {
