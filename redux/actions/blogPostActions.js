@@ -18,6 +18,7 @@ import baseURL from '../../constants/apiURL';
 const getPost = ctx => {
     const path = ctx.req ? ctx.req.path : ctx.asPath;
     const id = path.split('/')[2];
+    console.log('Id is', id);
 
     const fetchOpts = {
         method: 'GET',

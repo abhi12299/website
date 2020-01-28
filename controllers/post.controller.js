@@ -35,7 +35,7 @@ postRouter.get('/getLatestPosts', async (req, res) => {
         return res.status(400).json({ error: true, msg: 'Incorrect info submitted!' });
     }
 
-    let { limit } = req.query;
+    let { limit=5 } = req.query;
     limit = parseInt(limit) || 5;
 
     const posts = await Post.getLatestPosts({ limit });
