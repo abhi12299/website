@@ -36,7 +36,6 @@ const SearchPage = props => {
     const metaTags = (
         <Fragment>
             <title>{decodeURI(q)} - Search Results - Abhishek Mehandiratta | Web Developer</title>
-            <link href='URL' rel='canonical' />
             <link rel='canonical' href='https://iabhishek.dev/search' />
 
             <meta name='description' content={`${count} Results For ${decodeURI(q)} - Abhishek Mehandiratta | Web Developer`} />

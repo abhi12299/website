@@ -37,7 +37,6 @@ const Post = props => {
         {title} - Abhishek Mehandiratta | Web Developer
       </title>
 
-      <link href='URL' rel='canonical' />
       <link rel='canonical' href={postURL} />
 
       <meta name='description' content={metaDescription} />

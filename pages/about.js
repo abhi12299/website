@@ -19,8 +19,7 @@ const About = props => {
   const metaTags = (
     <Fragment>
         <title>About Me - Abhishek Mehandiratta | Web Developer</title>
-        <link href='URL' rel='canonical' />
-            <link rel='canonical' href='https://iabhishek.dev' />
+            <link rel='canonical' href='https://iabhishek.dev/about' />
 
             <meta name='description' content='A passionate web developer and hardcore gamer.' />
             <meta name='keywords' content='Abhishek, Mehandiratta, About, Developer, Web' />

@@ -35,8 +35,7 @@ const Blog = props => {
     const metaTags = (
         <Fragment>
             <title>All Blogs - Page {pageNo} - Abhishek Mehandiratta | Web Developer</title>
-            <link href='URL' rel='canonical' />
-            <link rel='canonical' href='https://iabhishek.dev' />
+            <link rel='canonical' href='https://iabhishek.dev/blog' />
 
             <meta name='description' content='All Blogs - Abhishek Mehandiratta | Web Developer' />
             <meta name='keywords' content='Abhishek, Mehandiratta, Blog, Developer, Web' />
