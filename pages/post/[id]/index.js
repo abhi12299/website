@@ -161,6 +161,3 @@ Post.getInitialProps = async ctx => {
 };
 
 export default connect(state => state)(Post);
-
-
-<a href='https://widgetpack.com' class='wpac-cr'>Comments System WIDGET PACK</a>
