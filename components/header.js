@@ -110,7 +110,7 @@ const Header = props => {
                 <a>Contact</a>
             </li>
             <li onClick={() => handleLinksClick('/blog', 'TOP')}>
-                <a>Blog</a>
+                <a>Blog Posts</a>
             </li>
             {/* <li onClick={() => handleSearch()} id='search-nav'>
                 <a>Search</a>

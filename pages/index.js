@@ -38,7 +38,7 @@ const Home = props => {
       <meta property='og:image' content='https://iabhishek.dev/static/logo.png' />
       <meta property='og:url' content='https://iabhishek.dev' />
 
-      <meta name='twitter:card' content='summary_large_image' />
+      <meta name='twitter:card' content='https://iabhishek.dev/static/logo.png' />
       <meta name='twitter:site' content='@abhishek_m' />
       <meta name='twitter:creator' content='@abhishek_m' />
       <meta name='twitter:title' content='Abhishek Mehandiratta | Web Developer' />

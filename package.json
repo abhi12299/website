@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "npx rimraf .next/ && npx cross-env NODE_ENV=development node server.js",
-    "build": "npx rimraf .next/ && next build",
+    "build": "next build",
     "start:stag": "npx cross-env NODE_ENV=staging node server.js",
     "start": "npx cross-env NODE_ENV=production node server.js",
     "analyse-server": "BUNDLE_ANALYZE=server yarn build",

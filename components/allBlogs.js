@@ -50,7 +50,7 @@ function AllBlogs(props) {
                                         className='col-md-10 offset-lg-1 offset-md-1 text-center'
                                     >
                                         <h2>
-                                            ALL BLOGS
+                                            ALL BLOG POSTS
                                         </h2>
                                     </div>
                                     {
