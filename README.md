@@ -61,3 +61,9 @@ For server,
 <pre>yarn run analyse-server</pre>
 For client,
 <pre>yarn run analyse-client</pre>
+
+
+## To access dashboard routes, <small>Assuming the website is running on localhost:3000</small>
+1. Go to https://console.developers.google.com/ and create an OAUTH2 Api key for web. Specify localhost:3000 as authorized origin and localhost:3000/auth/redirect as redirect URI.
+2. Copy the client id and secret into .env file.
+3. Go to localhost:3000/auth/login and you should be able to login with email that you specified earlier when doing <code>node init.js</code>
