@@ -21,10 +21,15 @@ async function createIndex() {
             index: 'post',
             body: { properties: schema } 
         });
+        console.log('index created successfully!');
     } catch (err) {
         logger.error('Error while creating index!', err);
         return err;
     }
+}
+
+if (require.main === module) {
+    createIndex();
 }
 
 module.exports = createIndex;
