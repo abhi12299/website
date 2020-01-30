@@ -25,7 +25,7 @@ To run this locally, clone this repo and `cd` in the project directory
     GTAG_ID: 'your-google-tag-id'
 };</pre>
     </li>
-    <li>For the first time execution, run <pre>node elasticClient/createIndex.js</pre></li>
+    <li>For the first time execution, run <pre>node init.js</pre></li>
     <li>
     Install packages with
     <pre>yarn</pre>
