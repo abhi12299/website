@@ -81,8 +81,8 @@ class Search extends Component {
         q = q.trimLeft();
         // remove whitespace on right end side that occurs more than once
         q = q.replace(/\s{2,}$/, '');
-        // const { admin } = this.props.auth;
-        const admin = true;
+        const { admin } = this.props.auth;
+        // const admin = true;
 
         if (q.length < 1) {
             this.props.dispatch(actions.searchActions.clearSearchSuggestions());
