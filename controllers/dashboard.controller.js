@@ -63,7 +63,7 @@ dashboardRouter.post('/savePost', async (req, res) => {
         };
         const { error } = await elasticSearchHelper.addPost(elasticPostBody);
         if (error) {
-            logger.error('Cannot index post', post, error);
+            logger.error('Cannot index post', savedPost, error);
             // delete the savedPost
             await Post.deleteOne({ _id: savedPost._id });
             return res.json({

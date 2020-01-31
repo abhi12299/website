@@ -33,7 +33,7 @@ class MyDocument extends Document {
                     <meta name='msapplication-TileColor' content='#ffffff' />
                     <meta name='msapplication-TileImage' content='../static/favicon/ms-icon-144x144.png' />
                     <meta name='theme-color' content='#ffffff' />
-                    <link type='stylesheet' href='../node_modules/font-awesome/css/font-awesome.css'/>  
+                    {/* <link type='stylesheet' href='../node_modules/font-awesome/css/font-awesome.css'/>   */}
                     {/* Google Analytics section */}
                     <script async src={`https://www.googletagmanager.com/gtag/js?id=${keys.GTAG_ID}`}></script>
                     <script dangerouslySetInnerHTML={{__html: `
