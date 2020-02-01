@@ -48,8 +48,8 @@ const SearchPage = props => {
             <meta property='og:image' content='https://iabhishek.dev/static/logo.png' />
             <meta property='og:url' content='https://iabhishek.dev/search' />
 
-            <meta name='twitter:card' content='summary_large_image' />
-            <meta name='twitter:site' content='@abhishek_m' />
+            <meta name='twitter:card' content='https://iabhishek.dev/static/logo.png' />
+            <meta name='twitter:site' content='https://iabhishek.dev' />
             <meta name='twitter:creator' content='@abhishek_m' />
             <meta name='twitter:title' content={`${decodeURI(q)} - Search Results | Abhishek Mehandiratta Web Developer`} />
             <meta name='twitter:description' content={`${count} Results For ${decodeURI(q)} - Abhishek Mehandiratta | Web Developer`} />

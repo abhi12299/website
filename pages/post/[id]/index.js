@@ -52,8 +52,8 @@ const Post = props => {
       <meta property='og:image' content={headerImageURL} />
       <meta property='og:url' content={postURL} />
 
-      <meta name='twitter:card' content='summary_large_image' />
-      <meta name='twitter:site' content='@abhishek_m' />
+      <meta name='twitter:card' content='https://iabhishek.dev/static/logo.png' />
+      <meta name='twitter:site' content='https://iabhishek.dev' />
       <meta name='twitter:creator' content='@abhishek_m' />
       <meta name='twitter:title' content={title} />
       <meta name='twitter:description' content={metaDescription} />
