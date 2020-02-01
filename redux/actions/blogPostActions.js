@@ -19,6 +19,10 @@ const getPost = ctx => {
     const path = ctx.req ? ctx.req.path : ctx.asPath;
     const id = path.split('/')[2];
 
+    const store = ctx.store.getState()
+    if (store.blogPost.data && store.blogPost.data._id === id) {
+        return () => ({});
+    }
     const fetchOpts = {
         method: 'GET',
         credentials: 'include',

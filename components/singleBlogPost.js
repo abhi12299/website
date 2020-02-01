@@ -37,7 +37,8 @@ function SingleBlogPost(props) {
               mc.type = 'text/javascript';
               mc.async = true;
               mc.src = 'https://embed.widgetpack.com/widget.js';
-              var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+              var s = document.getElementsByTagName('script')[0];
+              s.parentNode.insertBefore(mc, s.nextSibling);
           })();
         `;
         document.body.appendChild(widgetpackScript);

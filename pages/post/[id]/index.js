@@ -104,40 +104,42 @@ const Post = props => {
     </Fragment>
   );
 
+  const appendScripts = (highlightTimeout) => {
+    if (!document.querySelector('script[src$="prism.js"]')) {
+      const prismScript = document.createElement('script');
+      prismScript.src = '../static/prism/prism.js';
+      prismScript.setAttribute('data-manual', true);
+
+      const prismInit = document.createElement('script');
+      prismInit.innerHTML = `
+        function highlight() {
+          if ('Prism' in window && !('PRISM_CODE_PARSED' in window)) {
+            Prism.highlightAll(false, () => {
+              window.PRISM_CODE_PARSED = true;
+            });
+          }
+        }
+      `;
+
+      const prismCss = document.createElement('link');
+      prismCss.rel = 'stylesheet';
+      prismCss.href = '../static/prism/prism.css';
+      document.body.appendChild(prismScript);
+      document.body.appendChild(prismCss);
+      document.body.appendChild(prismInit);
+    }
+
+    setTimeout(window.highlight, highlightTimeout)
+  }
+
   useEffect(() => {
     if (!data) return;
-    const prismScript = document.createElement('script');
-    prismScript.src = '../static/prism/prism.js';
-    prismScript.async = true;
-    prismScript.setAttribute('data-manual', true);
-
-    const prismInit = document.createElement('script');
-    prismInit.async = true;
-    prismInit.innerHTML = `
-      function highlight() {
-        if ('Prism' in window && !('PRISM_CODE_PARSED' in window)) {
-          Prism.highlightAll(true, () => {
-            window.PRISM_CODE_PARSED = true;
-          });
-        }
-      }
-
-      window.addEventListener('load', highlight);
-      setTimeout(highlight, 2000);
-    `;
-
-    const prismCss = document.createElement('link');
-    prismCss.rel = 'stylesheet';
-    prismCss.href = '../static/prism/prism.css';
-
-    document.body.appendChild(prismScript);
-    document.body.appendChild(prismCss);
-    document.body.appendChild(prismInit);
-
+    if (document.readyState === 'complete') {
+      appendScripts(1000)
+    } else {
+      window.addEventListener('load', () => appendScripts(100));
+    }
     return () => {
-      document.body.removeChild(prismCss);
-      document.body.removeChild(prismScript);
-      document.body.appendChild(prismInit);
       if ('PRISM_CODE_PARSED' in window) delete window['PRISM_CODE_PARSED'];
     };
   }, []);
