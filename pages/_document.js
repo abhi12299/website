@@ -35,8 +35,8 @@ class MyDocument extends Document {
                     <meta name='theme-color' content='#ffffff' />
                     {/* <link type='stylesheet' href='../node_modules/font-awesome/css/font-awesome.css'/>   */}
                     {/* Google Analytics section */}
-                    <script async src={`https://www.googletagmanager.com/gtag/js?id=${keys.GTAG_ID}`}></script>
-                    <script dangerouslySetInnerHTML={{__html: `
+                    <script defer async src={`https://www.googletagmanager.com/gtag/js?id=${keys.GTAG_ID}`}></script>
+                    <script async defer dangerouslySetInnerHTML={{__html: `
                         window.dataLayer = window.dataLayer || [];
                         function gtag(){dataLayer.push(arguments);}
                         gtag('js', new Date());
