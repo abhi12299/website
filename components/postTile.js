@@ -10,7 +10,6 @@ import getDateParts from '../utils/getDateParts';
 import socialShare from '../utils/socialShareLinks';
 
 import actions from '../redux/actions';
-import baseURL from '../constants/apiURL';
 
 import '../css/postTile.css';
 
