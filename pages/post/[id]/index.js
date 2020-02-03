@@ -60,8 +60,8 @@ const Post = props => {
       <meta name='twitter:url' content={postURL} />
       <meta name='twitter:label1' content='Written By' />
       <meta name='twitter:data1' content='Abhishek Mehandiratta' />
-      <meta name='twitter:label1' content='Filed under' />
-      <meta name='twitter:label1' content={metaKeywords.join(', ')} />
+      <meta name='twitter:label2' content='Filed under' />
+      <meta name='twitter:data2' content={metaKeywords.join(', ')} />
 
       <script type='application/ld+json' dangerouslySetInnerHTML={{
         __html: `
